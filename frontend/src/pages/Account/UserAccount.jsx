@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Cookies from "js-cookie"
+// import { useNavigate } from 'react-router'
+// import { FaAngleLeft } from "react-icons/fa";
 
 function UserAccount() {
-
+    // const navigate = useNavigate()
     const [userData,setUserData] = useState([])
 
     useEffect(()=> {

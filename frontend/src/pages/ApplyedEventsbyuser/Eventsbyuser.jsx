@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react';
 import Cookies from "js-cookie";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { FcAbout } from "react-icons/fc";
+import { FaAngleLeft } from "react-icons/fa";
+import { useNavigate } from 'react-router';
 
 function Eventsbyuser() {
 
     const [appliedData, setAppliedData] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchDetails = async () => {
@@ -57,11 +61,18 @@ function Eventsbyuser() {
         );
     }
 
+    const handleNavigatetoHome = () => {
+        navigate("/user/allevents",{replace:true})
+    }
     
     return (
         <div className='bg-gray-800 min-h-screen'>
-            <ul className='pt-25'>
-
+            <ul className='pt-15'>
+                <button onClick={handleNavigatetoHome} className='bg-white mt-8 p-2 rounded-xl font-semibold cursor-pointer '>
+                    <div className='flex '>
+                        <FaAngleLeft className='mt-1' /> 
+                        <span >Back</span>
+                    </div></button>
                 {appliedData.map((each, id) => (
                     <li key={id} className="m-2 w-full">
                         <div className="bg-gray-900 text-white p-6 rounded-xl shadow-md w-full max-w-xl mx-auto">
