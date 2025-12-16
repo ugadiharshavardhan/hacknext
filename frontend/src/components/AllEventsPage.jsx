@@ -174,7 +174,7 @@ function AllEventsPage({ searchQuery, eventType, organizer }) {
 
                   <button
                     onClick={() => handleViewDetails(each._id)}
-                    className="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-sm px-4 py-2 rounded-md"
+                    className="flex items-center gap-2 bg-gray-800 hover:bg-gradient-to-r from-violet-500 to-blue-500 text-sm px-4 py-2 rounded-md"
                   >
                     View Details <FaExternalLinkAlt size={12} />
                   </button>
