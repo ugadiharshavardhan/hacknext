@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router";
 import { ThreeDot } from "react-loading-indicators";
 import { FaCalendarAlt, FaMapMarkerAlt, FaUser, FaClock } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 
 function UserAppliedEvents() {
   const navigate = useNavigate();
@@ -77,11 +78,21 @@ function UserAppliedEvents() {
     );
   }
 
+  const handleBackBtn = () => {
+    navigate("/admin/dashboard",{replace:true})
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0f1225] to-[#14172e] text-white p-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
+          <button
+            onClick={handleBackBtn}
+            className="p-2 cursor-pointer rounded-full border relative -left-170 top-10 border-white/20 hover:border-white/40 transition"
+          >
+            <FaArrowLeft />
+          </button>
           <h1 className="text-4xl font-bold mb-4">
             <span className="text-indigo-400">User Applied</span> Events
           </h1>

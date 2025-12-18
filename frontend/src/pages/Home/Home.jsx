@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router";
 import { ThreeDot } from "react-loading-indicators";
 import { FaUserGraduate, FaCalendarAlt, FaTrophy, FaUsers } from "react-icons/fa";
+import Footer from "../../components/Footer";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -116,7 +117,8 @@ const Home = () => {
         <div className="mt-10 flex gap-4">
           <button
             onClick={handleUserEvents}
-            className="px-7 py-3 cursor-pointer bg-white text-black rounded-lg font-semibold"
+            className="px-7 py-3 transition-all duration-200 ease-out
+            hover:scale-115 cursor-pointer bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-semibold"
           >
             Explore Events →
           </button>
@@ -197,6 +199,7 @@ const Home = () => {
           Get Started for Free →
         </button>
       </section>
+      <Footer />
     </div>
   );
 };

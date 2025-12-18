@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import { FaArrowLeft } from "react-icons/fa";
 import Cookies from "js-cookie";
 import { ThreeDot } from "react-loading-indicators";
 import {
@@ -20,6 +21,7 @@ import {
 } from "react-icons/si";
 
 function EachProject() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [eachProject, setEachProject] = useState({});
   const [loading, setLoading] = useState(true);
@@ -63,6 +65,11 @@ function EachProject() {
       .map((item) => item.trim())
       .filter((item) => item !== "") || [];
 
+  const handleBackBtn = () => {
+    navigate("/projects",{replace:true})
+  }
+
+
   return (
     <div>
       {loading ? (
@@ -71,6 +78,12 @@ function EachProject() {
         </div>
       ) : (
         <div className="min-h-screen bg-gradient-to-br from-[#0f1225] to-[#14172e] text-white px-6 py-24 flex justify-center items-start">
+          <button
+            onClick={handleBackBtn}
+            className="p-2 cursor-pointer rounded-full border relative right-70 top-5 border-white/20 hover:border-white/40 transition"
+          >
+            <FaArrowLeft />
+          </button>
           <div
             className="w-full max-w-4xl rounded-2xl bg-white/5 border border-white/10 
                        p-8 shadow-xl hover:shadow-indigo-900/30 transition-all"

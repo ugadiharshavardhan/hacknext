@@ -17,9 +17,13 @@ import { useNavigate } from "react-router";
 function AllEventsPage({ searchQuery, eventType, organizer }) {
   const [TotalEvents, setTotalEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const [activeSection, setActiveSection] = useState("upcoming");
+
   const token = Cookies.get("jwt_token");
   const navigate = useNavigate();
 
+  /* ---------------- FETCH ALL EVENTS ---------------- */
   useEffect(() => {
     const allEventsData = async () => {
       try {
@@ -33,6 +37,7 @@ function AllEventsPage({ searchQuery, eventType, organizer }) {
             },
           }
         );
+
         if (response.ok) {
           const data = await response.json();
           setTotalEvents(data.allevents || []);
@@ -43,8 +48,22 @@ function AllEventsPage({ searchQuery, eventType, organizer }) {
         setLoading(false);
       }
     };
+
     allEventsData();
   }, []);
+
+  /* ---------------- DATE HELPERS ---------------- */
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const getEventCategory = (startDate) => {
+    const eventDate = new Date(startDate);
+    eventDate.setHours(0, 0, 0, 0);
+
+    if (eventDate < today) return "completed";
+    if (eventDate.getTime() === today.getTime()) return "live";
+    return "upcoming";
+  };
 
   const formatDate = (dateString) => {
     if (!dateString) return "";
@@ -59,7 +78,20 @@ function AllEventsPage({ searchQuery, eventType, organizer }) {
     return `${day}-${month}-${year}`;
   };
 
-  let filteredEvents = TotalEvents;
+  const remainingDays = (dateString) => {
+    const date = new Date(dateString);
+    date.setHours(0, 0, 0, 0);
+
+    const diff = Math.floor((date - today) / (1000 * 60 * 60 * 24));
+    if (diff === 0) return "Today";
+    if (diff < 0) return "Expired";
+    return `${diff} Days Left`;
+  };
+
+  /* ---------------- FILTER LOGIC ---------------- */
+  let filteredEvents = TotalEvents.filter(
+    (event) => getEventCategory(event.StartDate) === activeSection
+  );
 
   if (searchQuery.trim() !== "") {
     filteredEvents = filteredEvents.filter((each) =>
@@ -79,24 +111,32 @@ function AllEventsPage({ searchQuery, eventType, organizer }) {
     );
   }
 
-  const remainingDays = (dateString) => {
-    const date = new Date(dateString);
-    const today = new Date();
-    date.setHours(0, 0, 0, 0);
-    today.setHours(0, 0, 0, 0);
-
-    const days = Math.floor((date - today) / (1000 * 60 * 60 * 24));
-    if (days === 0) return "Today";
-    if (days < 0) return "Expired";
-    return `${days} Days Left`;
-  };
-
   const handleViewDetails = (eventid) => {
     navigate(`/user/allevents/${eventid}`);
   };
 
   return (
     <div className="min-h-screen w-full">
+      <div className="flex justify-center gap-6 pt-10">
+        {[
+          { key: "upcoming", label: "Upcoming Events" },
+          { key: "live", label: "Live Events" },
+          { key: "completed", label: "Completed Events" },
+        ].map((tab) => (
+          <button
+            key={tab.key}
+            onClick={() => setActiveSection(tab.key)}
+            className={`px-5 py-2 rounded-full text-sm font-medium transition
+              ${
+                activeSection === tab.key
+                  ? "bg-gradient-to-r from-blue-500 to-violet-600 text-white"
+                  : "border border-white/10 text-gray-400 hover:text-white cursor-pointer"
+              }`}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
 
       {loading ? (
         <div className="flex items-center justify-center min-h-screen">
@@ -106,7 +146,7 @@ function AllEventsPage({ searchQuery, eventType, organizer }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 px-6 py-16">
           {filteredEvents.length === 0 ? (
             <p className="text-center text-gray-400 col-span-full">
-              No events found matching your filters.
+              No events found for this section.
             </p>
           ) : (
             filteredEvents.map((each, _id) => (
@@ -116,7 +156,6 @@ function AllEventsPage({ searchQuery, eventType, organizer }) {
                            shadow-xl hover:shadow-indigo-900/30
                            transition-transform duration-300 hover:-translate-y-3"
               >
-                {/* Organizer + Type */}
                 <div className="flex items-center gap-2 mb-4">
                   {each.Organizer === "College" ? (
                     <span className="bg-emerald-500/20 text-emerald-400 text-xs px-3 py-1 rounded-full flex items-center gap-1">
@@ -137,23 +176,14 @@ function AllEventsPage({ searchQuery, eventType, organizer }) {
                   </span>
                 </div>
 
-                <h2 className="
-                  text-lg font-bold mb-2
-                  bg-gradient-to-r from-blue-400 to-violet-500
-                  bg-clip-text text-transparent
-                  hover:from-blue-500 hover:to-violet-600
-                  transition
-                ">
+                <h2 className="text-lg font-bold mb-2 bg-gradient-to-r from-blue-400 to-violet-500 bg-clip-text text-transparent">
                   {each.EventTitle.toUpperCase()}
                 </h2>
 
-
-                {/* Description */}
                 <p className="text-gray-400 text-sm mb-4 leading-relaxed">
                   {each.EventDescription}
                 </p>
 
-                {/* Event Info */}
                 <div className="space-y-2 text-gray-300 text-sm">
                   <div className="flex items-center gap-2">
                     <FaCalendarAlt />
@@ -177,7 +207,6 @@ function AllEventsPage({ searchQuery, eventType, organizer }) {
                   </div>
                 </div>
 
-                {/* Stacks */}
                 <ul className="flex flex-wrap gap-2 mt-4">
                   {each.SpecifiedStacks?.split(",").map((stack, index) => (
                     <li
@@ -189,7 +218,6 @@ function AllEventsPage({ searchQuery, eventType, organizer }) {
                   ))}
                 </ul>
 
-                {/* Footer */}
                 <div className="flex justify-between items-center mt-6">
                   <div className="flex items-center text-gray-400 text-sm">
                     <LuClock3 className="mr-1" />
@@ -200,7 +228,7 @@ function AllEventsPage({ searchQuery, eventType, organizer }) {
                     onClick={() => handleViewDetails(each._id)}
                     className="flex items-center gap-2 px-4 py-2 rounded-xl
                                border border-white/10
-                              hover:bg-gradient-to-r hover:from-blue-500 hover:to-violet-600
+                               hover:bg-gradient-to-r hover:from-blue-500 hover:to-violet-600
                                text-white text-sm transition cursor-pointer"
                   >
                     View Details <FaExternalLinkAlt size={12} />
