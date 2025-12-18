@@ -18,6 +18,12 @@ function InputElement() {
     if (section) section.scrollIntoView({ behavior: "smooth" });
   };
 
+  const handleClearfilters = () => {
+    setEventType("All Types")
+    setOrganizer("All Organizers")
+    setSearchQuery("")
+  }
+
   const handleProjects = () => {
     navigate("/projects", { replace: true });
   };
@@ -118,7 +124,7 @@ function InputElement() {
           <select
             value={eventType}
             onChange={(e) => setEventType(e.target.value)}
-            className="bg-[#020617] border border-slate-700/50
+            className="bg-[#020617] border cursor-pointer border-slate-700/50
                        rounded-xl px-4 py-3 text-sm text-slate-300
                        hover:border-violet-500 transition"
           >
@@ -133,7 +139,7 @@ function InputElement() {
           <select
             value={organizer}
             onChange={(e) => setOrganizer(e.target.value)}
-            className="bg-[#020617] border border-slate-700/50
+            className="bg-[#020617] border cursor-pointer border-slate-700/50
                        rounded-xl px-4 py-3 text-sm text-slate-300
                        hover:border-blue-500 transition"
           >
@@ -143,6 +149,7 @@ function InputElement() {
               </option>
             ))}
           </select>
+          <h1 onClick={handleClearfilters} className="text-white bg-[#020617] border p-2 rounded-xl border-slate-700/50 cursor-pointer">clear filters</h1>
         </div>
       </section>
 

@@ -24,9 +24,9 @@ function SavedEvents() {
             Authorization: `Bearer ${Cookies.get("jwt_token")}`,
           },
         };
-
         const response = await fetch(url, options);
         const data = await response.json();
+        console.log(data)
 
         setEvents(data.events || []);
       } catch (error) {
@@ -39,8 +39,8 @@ function SavedEvents() {
     fetchSaved();
   }, []);
 
-  const Data = events.map((each) => each.eventid);
-
+  const Data = events.map((each) => each.eventid).filter((event) => event !== null);
+  console.log(Data)
   return (
     <div className="pt-10 w-full">
       {loading ? (

@@ -20,51 +20,54 @@ const EachEventDetails = () => {
   const [isSaved, setIsSaved] = useState(false);
   const [eachData, setEachData] = useState({});
   const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
+  const [isApplied, setIsApplied] = useState(false);
 
   /* ---------------- FETCH EVENT DETAILS ---------------- */
   useEffect(() => {
     const fetchEventDetails = async () => {
       try {
-        const url = `https://project-hackathon-7utw.onrender.com/user/allevents/${eventid}`;
-        const options = {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${jwtToken}`,
-          },
-        };
-        const response = await fetch(url, options);
+        const response = await fetch(
+          `https://project-hackathon-7utw.onrender.com/user/allevents/${eventid}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          }
+        );
+
         if (response.ok) {
           const data = await response.json();
           setEachData(data);
         }
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     };
+
     fetchEventDetails();
   }, [eventid, jwtToken]);
 
   /* ---------------- FETCH SAVED STATUS ---------------- */
   useEffect(() => {
+    if (!eventid || !jwtToken) return;
+
     let isMounted = true;
 
     const fetchSavedStatus = async () => {
-      if (!eventid || !jwtToken) return;
-
       try {
-        const url = `https://project-hackathon-7utw.onrender.com/user/saved/${eventid}`;
-        const options = {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${jwtToken}`,
-          },
-        };
-        const response = await fetch(url, options);
-        if (response.ok) {
+        const response = await fetch(
+          `https://project-hackathon-7utw.onrender.com/user/saved/${eventid}`,
+          {
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          }
+        );
+
+        if (response.ok && isMounted) {
           const data = await response.json();
-          if (isMounted) setIsSaved(!!data.isSaved);
+          setIsSaved(!!data.isSaved);
         }
       } catch {
         if (isMounted) setIsSaved(false);
@@ -75,6 +78,37 @@ const EachEventDetails = () => {
     return () => (isMounted = false);
   }, [eventid, jwtToken]);
 
+  /* ---------------- FETCH APPLICATION STATUS ---------------- */
+  useEffect(() => {
+    if (!eventid || !jwtToken) return;
+
+    let isMounted = true;
+
+    const fetchApplicationStatus = async () => {
+      try {
+        const response = await fetch(
+          `https://project-hackathon-7utw.onrender.com/user/applications/check/${eventid}`,
+          {
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          }
+        );
+
+        if (response.ok && isMounted) {
+          const data = await response.json();
+          setIsApplied(!!data.hasApplied);
+        }
+      } catch {
+        if (isMounted) setIsApplied(false);
+      }
+    };
+
+    fetchApplicationStatus();
+    return () => (isMounted = false);
+  }, [eventid, jwtToken]);
+
+  /* ---------------- REGISTRATION DEADLINE ---------------- */
   useEffect(() => {
     if (!eachData.StartDate) return;
 
@@ -88,77 +122,71 @@ const EachEventDetails = () => {
     setIsRegistrationOpen(today < deadline);
   }, [eachData]);
 
-
+  /* ---------------- APPLY HANDLER ---------------- */
   const handleApplyNow = () => {
-    navigate(`/events/apply/${eventid}`, { replace: true });
+    if (!eachData.FormLink) {
+      navigate(`/events/apply/${eventid}`, { replace: true });
+      return;
+    }
+
+    if (eachData.FormLink.startsWith("http")) {
+      window.open(eachData.FormLink, "_blank", "noopener,noreferrer");
+    } else {
+      navigate(`/events/apply/${eventid}`, { replace: true });
+    }
   };
 
+  /* ---------------- BACK BUTTON ---------------- */
   const handleBackBtn = () => {
     navigate("/user/allevents", { replace: true });
   };
 
-
+  /* ---------------- SAVE EVENT ---------------- */
   const handleSaveBtn = async () => {
-  if (!eventid || !jwtToken) return;
+    if (!eventid || !jwtToken) return;
 
-  const newSaveState = !isSaved;
-  const prev = isSaved;
-  setIsSaved(newSaveState);
+    const prev = isSaved;
+    const newState = !isSaved;
+    setIsSaved(newState);
 
-  try {
-    const response = await fetch(
-      "https://project-hackathon-7utw.onrender.com/user/saved",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${jwtToken}`,
-        },
-        body: JSON.stringify({ eventid, save: newSaveState }),
-      }
-    );
+    try {
+      const response = await fetch(
+        "https://project-hackathon-7utw.onrender.com/user/saved",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${jwtToken}`,
+          },
+          body: JSON.stringify({ eventid, save: newState }),
+        }
+      );
 
-    if (!response.ok) throw new Error();
+      if (!response.ok) throw new Error();
 
-    if (newSaveState) {
-      toast.success("Event Saved");
-    } else {
-      toast.error("Event Unsaved");
+      toast.success(newState ? "Event Saved" : "Event Unsaved");
+    } catch {
+      setIsSaved(prev);
+      toast.error("Something went wrong");
     }
-  } catch {
-    setIsSaved(prev);
-    toast.error("Something went wrong");
-  }
-};
-
+  };
 
   /* ---------------- DATE HELPERS ---------------- */
-  const formatDate = (dateString) => {
-    if (!dateString) return "";
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
+  const formatDate = (date) =>
+    new Date(date).toLocaleDateString("en-US", {
       weekday: "long",
       year: "numeric",
       month: "long",
       day: "2-digit",
     });
+
+  const deadlineDate = (date) => {
+    const d = new Date(date);
+    d.setDate(d.getDate() - 1);
+    return formatDate(d);
   };
 
-  const DeadLineDate = (startDate) => {
-    if (!startDate) return "";
-
-    const date = new Date(startDate);
-    date.setDate(date.getDate() - 1);
-
-    return date.toLocaleDateString("en-US", {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "2-digit",
-    });
-  };
-
-
+  /* ---------------- UI ---------------- */
   return (
     <div>
       {eachData.EventTitle ? (
@@ -171,7 +199,7 @@ const EachEventDetails = () => {
                 <div className="flex items-center gap-3 mb-2">
                   <button
                     onClick={handleBackBtn}
-                    className="p-2 rounded-full border border-white/20 hover:border-white/40 transition"
+                    className="p-2 cursor-pointer rounded-full border border-white/20 hover:border-white/40 transition"
                   >
                     <FaArrowLeft />
                   </button>
@@ -185,13 +213,7 @@ const EachEventDetails = () => {
                   </span>
                 </div>
 
-                <h1
-                  className="
-                    text-4xl font-bold
-                    bg-gradient-to-r from-indigo-400 to-violet-500
-                    bg-clip-text text-transparent
-                  "
-                >
+                <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-violet-500 bg-clip-text text-transparent">
                   {eachData.EventTitle}
                 </h1>
 
@@ -202,96 +224,78 @@ const EachEventDetails = () => {
 
               <button
                 onClick={handleSaveBtn}
-                className={`p-3 rounded-full border transition cursor-pointer
-                  ${
-                    isSaved
-                      ? "bg-white text-black"
-                      : "border-white/20 hover:border-white/40"
-                  }
-                `}
+                className={`p-3 rounded-full border cursor-pointer transition ${
+                  isSaved
+                    ? "bg-white text-black"
+                    : "border-white/20 hover:border-white/40"
+                }`}
               >
-                <FaRegBookmark size={18} />
+                <FaRegBookmark />
               </button>
             </div>
 
             {/* CONTENT */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* LEFT */}
-              <div className="lg:col-span-2 flex flex-col gap-6">
+              <div className="lg:col-span-2 space-y-6">
                 <Card>
                   <h2 className="text-xl font-semibold mb-4">Event Details</h2>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                    <Info label="Start Date" icon={<FaCalendarAlt />}>
+                    <Info icon={<FaCalendarAlt />} label="Start Date">
                       {formatDate(eachData.StartDate)}
                     </Info>
-                    <Info label="End Date" icon={<FaCalendarAlt />}>
+                    <Info icon={<FaCalendarAlt />} label="End Date">
                       {formatDate(eachData.EndDate)}
                     </Info>
-                    <Info label="Location" icon={<FaMapMarkerAlt />}>
-                      {eachData.Venue}, {eachData.City}, {eachData.State}
+                    <Info icon={<FaMapMarkerAlt />} label="Location">
+                      {eachData.Venue}, {eachData.City}
                     </Info>
-                    <Info label="Prize Pool" icon={<FaTrophy />}>
-                      <span className="text-amber-400">
-                        ₹ {eachData.PricePool}
-                      </span>
+                    <Info icon={<FaTrophy />} label="Prize Pool">
+                      <span className="text-amber-400">₹ {eachData.PricePool}</span>
                     </Info>
                   </div>
                 </Card>
 
                 <Card>
-                  <h2 className="text-xl font-semibold mb-3">
-                    About This Event
-                  </h2>
-                  <p className="text-gray-300">
-                    {eachData.EventDescription}
-                  </p>
+                  <h2 className="text-xl font-semibold mb-3">About This Event</h2>
+                  <p className="text-gray-300">{eachData.EventDescription}</p>
                 </Card>
 
                 <Card>
-                  <h2 className="text-xl font-semibold mb-3">
-                    Technologies
-                  </h2>
+                  <h2 className="text-xl font-semibold mb-3">Technologies</h2>
                   <div className="flex flex-wrap gap-2">
-                    {eachData.SpecifiedStacks &&
-                      eachData.SpecifiedStacks.split(",").map(
-                        (stack, index) => (
-                          <span
-                            key={index}
-                            className="bg-blue-600 text-white font-bold px-4 py-1 rounded-full text-sm"
-                          >
-                            {stack.trim()}
-                          </span>
-                        )
-                      )}
+                    {eachData.SpecifiedStacks?.split(",").map((s, i) => (
+                      <span
+                        key={i}
+                        className="bg-blue-600 px-4 py-1 rounded-full text-sm font-bold"
+                      >
+                        {s.trim()}
+                      </span>
+                    ))}
                   </div>
                 </Card>
               </div>
 
-              {/* RIGHT */}
-              <div className="flex flex-col gap-6">
+              <div className="space-y-6">
                 <Card>
-                  <h2 className="text-xl font-semibold mb-2">
-                    Registration
-                  </h2>
-
+                  <h2 className="text-xl font-semibold mb-2">Registration</h2>
                   <p className="flex items-center gap-2 text-gray-400 text-sm mb-4">
                     <FaClock />
                     {isRegistrationOpen
-                      ? `Deadline: ${DeadLineDate(eachData.StartDate)}`
+                      ? `Deadline: ${deadlineDate(eachData.StartDate)}`
                       : "Apply Denied"}
                   </p>
-
 
                   {isRegistrationOpen ? (
                     <button
                       onClick={handleApplyNow}
-                      className="
-                        w-full py-2.5 rounded-xl
-                        bg-gradient-to-r from-indigo-600 to-violet-600
-                        hover:opacity-90 transition cursor-pointer
-                      "
+                      disabled={isApplied}
+                      className={`w-full py-2.5 rounded-xl cursor-pointer transition ${
+                        isApplied
+                          ? "bg-green-600 cursor-not-allowed"
+                          : "bg-gradient-to-r from-indigo-600 to-violet-600 hover:opacity-90"
+                      }`}
                     >
-                      Apply Now
+                      {isApplied ? "Applied ✓" : "Apply Now"}
                     </button>
                   ) : (
                     <button
@@ -301,29 +305,13 @@ const EachEventDetails = () => {
                       Expired
                     </button>
                   )}
-
-                </Card>
-
-                <Card>
-                  <h2 className="text-xl font-semibold mb-3">
-                    Event Statistics
-                  </h2>
-                  <p className="text-sm text-gray-300">
-                    Duration:{" "}
-                    {Math.floor(
-                      (new Date(eachData.EndDate) -
-                        new Date(eachData.StartDate)) /
-                        (1000 * 60 * 60 * 24)
-                    )}{" "}
-                    Days
-                  </p>
                 </Card>
               </div>
             </div>
           </div>
         </div>
       ) : (
-        <div className="flex min-h-screen bg-gray-950 justify-center items-center">
+        <div className="min-h-screen flex items-center justify-center bg-gray-950">
           <ThreeDot color="#6366f1" size="medium" />
         </div>
       )}
@@ -331,7 +319,7 @@ const EachEventDetails = () => {
   );
 };
 
-/* UI-only helpers */
+/* UI HELPERS */
 const Card = ({ children }) => (
   <div className="bg-white/5 border border-white/10 rounded-2xl p-5 shadow-xl">
     {children}

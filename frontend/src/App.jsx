@@ -18,6 +18,7 @@ import ProjectsPage from "./components/ProjectPage";
 import { Toaster } from "react-hot-toast";
 import EachProject from "./components/EachProject";
 import AdminAcc from "./pages/AdminAccount/AdminAcc";
+import UserAppliedEvents from "./components/UserAppliedEvents";
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
             <Route path="/user/account" element={<ProtectedRoute><UserAccount /></ProtectedRoute>} />
             <Route path="/projects/:id" element={<ProtectedRoute><EachProject /></ProtectedRoute>} />
             <Route path="/adminaccount" element={<AdminAcc />} />
+            <Route path="/userappliedevents" element={<UserAppliedEvents />} />
             <Route path="/createproject" element={<CreateProjectAdmin />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

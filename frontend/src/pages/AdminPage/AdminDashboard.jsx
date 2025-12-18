@@ -35,6 +35,11 @@ const AdminDashboard = () => {
     navigate("/createproject",{replace:true})
   }
 
+
+  const handleuserappliedevents = () => {
+    navigate("/userappliedevents",{replace:true})
+  }
+
   // const handleAdminAccount = () => {
   //   navigate("/adminaccount",{replace:true})
   // }
@@ -45,15 +50,20 @@ const AdminDashboard = () => {
         <h1 onClick={handleHome} className="text-2xl cursor-pointer font-bold">
           Admin <span className="text-blue-500">Dashboard</span>
         </h1>
-        <div
-          onClick={handleLogout}
-          className="m-4 flex items-center justify-center gap-2 p-2 rounded-xl
-                      bg-rose-500/60 text-white cursor-pointer
-                      hover:bg-rose-500 transition"
-        >
-          <FaSignInAlt />
-          Logout
-        </div>
+        <div className="flex">
+          <h1 onClick={handleuserappliedevents} className="text-lg pt-5 pr-5 cursor-pointer font-bold">
+            User Applied Events
+          </h1>
+          <button
+            onClick={handleLogout}
+            className="m-4 flex items-center justify-center gap-2 p-2 rounded-xl
+                        bg-rose-500/60 text-white cursor-pointer
+                        hover:bg-rose-500 transition"
+          >
+            <FaSignInAlt />
+            Logout
+          </button>
+        </div>  
       </div>
 
       {!form.open && <AdminOverView />}

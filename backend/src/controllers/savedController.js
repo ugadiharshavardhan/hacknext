@@ -30,9 +30,25 @@ export const getSavedEvents = async (req, res) => {
       save: true,
     }).populate("eventid");
 
+    // Filter out saved events where the referenced event no longer exists
+    const validSavedEvents = savedEvents.filter(savedEvent => savedEvent.eventid !== null);
+
+    // Clean up orphaned saved events (optional - runs in background)
+    if (validSavedEvents.length !== savedEvents.length) {
+      const orphanedIds = savedEvents
+        .filter(savedEvent => savedEvent.eventid === null)
+        .map(savedEvent => savedEvent._id);
+
+      if (orphanedIds.length > 0) {
+        SavedModel.deleteMany({ _id: { $in: orphanedIds } }).catch(err =>
+          console.log("Cleanup of orphaned saved events failed:", err)
+        );
+      }
+    }
+
     res.status(200).json({
       success: true,
-      events: savedEvents,
+      events: validSavedEvents,
     });
   } catch (error) {
     console.error("Error fetching saved events:", error);

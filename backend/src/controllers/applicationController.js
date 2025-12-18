@@ -109,3 +109,52 @@ export const getUserApplications = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+export const getAdminAppliedEvents = async (req, res) => {
+  try {
+    const adminId = req.adminId;
+
+    if (!adminId) {
+      return res.status(400).json({ message: "Admin ID not found in request" });
+    }
+
+    // Find all events created by this admin
+    const adminEvents = await TechEventsModel.find({ createdBy: adminId });
+
+    if (adminEvents.length === 0) {
+      return res.status(200).json({
+        message: "No events found for this admin",
+        applications: []
+      });
+    }
+
+    // Get event IDs
+    const eventIds = adminEvents.map(event => event._id);
+
+    // Find all applications for these events
+    let applications = await AppliedEventModel.find({
+      event: { $in: eventIds }
+    })
+    .sort({ createdAt: -1 });
+
+    // Populate user and event data
+    try {
+      applications = await AppliedEventModel.populate(applications, [
+        { path: 'user', select: 'username email' },
+        { path: 'event', select: 'EventTitle EventType StartDate EndDate Venue' }
+      ]);
+    } catch (populateError) {
+      console.error("Populate error:", populateError);
+      // Continue with unpopulated data
+    }
+
+    res.status(200).json({
+      message: "Admin's event applications",
+      applications: applications,
+      totalApplications: applications.length
+    });
+  } catch (error) {
+    console.error("Error fetching admin applied events:", error);
+    res.status(500).json({ message: "Server Error", error: error.message });
+  }
+};

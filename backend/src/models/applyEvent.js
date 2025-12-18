@@ -29,8 +29,8 @@ const AppliedEventSchema = new mongoose.Schema({
 
   ideaDescription: { type: String, required: true },
 
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-  admin: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, // admin who created the event
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true },
+  admin: { type: mongoose.Schema.Types.ObjectId, ref: "admindetails", required: true }, // admin who created the event
   event: { type: mongoose.Schema.Types.ObjectId, ref: "TechEvents", required: true }
 }, { timestamps: true });
 
