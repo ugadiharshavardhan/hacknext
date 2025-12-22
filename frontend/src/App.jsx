@@ -9,6 +9,7 @@ import Home from "./pages/Home/Home";
 import { CounterProvider } from "./contextApi/TotalCountsContext";
 import { FormProvider } from "./contextApi/FormContext";
 import NotFound from "./pages/ErrorPage/NotFound";
+// import FuzzyText from "./pages/ErrorPage/NotFound";
 import DisplayAllEvents from "./pages/UserTotalEvents/DisplayAllEvents";
 import ProtectedRoute from "./components/ProtectedRoute";
 import EachEventDetails from "./components/EachEventDetails";
@@ -19,6 +20,7 @@ import { Toaster } from "react-hot-toast";
 import EachProject from "./components/EachProject";
 import AdminAcc from "./pages/AdminAccount/AdminAcc";
 import UserAppliedEvents from "./components/UserAppliedEvents";
+
 
 
 function App() {
@@ -43,8 +45,8 @@ function App() {
             <Route path="/adminaccount" element={<AdminAcc />} />
             <Route path="/userappliedevents" element={<UserAppliedEvents />} />
             <Route path="/createproject" element={<CreateProjectAdmin />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+            <Route path="*" element={ <NotFound />} />
+           </Routes>
         </BrowserRouter>
       </FormProvider>
     </CounterProvider>
@@ -52,3 +54,5 @@ function App() {
 }
 
 export default App;
+
+  
