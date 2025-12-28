@@ -36,8 +36,8 @@ export const loginAdmin = async (req, res) => {
 
 export const getAdminProfile = async (req, res) => {
   try {
-    const adminId = req.adminId; // From verifyAdmin middleware
-    const admin = await AdminModel.findById(adminId).select('-code'); // Exclude password/code
+    const adminId = req.adminId;
+    const admin = await AdminModel.findById(adminId).select('-code');
     if (!admin) {
       return res.status(404).json({ message: "Admin not found" });
     }

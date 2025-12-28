@@ -118,14 +118,14 @@ const Home = () => {
           <button
             onClick={handleUserEvents}
             className="px-5 sm:px-7 py-3 transition-all duration-200 ease-out
-            hover:scale-115 cursor-pointer bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-semibold"
+            hover:scale-105 cursor-pointer bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-semibold"
           >
             Explore Events →
           </button>
 
           <button
             onClick={handleAdminEvents}
-            className="px-5 sm:px-7 py-3 cursor-pointer bg-black/40 border border-white/10 rounded-lg"
+            className="px-6 sm:px-7 py-3 cursor-pointer transition-all duration-200 ease-out hover:scale-105 bg-black/40 border border-white/10 rounded-lg"
           >
             Admin Community
           </button>
@@ -191,7 +191,7 @@ const Home = () => {
 
         <button
           onClick={handleUserEvent}
-          className="px-10 py-4 cursor-pointer bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl text-lg font-semibold"
+          className="px-10 py-4 transition-all duration-200 ease-out hover:scale-105 cursor-pointer bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl text-lg font-semibold"
         >
           Get Started for Free →
         </button>

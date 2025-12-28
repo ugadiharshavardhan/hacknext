@@ -12,7 +12,12 @@ const userSchemaFormat = {
     password:{
         type:String,
         required:true
+    },
+    profileImage: {
+    type: String,
+    default: ""
     }
+
 }
 
 const userSchema = new Schema(userSchemaFormat)

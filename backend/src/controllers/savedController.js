@@ -30,10 +30,8 @@ export const getSavedEvents = async (req, res) => {
       save: true,
     }).populate("eventid");
 
-    // Filter out saved events where the referenced event no longer exists
     const validSavedEvents = savedEvents.filter(savedEvent => savedEvent.eventid !== null);
 
-    // Clean up orphaned saved events (optional - runs in background)
     if (validSavedEvents.length !== savedEvents.length) {
       const orphanedIds = savedEvents
         .filter(savedEvent => savedEvent.eventid === null)

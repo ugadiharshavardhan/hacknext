@@ -145,7 +145,6 @@ export const getAdminAppliedEvents = async (req, res) => {
       ]);
     } catch (populateError) {
       console.error("Populate error:", populateError);
-      // Continue with unpopulated data
     }
 
     res.status(200).json({
