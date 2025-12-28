@@ -44,12 +44,11 @@ function SavedEvents() {
   return (
     <div className="pt-10 w-full min-h-screen ">
       {loading ? (
-        /* LOADER */
+        
         <div className="flex min-h-screen justify-center items-center">
           <ThreeDot color="#6366f1" size="medium" />
         </div>
       ) : Data.length === 0 ? (
-        /* EMPTY STATE */
         <div className="flex min-h-screen flex-col justify-center items-center text-center">
           <h1 className="text-white font-bold text-4xl mb-4">
             No Saved Events
@@ -66,7 +65,7 @@ function SavedEvents() {
       ) : (
         /* EVENTS LIST */
         <div className="min-h-screen text-white px-6 animate-fadeIn">
-          {/* HEADER */}
+          
           <div className="text-center mb-12 pt-6 animate-slideUp">
             <h1 className="text-4xl font-bold">
               <span className="text-indigo-400">Saved</span> Events
@@ -76,7 +75,7 @@ function SavedEvents() {
             </p>
           </div>
 
-          {/* CARDS */}
+          
           <div className="flex flex-wrap justify-center gap-8">
             {Data.map((each) => (
               <div
