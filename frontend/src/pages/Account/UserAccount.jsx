@@ -14,7 +14,7 @@ import { ThreeDot } from "react-loading-indicators";
 import SavedEvents from "../../components/SavedEvents";
 import Eventsbyuser from "../ApplyedEventsbyuser/Eventsbyuser";
 import { useNavigate } from "react-router";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 function UserAccount() {
   const navigate = useNavigate();
