@@ -123,3 +123,40 @@ export const uploadProfileImage = async (req, res) => {
   }
 };
 
+// REMOVE PROFILE IMAGE
+export const removeProfileImage = async (req, res) => {
+  try {
+    const userId = req.user._id;
+
+    const user = await userModel.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (user.profileImage) {
+      const publicId = user.profileImage
+        .split("/")
+        .pop()
+        .split(".")[0];
+
+      try {
+        await cloudinary.uploader.destroy(`hackathon-profiles/${publicId}`);
+      } catch (err) {
+        console.warn("Cloudinary delete skipped:", err.message);
+      }
+    }
+
+    // Remove from DB
+    user.profileImage = "";
+    await user.save();
+
+    return res.status(200).json({
+      message: "Profile image removed successfully",
+    });
+  } catch (error) {
+    console.error("Remove image error:", error);
+    return res.status(500).json({
+      message: "Server error while removing profile image",
+    });
+  }
+};

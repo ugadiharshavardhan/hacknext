@@ -2,7 +2,7 @@ import express from "express";
 import multer from "multer";
 import path from "path";
 import fs from "fs/promises";
-import { signup, signin, getUserAccount, uploadProfileImage } from "../controllers/userController.js";
+import { signup, signin, getUserAccount, uploadProfileImage, removeProfileImage } from "../controllers/userController.js";
 import { verifyUserToken } from "../middlewares/userAuth.js";
 
 const router = express.Router();
@@ -42,5 +42,12 @@ router.post(
   upload.single("profileImage"),
   uploadProfileImage
 );
+
+router.delete(
+  "/user/remove-profile",
+  verifyUserToken,
+  removeProfileImage
+);
+
 
 export default router;

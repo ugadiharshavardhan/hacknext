@@ -32,7 +32,7 @@ function UserAccount() {
   useEffect(() => {
     const fetchAccount = async () => {
       const response = await fetch(
-        "https://project-hackathon-7utw.onrender.com/user/account",
+        "http://localhost:5678/user/account",
         {
           headers: {
             Authorization: `Bearer ${Cookies.get("jwt_token")}`,
@@ -80,7 +80,6 @@ function UserAccount() {
     const localPreview = URL.createObjectURL(file);
     setTempImage(localPreview);
     setShowOptions(false);
-    toast.success("Image updated");
 
     const formData = new FormData();
     formData.append("profileImage", file);
@@ -89,7 +88,7 @@ function UserAccount() {
       setUploading(true);
 
       const response = await fetch(
-        "https://project-hackathon-7utw.onrender.com/user/upload-profile",
+        "http://localhost:5678/user/upload-profile",
         {
           method: "POST",
           headers: {
@@ -101,17 +100,17 @@ function UserAccount() {
 
       const data = await response.json();
       if (!response.ok) throw new Error(data.message);
+      toast.success("Image updated");
 
-      //  REPLACE TEMP IMAGE WITH SERVER IMAGE
       setUserData((prev) => ({
         ...prev,
         profileImage: data.profileImage,
       }));
-      toast.success("Image Updated")
+      // toast.success("Image Updated")
 
       setTempImage(null);
     } catch (err) {
-      toast.error("Upload failed");
+      toast.error("Upload failed",err);
       setTempImage(null);
     } finally {
       setUploading(false);
@@ -119,16 +118,40 @@ function UserAccount() {
     }
   };
 
-  //  REMOVE IMAGE
-  const handleRemoveImage = () => {
-    setTempImage(null);
-    setUserData((prev) => ({
-      ...prev,
-      profileImage: "",
-    }));
-    setShowOptions(false);
-    toast.success("Profile picture removed");
+  const handleRemoveImage = async () => {
+    try {
+      setUploading(true);
+
+      const response = await fetch(
+        "https://project-hackathon-7utw.onrender.com/user/remove-profile",
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${Cookies.get("jwt_token")}`,
+          },
+        }
+      );
+
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message);
+
+      // Update UI after DB update
+      setTempImage(null);
+      setUserData((prev) => ({
+        ...prev,
+        profileImage: "",
+      }));
+
+      setShowOptions(false);
+      toast.success("Profile picture removed");
+    } catch (error) {
+      toast.error("Failed to remove image");
+    } finally {
+      setUploading(false);
+    }
   };
+
+
 
   return (
     <div className="flex min-h-screen bg-gray-950 overflow-hidden">
@@ -179,17 +202,22 @@ function UserAccount() {
                     onClick={handleImageClick}
                   >
                     <div className="w-full h-full rounded-full overflow-hidden">
-                      {(tempImage || userData?.profileImage) ? (
-                        <img
-                          src={tempImage || userData.profileImage}
-                          alt="Profile"
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <div className="w-full h-full bg-gradient-to-r from-indigo-500 to-violet-600 flex items-center justify-center text-3xl font-bold text-white">
-                          {userData?.username?.[0]?.toUpperCase()}
-                        </div>
-                      )}
+                      {uploading ? (
+  <div className="w-full h-full flex items-center justify-center bg-black/30">
+    <ThreeDot color="#ffffff" size="small" />
+  </div>
+) : (tempImage || userData?.profileImage) ? (
+  <img
+    src={tempImage || userData.profileImage}
+    alt="Profile"
+    className="w-full h-full object-cover"
+  />
+) : (
+  <div className="w-full h-full bg-gradient-to-r from-indigo-500 to-violet-600 flex items-center justify-center text-3xl font-bold text-white">
+    {userData?.username?.[0]?.toUpperCase()}
+  </div>
+)}
+
                     </div>
                   </div>
 
