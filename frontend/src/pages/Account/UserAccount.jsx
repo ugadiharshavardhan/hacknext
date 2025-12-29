@@ -32,7 +32,7 @@ function UserAccount() {
   useEffect(() => {
     const fetchAccount = async () => {
       const response = await fetch(
-        "http://localhost:5678/user/account",
+        "https://project-hackathon-7utw.onrender.com/user/account",
         {
           headers: {
             Authorization: `Bearer ${Cookies.get("jwt_token")}`,
@@ -88,7 +88,7 @@ function UserAccount() {
       setUploading(true);
 
       const response = await fetch(
-        "http://localhost:5678/user/upload-profile",
+        "https://project-hackathon-7utw.onrender.com/user/upload-profile",
         {
           method: "POST",
           headers: {
