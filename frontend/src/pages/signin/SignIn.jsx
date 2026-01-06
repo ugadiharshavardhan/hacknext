@@ -94,7 +94,7 @@ const SignIn = () => {
           )}
 
           <img
-            src="https://res.cloudinary.com/dcttatiuj/image/upload/v1764923422/ChatGPT_Image_Dec_5_2025_02_00_01_PM_janplh.png"
+            src="https://res.cloudinary.com/dcttatiuj/image/upload/v1767674999/hackathon-profiles/mrq7flwvk2od083wla4b.png"
             alt="Login Visual"
             onLoad={() => setImageLoading(false)}
             onError={() => setImageLoading(false)}

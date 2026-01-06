@@ -40,6 +40,7 @@ function UserAccount() {
         }
       );
       const data = await response.json();
+      console.log(data);
       setUserData(data.userDetails);
       setLoading(false);
     };
@@ -202,7 +203,6 @@ function UserAccount() {
                   <div
                     className="relative group w-24 h-24 mx-auto mb-4 cursor-pointer"
                     onClick={handleImageClick}
-                    onTouchStart={handleImageClick}
                   >
                     <div className="w-full h-full rounded-full overflow-hidden">
                       {uploading ? (
@@ -211,7 +211,7 @@ function UserAccount() {
                         </div>
                       ) : (tempImage || userData?.profileImage) ? (
                         <img
-                          src={tempImage || userData.profileImage.replace("http://", "https://")}
+                          src={tempImage || userData.profileImage}
                           alt="Profile"
                           className="w-full h-full object-cover"
                         />
@@ -253,44 +253,47 @@ function UserAccount() {
       {/* OPTIONS OVERLAY */}
       {showOptions && (
         <div
-          className="fixed inset-0 z-50 bg-black/40"
+          className="fixed inset-0 z-[60] bg-black/40 backdrop-blur-sm"
           onClick={() => setShowOptions(false)}
         >
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/90 backdrop-blur-sm rounded-xl p-4 space-y-2 min-w-[200px] shadow-2xl border border-white/10">
+          <div 
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/95 backdrop-blur-sm rounded-xl p-3 space-y-2 min-w-[220px] shadow-2xl border border-white/20"
+            onClick={(e) => e.stopPropagation()}
+          >
 
             {userData.profileImage && (
               <button
-                className="flex w-full cursor-pointer items-center gap-3 text-white py-3 px-4 hover:bg-white/10 rounded-lg transition-all"
+                className="flex w-full items-center gap-3 text-white py-3 px-4 hover:bg-white/10 active:bg-white/20 rounded-lg transition-all touch-manipulation"
                 onClick={(e) => {
                   e.stopPropagation();
                   setShowPreview(true);
                   setShowOptions(false);
                 }}
               >
-                <FaEye className="text-lg" /> <span className="font-medium">View Image</span>
+                <FaEye className="text-lg" /> <span className="font-medium text-base">View Image</span>
               </button>
             )}
 
             <button
-              className="flex w-full cursor-pointer items-center gap-3 text-white py-3 px-4 hover:bg-white/10 rounded-lg transition-all"
+              className="flex w-full items-center gap-3 text-white py-3 px-4 hover:bg-white/10 active:bg-white/20 rounded-lg transition-all touch-manipulation"
               onClick={(e) => {
                 e.stopPropagation();
                 fileInputRef.current.click();
                 setShowOptions(false);
               }}
             >
-              <FaUpload className="text-lg" /> <span className="font-medium">Change Image</span>
+              <FaUpload className="text-lg" /> <span className="font-medium text-base">Change Image</span>
             </button>
 
             {userData.profileImage && (
               <button
-                className="flex w-full cursor-pointer items-center gap-3 text-red-400 py-3 px-4 hover:bg-white/10 rounded-lg transition-all"
+                className="flex w-full items-center gap-3 text-red-400 py-3 px-4 hover:bg-white/10 active:bg-white/20 rounded-lg transition-all touch-manipulation"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleRemoveImage();
                 }}
               >
-                <FaTrash className="text-lg" /> <span className="font-medium">Remove Image</span>
+                <FaTrash className="text-lg" /> <span className="font-medium text-base">Remove Image</span>
               </button>
             )}
           </div>
@@ -299,15 +302,19 @@ function UserAccount() {
 
       {/* IMAGE PREVIEW */}
       {showPreview && (
-        <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center">
+        <div 
+          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center"
+          onClick={() => setShowPreview(false)}
+        >
           <img
             src={userData.profileImage}
             alt="Preview"
-            className="max-w-[90%] max-h-[90%]"
+            className="max-w-[90%] max-h-[90%] object-contain"
+            onClick={(e) => e.stopPropagation()}
           />
           <button
             onClick={() => setShowPreview(false)}
-            className="absolute top-6 right-6 text-white"
+            className="absolute top-6 right-6 text-white text-2xl p-2 hover:bg-white/10 rounded-full transition"
           >
             <FaTimes />
           </button>

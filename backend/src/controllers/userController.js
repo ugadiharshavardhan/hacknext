@@ -60,7 +60,7 @@ export const signin = async (req, res) => {
 //     if (!user) {
 //       return res.status(404).json({ message: 'User not found' });
 //     }
-    
+
 //     res.status(200).json({
 //       userDetails: user,
 //     });
@@ -72,7 +72,7 @@ export const signin = async (req, res) => {
 
 export const getUserAccount = async (req, res) => {
   try {
-    res.set("Cache-Control", "no-store"); 
+    res.set("Cache-Control", "no-store");
 
     const user = await userModel
       .findById(req.user._id)
@@ -100,6 +100,29 @@ export const uploadProfileImage = async (req, res) => {
 
     if (!req.user?._id) {
       return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+
+    // Check for existing profile image and delete it
+    try {
+      const existingUser = await userModel.findById(req.user._id);
+      if (existingUser?.profileImage) {
+        // Extract public_id using regex to handle versions and folders correctly
+        // Matches: .../upload/(optional version)/ (captured public_id) .extension
+        const publicIdMatch = existingUser.profileImage.match(/\/upload\/(?:v\d+\/)?(.+)\.[^.]+$/);
+
+        if (publicIdMatch && publicIdMatch[1]) {
+          const publicId = publicIdMatch[1];
+          console.log(`Attempting to delete old image. URL: ${existingUser.profileImage}, Extracted Public ID: ${publicId}`);
+
+          const result = await cloudinary.uploader.destroy(publicId);
+          console.log(`Cloudinary destroy result: ${JSON.stringify(result)}`);
+        } else {
+          console.warn(`Could not extract public_id from URL: ${existingUser.profileImage}`);
+        }
+      }
+    } catch (err) {
+      console.warn("Old profile image deletion skipped:", err.message);
+      // Continue with upload even if deletion fails
     }
 
     const result = await cloudinary.uploader.upload(req.file.path, {
