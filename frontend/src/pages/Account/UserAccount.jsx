@@ -93,6 +93,7 @@ function UserAccount() {
 
       const response = await fetch(
         "https://project-hackathon-7utw.onrender.com/user/upload-profile",
+        // "http://localhost:5678/user/upload-profile",
         {
           method: "POST",
           headers: {
@@ -128,6 +129,7 @@ function UserAccount() {
 
       const response = await fetch(
         "https://project-hackathon-7utw.onrender.com/user/remove-profile",
+        // "http://localhost:5678/user/remove-profile",
         {
           method: "DELETE",
           headers: {

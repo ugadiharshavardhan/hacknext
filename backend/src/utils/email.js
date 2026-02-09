@@ -1,5 +1,4 @@
 import 'dotenv/config'; // Ensure env vars are loaded
-import axios from 'axios';
 
 /**
  * Sends an email using Brevo (Sendinblue) Transactional Email API.
@@ -44,38 +43,31 @@ export const sendEmail = async ({ to, subject, htmlContent }) => {
     console.log("Sending payload to Brevo:", JSON.stringify({ ...data, htmlContent: "..." })); // Log structure but hide content
 
     try {
-        const response = await axios.post(url, data, {
+        const response = await fetch(url, {
+            method: "POST",
             headers: {
                 "accept": "application/json",
                 "api-key": apiKey,
                 "content-type": "application/json"
-            }
+            },
+            body: JSON.stringify(data)
         });
 
         console.log(`Brevo API Response Status: ${response.status}`);
-        console.log("Brevo API Response Body:", JSON.stringify(response.data, null, 2));
 
-        if (response.status === 200 || response.status === 201) {
-            console.log("Email sent successfully (according to Brevo API).");
-            return true;
+        const responseData = await response.json();
+        console.log("Brevo API Response Body:", JSON.stringify(responseData, null, 2));
+
+        if (!response.ok) {
+            console.error("Error sending email via Brevo.");
+            return false;
         }
 
-        console.error("Unexpected status code from Brevo:", response.status);
-        return false;
+        console.log("Email sent successfully (according to Brevo API).");
+        return true;
 
     } catch (error) {
-        if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            console.error("Brevo API Error Response:", JSON.stringify(error.response.data, null, 2));
-            console.error("Status Code:", error.response.status);
-        } else if (error.request) {
-            // The request was made but no response was received
-            console.error("No response received from Brevo:", error.request);
-        } else {
-            // Something happened in setting up the request that triggered an Error
-            console.error("Error setting up email request:", error.message);
-        }
+        console.error("Network/Unexpected error sending email:", error);
         return false;
     }
 };

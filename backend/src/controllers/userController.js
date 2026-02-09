@@ -245,11 +245,16 @@ export const forgotPassword = async (req, res) => {
     user.otpExpires = otpExpires;
     await user.save();
 
-    console.log(`Sending OTP ${otp} to ${email}`);
+    console.log(`Sending OTP to ${email}`);
+
+    // Check for API Key
+    if (!process.env.BREVO_API_KEY) {
+      console.error("CRITICAL: BREVO_API_KEY is missing in environment variables!");
+      return res.status(500).json({ message: "Server configuration error: Email service not configured." });
+    }
 
     // Send OTP Email
     const htmlContent = getOtpEmailTemplate(user.username, otp);
-
     const emailSent = await sendEmail({
       to: email,
       subject: "Password Reset OTP - HackNext",
@@ -257,14 +262,16 @@ export const forgotPassword = async (req, res) => {
     });
 
     if (emailSent) {
+      console.log(`OTP email sent successfully to ${email}`);
       return res.status(200).json({ message: "OTP sent to your email" });
     } else {
-      return res.status(500).json({ message: "Failed to send OTP email" });
+      console.error(`Failed to send OTP email to ${email}. Check server logs.`);
+      return res.status(500).json({ message: "Failed to send OTP email. Please try again later." });
     }
 
   } catch (error) {
     console.error("Forgot password error:", error);
-    return res.status(500).json({ message: "Server error" });
+    return res.status(500).json({ message: "Server error during password reset request" });
   }
 };
 
@@ -277,13 +284,18 @@ export const verifyOtp = async (req, res) => {
   }
 
   try {
+    // Find user with matching email and OTP, and check expiration
     const user = await userModel.findOne({
       email,
       otp,
-      otpExpires: { $gt: Date.now() }
+      otpExpires: { $gt: new Date() } // Ensure current time is less than expiration
     });
 
     if (!user) {
+      // Check if user exists at least, to give better error
+      const userExists = await userModel.findOne({ email });
+      if (!userExists) return res.status(404).json({ message: "User not found" });
+
       return res.status(400).json({ message: "Invalid or expired OTP" });
     }
 
@@ -291,7 +303,7 @@ export const verifyOtp = async (req, res) => {
 
   } catch (error) {
     console.error("Verify OTP error:", error);
-    return res.status(500).json({ message: "Server error" });
+    return res.status(500).json({ message: "Server error verification failed" });
   }
 };
 
@@ -307,11 +319,11 @@ export const resetPassword = async (req, res) => {
     const user = await userModel.findOne({
       email,
       otp,
-      otpExpires: { $gt: Date.now() }
+      otpExpires: { $gt: new Date() }
     });
 
     if (!user) {
-      return res.status(400).json({ message: "Invalid or expired OTP" });
+      return res.status(400).json({ message: "Invalid or expired OTP. Please request a new one." });
     }
 
     if (newPassword.length < 6) {
@@ -320,14 +332,18 @@ export const resetPassword = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     user.password = hashedPassword;
+
+    // Clear OTP details
     user.otp = null;
     user.otpExpires = null;
+
     await user.save();
 
+    console.log(`Password reset successfully for user: ${email}`);
     return res.status(200).json({ message: "Password reset successfully" });
 
   } catch (error) {
     console.error("Reset password error:", error);
-    return res.status(500).json({ message: "Server error" });
+    return res.status(500).json({ message: "Server error during password reset" });
   }
 };

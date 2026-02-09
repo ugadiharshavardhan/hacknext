@@ -87,7 +87,7 @@ const EachEventDetails = () => {
     const fetchApplicationStatus = async () => {
       try {
         const response = await fetch(
-          `https://project-hackathon-7utw.onrender.com/user/applications/check/${eventid}`,
+          `http://localhost:5678/user/applications/check/${eventid}`,
           {
             headers: {
               Authorization: `Bearer ${jwtToken}`,

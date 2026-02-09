@@ -23,7 +23,7 @@ export default function ForgotPassword() {
 
         setLoading(true);
         try {
-            const response = await fetch("https://project-hackathon-7utw.onrender.com/forgot-password", {
+            const response = await fetch("http://localhost:5678/forgot-password", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email }),
@@ -39,7 +39,7 @@ export default function ForgotPassword() {
             }
         } catch (error) {
             console.error(error);
-            toast.error("Something went wrong");
+            toast.error("Network error. Please try again.");
         } finally {
             setLoading(false);
         }
@@ -51,7 +51,7 @@ export default function ForgotPassword() {
 
         setLoading(true);
         try {
-            const response = await fetch("https://project-hackathon-7utw.onrender.com/verify-otp", {
+            const response = await fetch("http://localhost:5678/verify-otp", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, otp }),
@@ -67,7 +67,7 @@ export default function ForgotPassword() {
             }
         } catch (error) {
             console.error(error);
-            toast.error("Something went wrong");
+            toast.error("Network error. Please try again.");
         } finally {
             setLoading(false);
         }
@@ -86,7 +86,7 @@ export default function ForgotPassword() {
 
         setLoading(true);
         try {
-            const response = await fetch("https://project-hackathon-7utw.onrender.com/reset-password", {
+            const response = await fetch("http://localhost:5678/reset-password", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, otp, newPassword }),
@@ -96,13 +96,18 @@ export default function ForgotPassword() {
 
             if (response.ok) {
                 toast.success(data.message); // "Password reset successfully"
+                setStep(1); // Reset step (optional, or navigate)
+                setEmail("");
+                setOtp("");
+                setNewPassword("");
+                setConfirmPassword("");
                 navigate("/signin", { replace: true });
             } else {
                 toast.error(data.message || "Failed to reset password");
             }
         } catch (error) {
             console.error(error);
-            toast.error("Something went wrong");
+            toast.error("Network error. Please try again.");
         } finally {
             setLoading(false);
         }

@@ -61,7 +61,7 @@ export default function SignUp() {
 
     try {
       const response = await fetch(
-        "https://project-hackathon-7utw.onrender.com/signup",
+        "http://localhost:5678/signup",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

@@ -70,7 +70,7 @@ function AppliedEvent() {
         setIsSubmitting(true);
 
         try {
-            const url = `https://project-hackathon-7utw.onrender.com/event/apply/${eventid}`;
+            const url = `http://localhost:5678/event/apply/${eventid}`;
             const options = {
                 method: "POST",
                 credentials: "include",
