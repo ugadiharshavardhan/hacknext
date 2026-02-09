@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { ThreeDot } from "react-loading-indicators";
 import { FaCalendarAlt, FaMapMarkerAlt, FaUser } from "react-icons/fa";
 import AdminNavbar from "./AdminNavbar";
+import { BACKEND_URL } from "../config";
 
 function UserAppliedEvents() {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ function UserAppliedEvents() {
         }
 
         const response = await fetch(
-          "https://project-hackathon-7utw.onrender.com/admin/applied-events",
+          `${BACKEND_URL}/admin/applied-events`,
           {
             headers: {
               Authorization: `Bearer ${adminToken}`,
@@ -120,11 +121,10 @@ function UserAppliedEvents() {
             <button
               key={type}
               onClick={() => setActiveType(type)}
-              className={`px-4 py-2 rounded-lg cursor-pointer ${
-                activeType === type
+              className={`px-4 py-2 rounded-lg cursor-pointer ${activeType === type
                   ? "bg-indigo-600"
                   : "bg-white/10"
-              }`}
+                }`}
             >
               {type}
             </button>

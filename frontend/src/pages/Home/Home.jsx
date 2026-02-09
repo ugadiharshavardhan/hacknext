@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { ThreeDot } from "react-loading-indicators";
 import { FaUserGraduate, FaCalendarAlt, FaTrophy, FaUsers } from "react-icons/fa";
 import Footer from "../../components/Footer";
+import { BACKEND_URL } from "../../config";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const Home = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const url = "https://project-hackathon-7utw.onrender.com/publicdata";
+      const url = `${BACKEND_URL}/publicdata`;
       const response = await fetch(url);
       const data = await response.json();
       setAllEvents(data.event);

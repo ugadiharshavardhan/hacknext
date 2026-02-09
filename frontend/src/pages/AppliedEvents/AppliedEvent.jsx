@@ -4,6 +4,7 @@ import Cookies from "js-cookie"
 import { useParams, useNavigate } from "react-router";
 import { toast } from "react-hot-toast";
 import { FaCalendarPlus, FaCheckCircle, FaArrowRight, FaHome } from "react-icons/fa";
+import { BACKEND_URL } from "../../config";
 
 function AppliedEvent() {
     const { eventid } = useParams();
@@ -70,7 +71,7 @@ function AppliedEvent() {
         setIsSubmitting(true);
 
         try {
-            const url = `http://localhost:5678/event/apply/${eventid}`;
+            const url = `${BACKEND_URL}/event/apply/${eventid}`;
             const options = {
                 method: "POST",
                 credentials: "include",
@@ -122,7 +123,7 @@ function AppliedEvent() {
 
     useEffect(() => {
         const fetchEvent = async () => {
-            const url = `https://project-hackathon-7utw.onrender.com/user/allevents/${eventid}`
+            const url = `${BACKEND_URL}/user/allevents/${eventid}`
             const options = {
                 method: "GET",
                 headers: {

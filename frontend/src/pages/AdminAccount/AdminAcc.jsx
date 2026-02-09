@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { ThreeDot } from "react-loading-indicators";
 import { FaUser, FaEnvelope, FaCalendarAlt, FaShieldAlt } from "react-icons/fa";
 import AdminNavbar from "../../components/AdminNavbar";
+import { BACKEND_URL } from "../../config";
 
 function AdminAcc() {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ function AdminAcc() {
         }
 
         const response = await fetch(
-          "https://project-hackathon-7utw.onrender.com/admin/profile",
+          `${BACKEND_URL}/admin/profile`,
           {
             headers: {
               Authorization: `Bearer ${adminToken}`,
@@ -75,7 +76,7 @@ function AdminAcc() {
       <AdminNavbar />
       <div className="pt-16 md:pt-20 p-4 md:p-8">
         <div className="max-w-4xl mx-4 md:mx-auto">
-          
+
           <div className="text-center mb-8 md:mb-12">
             <h1 className="text-2xl md:text-4xl font-bold mb-4">
               <span className="text-indigo-400">Admin</span> Profile
@@ -85,9 +86,9 @@ function AdminAcc() {
             </p>
           </div>
 
-          
+
           <div className="bg-white/5 border border-white/10 rounded-2xl p-4 md:p-8 hover:bg-white/10 transition-all duration-300">
-            
+
             <div className="flex items-center gap-4 md:gap-6 mb-6 md:mb-8">
               <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-r from-indigo-500 to-violet-600 rounded-full flex items-center justify-center">
                 <FaShieldAlt className="text-white text-2xl md:text-3xl" />
@@ -98,9 +99,9 @@ function AdminAcc() {
               </div>
             </div>
 
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              
+
               <div className="bg-gray-900/50 p-4 md:p-6 rounded-xl border border-gray-700/50">
                 <div className="flex items-center gap-3 mb-3">
                   <FaEnvelope className="text-indigo-400 text-lg md:text-xl" />
@@ -109,7 +110,7 @@ function AdminAcc() {
                 <p className="text-gray-300 text-base md:text-lg">{adminData?.email || "N/A"}</p>
               </div>
 
-              
+
               <div className="bg-gray-900/50 p-4 md:p-6 rounded-xl border border-gray-700/50">
                 <div className="flex items-center gap-3 mb-3">
                   <FaUser className="text-indigo-400 text-lg md:text-xl" />
@@ -118,7 +119,7 @@ function AdminAcc() {
                 <p className="text-gray-300 text-base md:text-lg">Administrator</p>
               </div>
 
-              
+
               <div className="bg-gray-900/50 p-4 md:p-6 rounded-xl border border-gray-700/50">
                 <div className="flex items-center gap-3 mb-3">
                   <FaCalendarAlt className="text-indigo-400 text-lg md:text-xl" />
@@ -133,7 +134,7 @@ function AdminAcc() {
                 </p>
               </div>
 
-              
+
               <div className="bg-gray-900/50 p-4 md:p-6 rounded-xl border border-gray-700/50">
                 <div className="flex items-center gap-3 mb-3">
                   <FaShieldAlt className="text-indigo-400 text-lg md:text-xl" />
@@ -143,7 +144,7 @@ function AdminAcc() {
               </div>
             </div>
 
-          
+
             <div className="mt-6 md:mt-8 p-4 md:p-6 bg-indigo-900/20 rounded-xl border border-indigo-500/20">
               <h3 className="text-lg md:text-xl font-bold text-indigo-400 mb-4">Account Information</h3>
               <div className="space-y-2 md:space-y-3 text-gray-300">

@@ -230,6 +230,7 @@ export const removeProfileImage = async (req, res) => {
 
 // FORGOT PASSWORD
 export const forgotPassword = async (req, res) => {
+  console.log("--- forgotPassword controller hit ---");
   const { email } = req.body;
   if (!email) return res.status(400).json({ message: "Email is required" });
 

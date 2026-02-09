@@ -5,21 +5,22 @@ import { useState } from 'react'
 import { FaCode } from "react-icons/fa";
 import { FaAngleLeft } from "react-icons/fa";
 import toast from 'react-hot-toast';
+import { BACKEND_URL } from "../../config";
 
 function AdminLogin() {
   const navigate = useNavigate()
-  const [email,setEmail] = useState("")
-  const [code,setCode] = useState("")
-  const [isErr,setIsErr] = useState(false)
-  const [showErrorMsg,setShowErrMsg] = useState("")
+  const [email, setEmail] = useState("")
+  const [code, setCode] = useState("")
+  const [isErr, setIsErr] = useState(false)
+  const [showErrorMsg, setShowErrMsg] = useState("")
 
-  const onSuccessData = (adminToken) =>{ 
-    Cookies.set("admin_token",adminToken,{expires:7})
+  const onSuccessData = (adminToken) => {
+    Cookies.set("admin_token", adminToken, { expires: 7 })
     setIsErr(false)
-    navigate("/admin/dashboard",{replace:true})
+    navigate("/admin/dashboard", { replace: true })
     toast.success("Login Successfully", { duration: 2000 })
   }
-  
+
   const AdminToken = Cookies.get("admin_token")
   if (AdminToken !== undefined) {
     return <Navigate to="/admin/dashboard" replace />
@@ -31,19 +32,19 @@ function AdminLogin() {
     toast.error("Invalid Credentials", { duration: 2000 })
   }
 
-  const handleSubmitForm = async(event) =>{
+  const handleSubmitForm = async (event) => {
     event.preventDefault()
 
-    const url = "https://project-hackathon-7utw.onrender.com/admin/login"
+    const url = `${BACKEND_URL}/admin/login`
     const AdminDetails = { email, code }
 
     const options = {
-      method:"POST",
-      headers:{ 'Content-Type':'application/json' },
-      body:JSON.stringify(AdminDetails)
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(AdminDetails)
     }
 
-    const response = await fetch(url,options)
+    const response = await fetch(url, options)
     if (response.ok === true) {
       const data = await response.json()
       onSuccessData(data.adminToken)
@@ -52,12 +53,12 @@ function AdminLogin() {
     }
   }
 
-  const handleHome = () => navigate("/",{replace:true})
+  const handleHome = () => navigate("/", { replace: true })
 
   return (
     <div className="min-h-screen  w-full bg-gradient-to-br from-[#020617] via-[#020617] to-[#0f172a] flex items-center justify-center px-4">
 
-      <header  onClick={handleHome} className="absolute top-6 left-6 flex items-center gap-2">
+      <header onClick={handleHome} className="absolute top-6 left-6 flex items-center gap-2">
         <FaCode size={34} className="text-blue-500" />
         <h1 className="text-3xl font-bold text-white tracking-wide">HackNext</h1>
       </header>
@@ -87,7 +88,7 @@ function AdminLogin() {
                 placeholder="Enter email"
                 name='email'
                 value={email}
-                onChange={(e)=>setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full mt-1 p-2 rounded bg-[#0f172a] text-white border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-600"
               />
             </div>
@@ -98,7 +99,7 @@ function AdminLogin() {
                 type="password"
                 placeholder="Enter Password"
                 value={code}
-                onChange={(e)=>setCode(e.target.value)}
+                onChange={(e) => setCode(e.target.value)}
                 className="w-full mt-1 p-2 rounded bg-[#0f172a] text-white border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-600"
               />
             </div>

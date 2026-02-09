@@ -5,6 +5,7 @@ import { FaCode, FaEye, FaEyeSlash } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { FaAngleLeft } from "react-icons/fa";
 import { ThreeDot } from "react-loading-indicators";
+import { BACKEND_URL } from "../../config";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ const SignIn = () => {
     const userDetails = { email, password };
 
     const response = await fetch(
-      "https://project-hackathon-7utw.onrender.com/signin",
+      `${BACKEND_URL}/signin`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

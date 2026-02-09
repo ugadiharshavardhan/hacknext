@@ -44,7 +44,7 @@
 //   return (
 //     <div className="pt-10 w-full min-h-screen ">
 //       {loading ? (
-        
+
 //         <div className="flex min-h-screen justify-center items-center">
 //           <ThreeDot color="#6366f1" size="medium" />
 //         </div>
@@ -65,7 +65,7 @@
 //       ) : (
 //         /* EVENTS LIST */
 //         <div className="min-h-screen text-white px-6 animate-fadeIn">
-          
+
 //           <div className="text-center mb-12 pt-6 animate-slideUp">
 //             <h1 className="text-4xl font-bold">
 //               <span className="text-indigo-400">Saved</span> Events
@@ -75,7 +75,7 @@
 //             </p>
 //           </div>
 
-          
+
 //           <div className="flex flex-wrap justify-center gap-8">
 //             {Data.map((each) => (
 //               <div
@@ -150,6 +150,7 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router";
 import { ThreeDot } from "react-loading-indicators";
 import { FaExternalLinkAlt } from "react-icons/fa";
+import { BACKEND_URL } from "../config";
 
 function SavedEvents() {
   const navigate = useNavigate();
@@ -163,7 +164,7 @@ function SavedEvents() {
         setLoading(true);
 
         const url =
-          "https://project-hackathon-7utw.onrender.com/user/savedevents";
+          `${BACKEND_URL}/user/savedevents`;
         const options = {
           method: "GET",
           headers: {

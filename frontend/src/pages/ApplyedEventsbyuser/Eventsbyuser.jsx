@@ -12,6 +12,7 @@ import {
 import { FcAbout } from "react-icons/fc";
 import { useNavigate } from "react-router";
 import { ThreeDot } from "react-loading-indicators";
+import { BACKEND_URL } from "../../config";
 
 function Eventsbyuser() {
   const [appliedData, setAppliedData] = useState([]);
@@ -23,7 +24,7 @@ function Eventsbyuser() {
     const fetchDetails = async () => {
       try {
         const url =
-          "https://project-hackathon-7utw.onrender.com/user/appliedevents";
+          `${BACKEND_URL}/user/appliedevents`;
         const options = {
           method: "GET",
           headers: {
@@ -93,7 +94,7 @@ function Eventsbyuser() {
             <h3 className="text-indigo-400 font-semibold mb-3">
               Event Details
             </h3>
-            
+
             <h2 className="text-xl font-bold mb-3">
               {each.eventTitle}
             </h2>

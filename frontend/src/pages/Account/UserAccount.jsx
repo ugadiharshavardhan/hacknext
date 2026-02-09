@@ -15,6 +15,7 @@ import SavedEvents from "../../components/SavedEvents";
 import Eventsbyuser from "../ApplyedEventsbyuser/Eventsbyuser";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
+import { BACKEND_URL } from "../../config";
 
 function UserAccount() {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ function UserAccount() {
   useEffect(() => {
     const fetchAccount = async () => {
       const response = await fetch(
-        "https://project-hackathon-7utw.onrender.com/user/account",
+        `${BACKEND_URL}/user/account`,
         {
           headers: {
             Authorization: `Bearer ${Cookies.get("jwt_token")}`,
@@ -92,8 +93,7 @@ function UserAccount() {
       setUploading(true);
 
       const response = await fetch(
-        "https://project-hackathon-7utw.onrender.com/user/upload-profile",
-        // "http://localhost:5678/user/upload-profile",
+        `${BACKEND_URL}/user/upload-profile`,
         {
           method: "POST",
           headers: {
@@ -128,8 +128,7 @@ function UserAccount() {
       setUploading(true);
 
       const response = await fetch(
-        "https://project-hackathon-7utw.onrender.com/user/remove-profile",
-        // "http://localhost:5678/user/remove-profile",
+        `${BACKEND_URL}/user/remove-profile`,
         {
           method: "DELETE",
           headers: {

@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 import AdminNavbar from "./AdminNavbar";
 import { FaArrowLeft } from "react-icons/fa";
+import { BACKEND_URL } from "../config";
 
 function CreateProjectAdmin() {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ function CreateProjectAdmin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const url = "https://project-hackathon-7utw.onrender.com/createproject";
+    const url = `${BACKEND_URL}/createproject`;
     const options = {
       method: "POST",
       headers: {

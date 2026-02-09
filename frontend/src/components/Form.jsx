@@ -3,6 +3,7 @@ import { RxCrossCircled } from "react-icons/rx";
 import { FormContext } from "../contextApi/FormContext";
 import Cookies from "js-cookie"
 import toast from "react-hot-toast";
+import { BACKEND_URL } from "../config";
 
 const Form = ({ event }) => {
   const { form, setForm } = useContext(FormContext);
@@ -12,7 +13,7 @@ const Form = ({ event }) => {
 
   const [formData, setFormData] = useState({
     EventTitle: event?.EventTitle || "",
-    EventDescription:event?.EventDescription || "",
+    EventDescription: event?.EventDescription || "",
     EventType: event?.EventType || "",
     Organizer: event?.Organizer || "",
     OnlineorOffline:
@@ -21,7 +22,7 @@ const Form = ({ event }) => {
       false,
     PricePool: event?.PricePool || "",
     OrganisationName: event?.OrganisationName || "",
-    Slots:event?.Slots || "",
+    Slots: event?.Slots || "",
     City: event?.City || "",
     State: event?.State || "",
     Venue: event?.Venue || "",
@@ -32,7 +33,7 @@ const Form = ({ event }) => {
       ? new Date(event.EndDate).toISOString().split("T")[0]
       : "",
     SpecifiedStacks: event?.SpecifiedStacks || "",
-    FormLink:event?.FormLink || ""
+    FormLink: event?.FormLink || ""
   });
 
   // handle input change
@@ -50,11 +51,11 @@ const Form = ({ event }) => {
 
     const isUpdating = !!event;
     const url = isUpdating
-      ? `https://project-hackathon-7utw.onrender.com/events/${id}`
-      : "https://project-hackathon-7utw.onrender.com/events/post";
-    
+      ? `${BACKEND_URL}/events/${id}`
+      : `${BACKEND_URL}/events/post`;
+
     console.log(url)
-      
+
     const method = isUpdating ? "PUT" : "POST";
     console.log(method)
 
@@ -69,7 +70,7 @@ const Form = ({ event }) => {
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}` 
+        "Authorization": `Bearer ${token}`
       },
       body: JSON.stringify(dataToSubmit),
     });
@@ -85,7 +86,7 @@ const Form = ({ event }) => {
     // Reset form after submission
     setFormData({
       EventTitle: "",
-      EventDescription:"",
+      EventDescription: "",
       EventType: "",
       Organizer: "",
       OnlineorOffline: false,
@@ -94,17 +95,17 @@ const Form = ({ event }) => {
       City: "",
       State: "",
       Venue: "",
-      Slots:"",
+      Slots: "",
       StartDate: "",
       EndDate: "",
       SpecifiedStacks: "",
-      FormLink:""
+      FormLink: ""
     });
 
     // Close form modal
     setForm({ open: false, event: null });
 
-    if(method==="PUT") {
+    if (method === "PUT") {
       toast.success("Event Updated Succesfully!")
     }
     else {

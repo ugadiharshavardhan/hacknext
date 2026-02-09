@@ -6,6 +6,7 @@ import { signup, signin, getUserAccount, uploadProfileImage, removeProfileImage,
 import { verifyUserToken } from "../middlewares/userAuth.js";
 
 const router = express.Router();
+console.log("--- userRoutes loaded ---");
 
 const uploadDir = path.join(process.cwd(), "uploads/profile-images");
 

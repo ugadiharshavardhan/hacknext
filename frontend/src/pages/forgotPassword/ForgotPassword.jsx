@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { FaCode, FaEnvelope, FaLock, FaKey, FaArrowLeft } from "react-icons/fa";
 import toast from "react-hot-toast";
+import { BACKEND_URL } from "../../config";
 
 export default function ForgotPassword() {
     const navigate = useNavigate();
@@ -23,7 +24,7 @@ export default function ForgotPassword() {
 
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:5678/forgot-password", {
+            const response = await fetch(`${BACKEND_URL}/forgot-password`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email }),
@@ -51,7 +52,7 @@ export default function ForgotPassword() {
 
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:5678/verify-otp", {
+            const response = await fetch(`${BACKEND_URL}/verify-otp`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, otp }),
@@ -86,7 +87,7 @@ export default function ForgotPassword() {
 
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:5678/reset-password", {
+            const response = await fetch(`${BACKEND_URL}/reset-password`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, otp, newPassword }),

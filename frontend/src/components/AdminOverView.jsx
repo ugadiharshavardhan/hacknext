@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import { Calendar, Trophy, BarChart2 } from "lucide-react";
 import { FaUsersCog } from "react-icons/fa";
 import { ThreeDot } from "react-loading-indicators";
+import { BACKEND_URL } from "../config";
 
 function AdminOverView() {
   const { count } = useContext(CounterContext);
@@ -12,7 +13,7 @@ function AdminOverView() {
   const [WorkShopCount, setWorkShopCount] = useState(0);
   const [TechCount, setTechCount] = useState(0);
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
   const stats = [
     {
       title: "Total Events",
@@ -40,7 +41,7 @@ function AdminOverView() {
     const fetchApi = async () => {
       try {
         const response = await fetch(
-          "https://project-hackathon-7utw.onrender.com/events/my",
+          `${BACKEND_URL}/events/my`,
           {
             method: "GET",
             headers: {
@@ -54,7 +55,7 @@ function AdminOverView() {
       } catch (error) {
         console.error(error);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
     fetchApi();

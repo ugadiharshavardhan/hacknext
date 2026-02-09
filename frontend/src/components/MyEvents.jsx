@@ -11,6 +11,7 @@ import CounterContext from "../contextApi/TotalCountsContext";
 import Cookies from "js-cookie";
 import { ThreeDot } from "react-loading-indicators";
 import toast from "react-hot-toast";
+import { BACKEND_URL } from "../config";
 
 function MyEvents({ setForm, dropValue }) {
   const [MyEventsdata, setMyEventsdata] = useState([]);
@@ -23,7 +24,7 @@ function MyEvents({ setForm, dropValue }) {
     const fetchEvents = async () => {
       try {
         const response = await fetch(
-          "https://project-hackathon-7utw.onrender.com/events/my",
+          `${BACKEND_URL}/events/my`,
           {
             method: "GET",
             credentials: "include",
@@ -58,7 +59,7 @@ function MyEvents({ setForm, dropValue }) {
     const fetchProjects = async () => {
       try {
         const response = await fetch(
-          "https://project-hackathon-7utw.onrender.com/projects",
+          `${BACKEND_URL}/projects`,
           {
             method: "GET",
             credentials: "include",
@@ -94,7 +95,7 @@ function MyEvents({ setForm, dropValue }) {
   /* ---------------- DELETE EVENT ---------------- */
   const handleDeleteEachItem = async (id) => {
     const res = await fetch(
-      `https://project-hackathon-7utw.onrender.com/events/${id}`,
+      `${BACKEND_URL}/events/${id}`,
       {
         method: "DELETE",
         credentials: "include",
@@ -116,7 +117,7 @@ function MyEvents({ setForm, dropValue }) {
   /* ---------------- DELETE PROJECT ---------------- */
   const handleDeleteProject = async (id) => {
     const res = await fetch(
-      `https://project-hackathon-7utw.onrender.com/projects/${id}`,
+      `${BACKEND_URL}/projects/${id}`,
       {
         method: "DELETE",
         credentials: "include",
@@ -140,8 +141,8 @@ function MyEvents({ setForm, dropValue }) {
     if (!dateString) return "";
     const date = new Date(dateString);
     const monthNames = [
-      "Jan","Feb","Mar","Apr","May","Jun",
-      "Jul","Aug","Sep","Oct","Nov","Dec"
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
     ];
     return `${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
   };

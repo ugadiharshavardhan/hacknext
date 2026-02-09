@@ -18,6 +18,7 @@ import { useNavigate } from "react-router";
 import { FiSearch } from "react-icons/fi";
 import { ThreeDot } from "react-loading-indicators";
 import { FaExternalLinkAlt } from "react-icons/fa";
+import { BACKEND_URL } from "../config";
 
 function ProjectsPage() {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ function ProjectsPage() {
   useEffect(() => {
     const fetchProjectData = async () => {
       try {
-        const url = "https://project-hackathon-7utw.onrender.com/user/projects";
+        const url = `${BACKEND_URL}/user/projects`;
         const options = {
           method: "GET",
           headers: {
@@ -154,15 +155,14 @@ function ProjectsPage() {
                     {project.title}
                   </h2>
                   <span
-                    className={`text-xs px-3 py-1 rounded-full font-semibold ${
-                      project.level === "Beginner"
+                    className={`text-xs px-3 py-1 rounded-full font-semibold ${project.level === "Beginner"
                         ? "bg-green-500 text-white"
                         : project.level === "Intermediate"
-                        ? "bg-orange-500 text-white"
-                        : project.level === "easy" 
-                        ? "bg-green-500 text-white"
-                        : "bg-red-500 text-white"
-                    }`}
+                          ? "bg-orange-500 text-white"
+                          : project.level === "easy"
+                            ? "bg-green-500 text-white"
+                            : "bg-red-500 text-white"
+                      }`}
                   >
                     {project.level}
                   </span>

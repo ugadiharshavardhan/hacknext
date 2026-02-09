@@ -13,6 +13,7 @@ import {
 import { LuClock3 } from "react-icons/lu";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router";
+import { BACKEND_URL } from "../config";
 
 function AllEventsPage({ searchQuery, eventType, organizer }) {
   const [TotalEvents, setTotalEvents] = useState([]);
@@ -28,7 +29,7 @@ function AllEventsPage({ searchQuery, eventType, organizer }) {
     const allEventsData = async () => {
       try {
         const response = await fetch(
-          "https://project-hackathon-7utw.onrender.com/events/all",
+          `${BACKEND_URL}/events/all`,
           {
             method: "GET",
             headers: {

@@ -11,6 +11,7 @@ import { useParams, useNavigate } from "react-router";
 import Cookies from "js-cookie";
 import { ThreeDot } from "react-loading-indicators";
 import toast from "react-hot-toast";
+import { BACKEND_URL } from "../config";
 
 const EachEventDetails = () => {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const EachEventDetails = () => {
     const fetchEventDetails = async () => {
       try {
         const response = await fetch(
-          `https://project-hackathon-7utw.onrender.com/user/allevents/${eventid}`,
+          `${BACKEND_URL}/user/allevents/${eventid}`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -57,7 +58,7 @@ const EachEventDetails = () => {
     const fetchSavedStatus = async () => {
       try {
         const response = await fetch(
-          `https://project-hackathon-7utw.onrender.com/user/saved/${eventid}`,
+          `${BACKEND_URL}/user/saved/${eventid}`,
           {
             headers: {
               Authorization: `Bearer ${jwtToken}`,
@@ -87,7 +88,7 @@ const EachEventDetails = () => {
     const fetchApplicationStatus = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5678/user/applications/check/${eventid}`,
+          `${BACKEND_URL}/user/applications/check/${eventid}`,
           {
             headers: {
               Authorization: `Bearer ${jwtToken}`,
@@ -153,7 +154,7 @@ const EachEventDetails = () => {
 
     try {
       const response = await fetch(
-        "https://project-hackathon-7utw.onrender.com/user/saved",
+        `${BACKEND_URL}/user/saved`,
         {
           method: "POST",
           headers: {

@@ -19,6 +19,7 @@ import {
   SiNodedotjs,
   SiFigma,
 } from "react-icons/si";
+import { BACKEND_URL } from "../config";
 
 function EachProject() {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ function EachProject() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const url = `https://project-hackathon-7utw.onrender.com/projects/${id}`;
+      const url = `${BACKEND_URL}/projects/${id}`;
       const options = {
         method: "GET",
         headers: {
@@ -66,7 +67,7 @@ function EachProject() {
       .filter((item) => item !== "") || [];
 
   const handleBackBtn = () => {
-    navigate("/projects",{replace:true})
+    navigate("/projects", { replace: true })
   }
 
 
@@ -101,15 +102,14 @@ function EachProject() {
               </h2>
 
               <span
-                className={`text-xs px-3 py-1 rounded-full font-semibold ${
-                  eachProject.level === "Beginner"
+                className={`text-xs px-3 py-1 rounded-full font-semibold ${eachProject.level === "Beginner"
                     ? "bg-green-500 text-white"
-                        : eachProject.level === "Intermediate"
-                        ? "bg-orange-500 text-white"
-                        : eachProject.level === "easy" 
+                    : eachProject.level === "Intermediate"
+                      ? "bg-orange-500 text-white"
+                      : eachProject.level === "easy"
                         ? "bg-green-500 text-white"
                         : "bg-red-500 text-white"
-                }`}
+                  }`}
               >
                 {eachProject.level}
               </span>

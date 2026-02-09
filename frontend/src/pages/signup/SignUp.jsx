@@ -4,6 +4,7 @@ import { FaCode, FaEye, FaEyeSlash } from "react-icons/fa";
 import Cookies from "js-cookie";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
+import { BACKEND_URL } from "../../config";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -61,7 +62,7 @@ export default function SignUp() {
 
     try {
       const response = await fetch(
-        "http://localhost:5678/signup",
+        `${BACKEND_URL}/signup`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

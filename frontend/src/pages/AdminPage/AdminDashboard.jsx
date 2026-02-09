@@ -8,6 +8,7 @@ import { FormContext } from "../../contextApi/FormContext";
 import { FaSignInAlt, FaBars, FaTimes, FaUser, FaClipboardList } from "react-icons/fa";
 import { ThreeDot } from "react-loading-indicators";
 import AdminNavbar from "../../components/AdminNavbar";
+import { BACKEND_URL } from "../../config";
 
 const AdminProfile = () => {
   const [adminData, setAdminData] = useState(null);
@@ -17,7 +18,7 @@ const AdminProfile = () => {
     const fetchAdminProfile = async () => {
       try {
         const response = await fetch(
-          "https://project-hackathon-7utw.onrender.com/admin/profile",
+          `${BACKEND_URL}/admin/profile`,
           {
             headers: {
               Authorization: `Bearer ${Cookies.get("admin_token")}`,
@@ -67,7 +68,7 @@ const AdminProfile = () => {
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const { form, setForm } = useContext(FormContext);
-  const [drodownValue,setDropDownValue] = useState('All Events')
+  const [drodownValue, setDropDownValue] = useState('All Events')
   const [activeSection, setActiveSection] = useState('overview');
 
   const adminToken = Cookies.get("admin_token");
@@ -81,7 +82,7 @@ const AdminDashboard = () => {
 
 
   const handleCreateProject = () => {
-    navigate("/createproject",{replace:true})
+    navigate("/createproject", { replace: true })
   }
 
   return (
@@ -89,57 +90,57 @@ const AdminDashboard = () => {
       <AdminNavbar />
       <div className="pt-20">
 
-      {!form.open && activeSection === 'overview' && <AdminOverView />}
+        {!form.open && activeSection === 'overview' && <AdminOverView />}
 
-      {!form.open && activeSection === 'profile' && (
-        <div>
-          <button
-            onClick={() => setActiveSection('overview')}
-            className="mb-4 px-4 py-2 bg-blue-600 rounded-lg hover:bg-blue-700 transition"
-          >
-            Back to Overview
-          </button>
-          <AdminProfile />
-        </div>
-      )}
+        {!form.open && activeSection === 'profile' && (
+          <div>
+            <button
+              onClick={() => setActiveSection('overview')}
+              className="mb-4 px-4 py-2 bg-blue-600 rounded-lg hover:bg-blue-700 transition"
+            >
+              Back to Overview
+            </button>
+            <AdminProfile />
+          </div>
+        )}
 
-      <div className="flex flex-col md:flex-row gap-4 mb-4">
-        <div className="flex flex-wrap gap-2">
-          <button
-            onClick={() => setForm({ open: false, event: null })}
-            className="px-4 py-2 md:px-6 md:py-2 cursor-pointer  bg-gray-800 rounded-lg shadow hover:bg-gray-700 transition"
-          >
-            My Events
-          </button>
-          <button
-            onClick={() => setForm({ open: true, event: null })}
-            className="px-4 py-2 md:px-6 md:py-2  cursor-pointer bg-gray-800 rounded-lg shadow hover:bg-gray-700 transition"
-          >
-            + Create Event
-          </button>
-          <button
-            onClick={handleCreateProject}
-            className="px-4 py-2 md:px-6 md:py-2  cursor-pointer bg-gray-800 rounded-lg shadow hover:bg-gray-700 transition"
-          >
-            + Create Project
-          </button>
+        <div className="flex flex-col md:flex-row gap-4 mb-4">
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => setForm({ open: false, event: null })}
+              className="px-4 py-2 md:px-6 md:py-2 cursor-pointer  bg-gray-800 rounded-lg shadow hover:bg-gray-700 transition"
+            >
+              My Events
+            </button>
+            <button
+              onClick={() => setForm({ open: true, event: null })}
+              className="px-4 py-2 md:px-6 md:py-2  cursor-pointer bg-gray-800 rounded-lg shadow hover:bg-gray-700 transition"
+            >
+              + Create Event
+            </button>
+            <button
+              onClick={handleCreateProject}
+              className="px-4 py-2 md:px-6 md:py-2  cursor-pointer bg-gray-800 rounded-lg shadow hover:bg-gray-700 transition"
+            >
+              + Create Project
+            </button>
+          </div>
+          <div>
+            <select className="bg-gray-700 p-2 rounded-xl  cursor-pointer text-sm md:text-base" value={drodownValue} onChange={(e) => handleDropValue(e)} >
+              <option value={"All Events"} >All Events</option>
+              <option value={"Hackathon"}>Hackathon</option>
+              <option value={"Workshop"}>Workshop</option>
+              <option value={"Tech Event"}>Tech Event</option>
+              <option value={"Projects"}>Projects</option>
+            </select>
+          </div>
         </div>
-        <div>
-          <select className="bg-gray-700 p-2 rounded-xl  cursor-pointer text-sm md:text-base" value={drodownValue} onChange={(e)=>handleDropValue(e)} >
-            <option value={"All Events"} >All Events</option>
-            <option value={"Hackathon"}>Hackathon</option>
-            <option value={"Workshop"}>Workshop</option>
-            <option value={"Tech Event"}>Tech Event</option>
-            <option value={"Projects"}>Projects</option>
-          </select>
-        </div>
-      </div>
-    
-      {form.open ? (
-        <Form event={form.event} isopen={form.open} />
-      ) : (
-        <MyEvents dropValue={drodownValue} setForm={setForm} />
-      )}
+
+        {form.open ? (
+          <Form event={form.event} isopen={form.open} />
+        ) : (
+          <MyEvents dropValue={drodownValue} setForm={setForm} />
+        )}
       </div>
     </div>
   );

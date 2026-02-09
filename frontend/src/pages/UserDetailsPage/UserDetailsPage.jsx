@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { ThreeDot } from "react-loading-indicators";
 import UserNavbar from "../../components/UserNavbar";
+import { BACKEND_URL } from "../../config";
 
 function UserDetailsPage() {
   const [userData, setUserData] = useState(null);
@@ -10,7 +11,7 @@ function UserDetailsPage() {
   useEffect(() => {
     const fetchAccount = async () => {
       const response = await fetch(
-        "https://project-hackathon-7utw.onrender.com/user/account",
+        `${BACKEND_URL}/user/account`,
         {
           headers: {
             Authorization: `Bearer ${Cookies.get("jwt_token")}`,
