@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router";
-import { FaCode } from "react-icons/fa";
+import { FaCode, FaEye, FaEyeSlash } from "react-icons/fa";
 import Cookies from "js-cookie";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
@@ -11,6 +11,7 @@ export default function SignUp() {
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [showErrorMsg, setShowErrMsg] = useState("");
   const [isErr, setIsErr] = useState(false);
 
@@ -71,6 +72,7 @@ export default function SignUp() {
       const data = await response.json();
 
       if (response.ok) {
+        console.log(data)
         onSubmitSuccess();
       } else {
         onSubmitFailure(data.message);
@@ -164,15 +166,22 @@ export default function SignUp() {
               <label className="text-gray-300 text-xs font-semibold">
                 PASSWORD
               </label>
-              <div className="mt-1 p-[1.5px] rounded-lg bg-white/10 focus-within:bg-gradient-to-r focus-within:from-indigo-500 focus-within:to-violet-600 transition">
+              <div className="mt-1 p-[1.5px] rounded-lg bg-white/10 focus-within:bg-gradient-to-r focus-within:from-indigo-500 focus-within:to-violet-600 transition relative">
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="Create new password"
                   value={password}
                   onChange={handlePassword}
                   required
-                  className="w-full px-3 py-2 rounded-md bg-[#0f1225] text-gray-200 text-sm outline-none"
+                  className="w-full px-3 py-2 rounded-md bg-[#0f1225] text-gray-200 text-sm outline-none pr-10"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition cursor-pointer"
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
               </div>
             </div>
 

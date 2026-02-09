@@ -2,7 +2,7 @@ import express from "express";
 import multer from "multer";
 import path from "path";
 import fs from "fs/promises";
-import { signup, signin, getUserAccount, uploadProfileImage, removeProfileImage } from "../controllers/userController.js";
+import { signup, signin, getUserAccount, uploadProfileImage, removeProfileImage, forgotPassword, verifyOtp, resetPassword } from "../controllers/userController.js";
 import { verifyUserToken } from "../middlewares/userAuth.js";
 
 const router = express.Router();
@@ -34,6 +34,9 @@ const upload = multer({
 
 router.post("/signup", signup);
 router.post("/signin", signin);
+router.post("/forgot-password", forgotPassword);
+router.post("/verify-otp", verifyOtp);
+router.post("/reset-password", resetPassword);
 router.get("/user/account", verifyUserToken, getUserAccount);
 
 router.post(

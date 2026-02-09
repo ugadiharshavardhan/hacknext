@@ -97,9 +97,11 @@ const EachEventDetails = () => {
 
         if (response.ok && isMounted) {
           const data = await response.json();
+          console.log("Check App Status:", data);
           setIsApplied(!!data.hasApplied);
         }
-      } catch {
+      } catch (err) {
+        console.error("Error isApplied:", err);
         if (isMounted) setIsApplied(false);
       }
     };
@@ -224,11 +226,10 @@ const EachEventDetails = () => {
 
               <button
                 onClick={handleSaveBtn}
-                className={`p-3 rounded-full border cursor-pointer transition ${
-                  isSaved
-                    ? "bg-white text-black"
-                    : "border-white/20 hover:border-white/40"
-                }`}
+                className={`p-3 rounded-full border cursor-pointer transition ${isSaved
+                  ? "bg-white text-black"
+                  : "border-white/20 hover:border-white/40"
+                  }`}
               >
                 <FaRegBookmark />
               </button>
@@ -289,11 +290,10 @@ const EachEventDetails = () => {
                     <button
                       onClick={handleApplyNow}
                       disabled={isApplied}
-                      className={`w-full py-2.5 rounded-xl cursor-pointer transition ${
-                        isApplied
-                          ? "bg-green-600 cursor-not-allowed"
-                          : "bg-gradient-to-r from-indigo-600 to-violet-600 hover:opacity-90"
-                      }`}
+                      className={`w-full py-2.5 rounded-xl cursor-pointer transition ${isApplied
+                        ? "bg-green-600 cursor-not-allowed"
+                        : "bg-gradient-to-r from-indigo-600 to-violet-600 hover:opacity-90"
+                        }`}
                     >
                       {isApplied ? "Applied ✓" : "Apply Now"}
                     </button>

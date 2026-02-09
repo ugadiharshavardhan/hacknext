@@ -12,6 +12,7 @@ import projectRoutes from "./src/routes/projectRoutes.js";
 import applicationRoutes from "./src/routes/applicationRoutes.js";
 import savedRoutes from "./src/routes/savedRoutes.js";
 import publicRoutes from "./src/routes/publicRoutes.js";
+import emailRoutes from "./src/routes/emailRoutes.js";
 
 // Use routes
 app.use("/", userRoutes);
@@ -21,6 +22,7 @@ app.use("/", projectRoutes);
 app.use("/", applicationRoutes);
 app.use("/", savedRoutes);
 app.use("/", publicRoutes);
+app.use("/api/email", emailRoutes);
 
 // Start server
 connection().then(() => {

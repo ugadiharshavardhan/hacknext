@@ -70,8 +70,8 @@ function AllEventsPage({ searchQuery, eventType, organizer }) {
     const date = new Date(dateString);
     const day = String(date.getDate()).padStart(2, "0");
     const monthNames = [
-      "Jan","Feb","Mar","Apr","May","Jun",
-      "Jul","Aug","Sep","Oct","Nov","Dec"
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
     ];
     const month = monthNames[date.getMonth()];
     const year = date.getFullYear();
@@ -127,10 +127,9 @@ function AllEventsPage({ searchQuery, eventType, organizer }) {
             key={tab.key}
             onClick={() => setActiveSection(tab.key)}
             className={`px-5 py-2 rounded-full text-sm font-medium transition
-              ${
-                activeSection === tab.key
-                  ? "bg-gradient-to-r from-blue-500 to-violet-600 text-white"
-                  : "border border-white/10 text-gray-400 hover:text-white cursor-pointer"
+              ${activeSection === tab.key
+                ? "bg-gradient-to-r from-blue-500 to-violet-600 text-white"
+                : "border border-white/10 text-gray-400 hover:text-white cursor-pointer"
               }`}
           >
             {tab.label}

@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
 import { AppliedEventModel } from "../models/applyEvent.js";
 import { TechEventsModel } from "../models/TechEvents.js";
+import { sendEmail } from "../utils/email.js";
+import { getSuccessEmailTemplate } from "../utils/emailTemplates.js";
 
 export const applyForEvent = async (req, res) => {
   try {
@@ -52,6 +54,46 @@ export const applyForEvent = async (req, res) => {
     });
 
     await application.save();
+
+    // Send Success Email
+    try {
+      console.log(`[DEBUG] Attempting to send application confirmation email to user ID: ${userId}`);
+      const user = await import("../models/userModels.js").then(m => m.userModel.findById(userId));
+      const { getEventAppliedEmailTemplate } = await import("../utils/emailTemplates.js");
+
+      if (user) {
+        console.log(`[DEBUG] User found: ${user.email}. Preparing email template...`);
+        // Prepare event details object for the template
+        const eventDetails = {
+          EventTitle: event.EventTitle,
+          EventDescription: event.EventDescription,
+          StartDate: event.StartDate,
+          EndDate: event.EndDate,
+          Venue: event.Venue,
+          City: event.City,
+          OrganisationName: event.OrganisationName
+        };
+
+        const htmlContent = getEventAppliedEmailTemplate(user.username, eventDetails);
+
+        const emailSent = await sendEmail({
+          to: user.email,
+          subject: `Application Confirmed: ${eventTitle}`,
+          htmlContent: htmlContent
+        });
+
+        if (emailSent) {
+          console.log(`[DEBUG] Application email successfully sent to ${user.email}`);
+        } else {
+          console.error(`[ERROR] Failed to send application email to ${user.email} (sendEmail returned false)`);
+        }
+      } else {
+        console.error(`[ERROR] User with ID ${userId} not found for email sending.`);
+      }
+    } catch (emailError) {
+      console.error("[EXCEPTION] Failed to send application success email:", emailError);
+      // Continue execution
+    }
 
     return res.status(201).json({
       message: "Application submitted successfully",
@@ -135,7 +177,7 @@ export const getAdminAppliedEvents = async (req, res) => {
     let applications = await AppliedEventModel.find({
       event: { $in: eventIds }
     })
-    .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 });
 
     // Populate user and event data
     try {
@@ -155,5 +197,31 @@ export const getAdminAppliedEvents = async (req, res) => {
   } catch (error) {
     console.error("Error fetching admin applied events:", error);
     res.status(500).json({ message: "Server Error", error: error.message });
+  }
+};
+
+export const checkApplicationStatus = async (req, res) => {
+  try {
+    const userId = req.userId; // Provided by verifyUserToken middleware
+    const eventId = req.params.eventId;
+
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const application = await import("../models/applyEvent.js").then(m => m.AppliedEventModel.findOne({
+      user: userId,
+      event: eventId
+    }));
+
+    if (application) {
+      return res.status(200).json({ hasApplied: true, applicationId: application._id });
+    } else {
+      return res.status(200).json({ hasApplied: false });
+    }
+
+  } catch (error) {
+    console.error("Error checking application status:", error);
+    res.status(500).json({ message: "Server Error" });
   }
 };

@@ -29,6 +29,9 @@ function UserAccount() {
   const [showPreview, setShowPreview] = useState(false);
   const [tempImage, setTempImage] = useState(null);
 
+
+  // Cookies.remove("jwt_token")
+
   useEffect(() => {
     const fetchAccount = async () => {
       const response = await fetch(
@@ -90,7 +93,6 @@ function UserAccount() {
 
       const response = await fetch(
         "https://project-hackathon-7utw.onrender.com/user/upload-profile",
-        // "http://localhost:5678/user/upload-profile",
         {
           method: "POST",
           headers: {
@@ -126,7 +128,6 @@ function UserAccount() {
 
       const response = await fetch(
         "https://project-hackathon-7utw.onrender.com/user/remove-profile",
-        // "http://localhost:5678/user/remove-profile",
         {
           method: "DELETE",
           headers: {
@@ -256,7 +257,7 @@ function UserAccount() {
           className="fixed inset-0 z-[60] bg-black/40 backdrop-blur-sm"
           onClick={() => setShowOptions(false)}
         >
-          <div 
+          <div
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/95 backdrop-blur-sm rounded-xl p-3 space-y-2 min-w-[220px] shadow-2xl border border-white/20"
             onClick={(e) => e.stopPropagation()}
           >
@@ -302,7 +303,7 @@ function UserAccount() {
 
       {/* IMAGE PREVIEW */}
       {showPreview && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center"
           onClick={() => setShowPreview(false)}
         >
@@ -337,8 +338,8 @@ function SidebarItem({ icon, label, active, onClick }) {
     <div
       onClick={onClick}
       className={`flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition ${active
-          ? "bg-gradient-to-r from-indigo-600/30 to-violet-600/30 text-white"
-          : "text-gray-400 hover:bg-white/5 hover:text-white"
+        ? "bg-gradient-to-r from-indigo-600/30 to-violet-600/30 text-white"
+        : "text-gray-400 hover:bg-white/5 hover:text-white"
         }`}
     >
       {icon}

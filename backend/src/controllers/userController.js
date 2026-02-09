@@ -4,6 +4,8 @@ import jwt from "jsonwebtoken";
 import fs from "fs/promises";
 import { v2 as cloudinary } from "cloudinary";
 import { userModel } from "../models/userModels.js";
+import { sendEmail } from "../utils/email.js";
+import { getWelcomeEmailTemplate, getOtpEmailTemplate } from "../utils/emailTemplates.js";
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -37,6 +39,26 @@ export const signup = async (req, res) => {
     email,
     password: hashedPassword
   });
+
+  // Send Welcome Email
+  try {
+    console.log(`Attempting to send welcome email to: ${email}`);
+    const htmlContent = getWelcomeEmailTemplate(username);
+    const emailSent = await sendEmail({
+      to: email,
+      subject: "Welcome to HackNext!",
+      htmlContent: htmlContent
+    });
+
+    if (!emailSent) {
+      console.error(`Failed to send welcome email to ${email} (sendEmail returned false). Check server logs for Brevo API response.`);
+    } else {
+      console.log(`Welcome email successfully sent to ${email}`);
+    }
+  } catch (emailError) {
+    console.error("Exception while sending welcome email:", emailError);
+    // Continue execution, do not fail the request
+  }
 
   res.status(201).json({ message: "User created", result: newUser });
 };
@@ -203,5 +225,109 @@ export const removeProfileImage = async (req, res) => {
     return res.status(500).json({
       message: "Server error while removing profile image",
     });
+  }
+};
+
+// FORGOT PASSWORD
+export const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  if (!email) return res.status(400).json({ message: "Email is required" });
+
+  try {
+    const user = await userModel.findOne({ email });
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    // Generate 6-digit OTP
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const otpExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+
+    user.otp = otp;
+    user.otpExpires = otpExpires;
+    await user.save();
+
+    console.log(`Sending OTP ${otp} to ${email}`);
+
+    // Send OTP Email
+    const htmlContent = getOtpEmailTemplate(user.username, otp);
+
+    const emailSent = await sendEmail({
+      to: email,
+      subject: "Password Reset OTP - HackNext",
+      htmlContent: htmlContent
+    });
+
+    if (emailSent) {
+      return res.status(200).json({ message: "OTP sent to your email" });
+    } else {
+      return res.status(500).json({ message: "Failed to send OTP email" });
+    }
+
+  } catch (error) {
+    console.error("Forgot password error:", error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+// VERIFY OTP
+export const verifyOtp = async (req, res) => {
+  const { email, otp } = req.body;
+
+  if (!email || !otp) {
+    return res.status(400).json({ message: "Email and OTP are required" });
+  }
+
+  try {
+    const user = await userModel.findOne({
+      email,
+      otp,
+      otpExpires: { $gt: Date.now() }
+    });
+
+    if (!user) {
+      return res.status(400).json({ message: "Invalid or expired OTP" });
+    }
+
+    return res.status(200).json({ message: "OTP verified successfully" });
+
+  } catch (error) {
+    console.error("Verify OTP error:", error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+// RESET PASSWORD
+export const resetPassword = async (req, res) => {
+  const { email, otp, newPassword } = req.body;
+
+  if (!email || !otp || !newPassword) {
+    return res.status(400).json({ message: "Email, OTP, and new password are required" });
+  }
+
+  try {
+    const user = await userModel.findOne({
+      email,
+      otp,
+      otpExpires: { $gt: Date.now() }
+    });
+
+    if (!user) {
+      return res.status(400).json({ message: "Invalid or expired OTP" });
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({ message: "Password must be at least 6 characters" });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedPassword;
+    user.otp = null;
+    user.otpExpires = null;
+    await user.save();
+
+    return res.status(200).json({ message: "Password reset successfully" });
+
+  } catch (error) {
+    console.error("Reset password error:", error);
+    return res.status(500).json({ message: "Server error" });
   }
 };

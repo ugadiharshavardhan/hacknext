@@ -22,20 +22,22 @@ import UserAppliedEvents from "./components/UserAppliedEvents";
 import UserSavedEvents from "./pages/UserSavedEvents/UserSavedEvents";
 import UserAppliedEventsPage from "./pages/UserAppliedEventsPage/UserAppliedEventsPage";
 import UserDetailsPage from "./pages/UserDetailsPage/UserDetailsPage";
+import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 
 
 
 function App() {
   return (
-    
+
     <CounterProvider>
       <FormProvider>
         <BrowserRouter>
-        <Toaster position="top-center" />
+          <Toaster position="top-center" />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/signin" element={<SignIn />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/projects" element={<ProtectedRoute><ProjectsPage /></ProtectedRoute>} />
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
@@ -50,8 +52,8 @@ function App() {
             <Route path="/user/applied-events" element={<ProtectedRoute><UserAppliedEventsPage /></ProtectedRoute>} />
             <Route path="/user/details" element={<ProtectedRoute><UserDetailsPage /></ProtectedRoute>} />
             <Route path="/createproject" element={<CreateProjectAdmin />} />
-            <Route path="*" element={ <NotFound />} />
-           </Routes>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
         </BrowserRouter>
       </FormProvider>
     </CounterProvider>
@@ -60,4 +62,4 @@ function App() {
 
 export default App;
 
-  
+

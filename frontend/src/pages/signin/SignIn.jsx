@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Cookies from "js-cookie";
 import { Navigate, useNavigate, Link } from "react-router";
-import { FaCode } from "react-icons/fa";
+import { FaCode, FaEye, FaEyeSlash } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { FaAngleLeft } from "react-icons/fa";
 import { ThreeDot } from "react-loading-indicators";
@@ -11,6 +11,7 @@ const SignIn = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [showErrorMsg, setShowErrMsg] = useState("");
   const [isErr, setIsErr] = useState(false);
   const [imageLoading, setImageLoading] = useState(true);
@@ -19,12 +20,12 @@ const SignIn = () => {
   const handlePassword = (e) => setPassword(e.target.value);
 
   const onSubmitSuccess = (jwtToken) => {
-  Cookies.remove("jwt_token"); 
-  Cookies.set("jwt_token", jwtToken, { expires: 7 });
+    Cookies.remove("jwt_token");
+    Cookies.set("jwt_token", jwtToken, { expires: 7 });
 
-  navigate("/user/allevents", { replace: true });
-  toast.success("Student Login Successfully", { duration: 2000 });
-};
+    navigate("/user/allevents", { replace: true });
+    toast.success("Student Login Successfully", { duration: 2000 });
+  };
 
 
   const onSubmitFailure = (errorMsg) => {
@@ -133,22 +134,37 @@ const SignIn = () => {
               <label className="text-xs font-semibold text-gray-300">
                 PASSWORD
               </label>
-              <div className="mt-1 p-[1.5px] rounded-lg bg-white/10 focus-within:bg-gradient-to-r focus-within:from-indigo-500 focus-within:to-violet-600 transition">
+              <div className="mt-1 p-[1.5px] rounded-lg bg-white/10 focus-within:bg-gradient-to-r focus-within:from-indigo-500 focus-within:to-violet-600 transition relative">
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="Enter password"
                   value={password}
                   onChange={handlePassword}
-                  className="w-full px-3 py-2 rounded-md bg-[#0f1225] text-gray-200 text-sm outline-none"
+                  className="w-full px-3 py-2 rounded-md bg-[#0f1225] text-gray-200 text-sm outline-none pr-10"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition cursor-pointer"
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
               </div>
             </div>
 
 
-            <div className="min-h-[20px]">
-              {isErr && (
-                <p className="text-rose-400 text-sm">{showErrorMsg}</p>
-              )}
+            <div className="flex justify-between items-center text-sm">
+              <div className="min-h-[20px]">
+                {isErr && (
+                  <p className="text-rose-400">{showErrorMsg}</p>
+                )}
+              </div>
+              <Link
+                to="/forgot-password"
+                className="text-indigo-400 hover:text-indigo-300 transition"
+              >
+                Forgot Password?
+              </Link>
             </div>
 
 
