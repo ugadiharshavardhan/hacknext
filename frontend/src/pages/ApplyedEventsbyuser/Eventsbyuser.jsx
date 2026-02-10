@@ -28,7 +28,7 @@ function Eventsbyuser() {
     const fetchDetails = async () => {
       try {
         const url =
-          `http://localhost:5678/user/appliedevents`;
+          `${BACKEND_URL}/user/appliedevents`;
         const options = {
           method: "GET",
           headers: {
