@@ -2,8 +2,7 @@ import React from 'react'
 import Cookies from "js-cookie"
 import { Navigate, useNavigate } from 'react-router'
 import { useState } from 'react'
-import { FaCode } from "react-icons/fa";
-import { FaAngleLeft } from "react-icons/fa";
+import { FaCode, FaAngleLeft, FaEye, FaEyeSlash } from "react-icons/fa";
 import toast from 'react-hot-toast';
 import { BACKEND_URL } from "../../config";
 
@@ -11,6 +10,7 @@ function AdminLogin() {
   const navigate = useNavigate()
   const [email, setEmail] = useState("")
   const [code, setCode] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
   const [isErr, setIsErr] = useState(false)
   const [showErrorMsg, setShowErrMsg] = useState("")
 
@@ -95,13 +95,22 @@ function AdminLogin() {
 
             <div>
               <label className="text-xs text-gray-300 font-semibold">Password</label>
-              <input
-                type="password"
-                placeholder="Enter Password"
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-                className="w-full mt-1 p-2 rounded bg-[#0f172a] text-white border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-600"
-              />
+              <div className="relative mt-1">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter Password"
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
+                  className="w-full p-2 pr-10 rounded bg-[#0f172a] text-white border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white cursor-pointer"
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
+              </div>
             </div>
 
             {isErr ? (

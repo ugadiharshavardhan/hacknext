@@ -7,16 +7,20 @@ import {
   FaUsers,
   FaUniversity,
   FaEnvelope,
-  FaPhoneAlt
+  FaPhoneAlt,
+  FaTrash
 } from "react-icons/fa";
 import { FcAbout } from "react-icons/fc";
 import { useNavigate } from "react-router";
 import { ThreeDot } from "react-loading-indicators";
 import { BACKEND_URL } from "../../config";
+import toast from "react-hot-toast";
 
 function Eventsbyuser() {
   const [appliedData, setAppliedData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedAppId, setSelectedAppId] = useState(null);
 
   const navigate = useNavigate();
 
@@ -24,7 +28,7 @@ function Eventsbyuser() {
     const fetchDetails = async () => {
       try {
         const url =
-          `${BACKEND_URL}/user/appliedevents`;
+          `http://localhost:5678/user/appliedevents`;
         const options = {
           method: "GET",
           headers: {
@@ -73,6 +77,41 @@ function Eventsbyuser() {
     navigate(`/user/allevents/${eventid}`, { replace: true });
   };
 
+  const confirmDelete = (appId) => {
+    setSelectedAppId(appId);
+    setShowModal(true);
+  };
+
+  const handleCancelApplication = async () => {
+    if (!selectedAppId) return;
+
+    try {
+      const url = `${BACKEND_URL}/user/application/cancel/${selectedAppId}`;
+      const options = {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("jwt_token")}`,
+        },
+      };
+
+      const response = await fetch(url, options);
+
+      if (response.ok) {
+        setAppliedData(appliedData.filter((item) => item._id !== selectedAppId));
+        toast.success("Application cancelled successfully");
+      } else {
+        const data = await response.json();
+        toast.error(data.message || "Failed to cancel application");
+      }
+    } catch (error) {
+      console.error("Error cancelling application:", error);
+      toast.error("Something went wrong");
+    } finally {
+      setShowModal(false);
+      setSelectedAppId(null);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-950 px-6 py-20">
       <h1 className="text-4xl font-bold text-center text-white mb-12">
@@ -89,6 +128,13 @@ function Eventsbyuser() {
               <span className="bg-green-600 text-white px-3 py-1 rounded-full text-xs font-semibold">
                 ✓ Applied
               </span>
+              <button
+                onClick={() => confirmDelete(each._id)}
+                className="text-gray-400 hover:text-red-500 transition p-1 rounded-full hover:bg-white/5 cursor-pointer"
+                title="Cancel Application"
+              >
+                <FaTrash />
+              </button>
             </div>
 
             <h3 className="text-indigo-400 font-semibold mb-3">
@@ -172,7 +218,35 @@ function Eventsbyuser() {
           </li>
         ))}
       </ul>
-    </div>
+
+      {/* Confirmation Modal */}
+      {
+        showModal && (
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <div className="bg-gray-900 border border-white/10 p-6 rounded-2xl w-full max-w-sm shadow-2xl animate-scaleIn">
+              <h3 className="text-xl font-bold text-white mb-2">Cancel Application?</h3>
+              <p className="text-gray-400 mb-6">
+                Are you sure you want to cancel this application? This action cannot be undone.
+              </p>
+              <div className="flex gap-3 justify-end">
+                <button
+                  onClick={() => setShowModal(false)}
+                  className="px-4 py-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition cursor-pointer"
+                >
+                  No, Keep it
+                </button>
+                <button
+                  onClick={handleCancelApplication}
+                  className="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold transition cursor-pointer"
+                >
+                  Yes, Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )
+      }
+    </div >
   );
 }
 

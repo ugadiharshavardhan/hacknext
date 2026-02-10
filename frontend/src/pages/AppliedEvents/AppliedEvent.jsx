@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Cookies from "js-cookie"
 import { useParams, useNavigate } from "react-router";
 import { toast } from "react-hot-toast";
-import { FaCalendarPlus, FaCheckCircle, FaArrowRight, FaHome } from "react-icons/fa";
+import { FaCalendarPlus, FaCheckCircle, FaArrowRight, FaHome, FaTimes } from "react-icons/fa";
 import { BACKEND_URL } from "../../config";
 
 function AppliedEvent() {
@@ -207,14 +207,23 @@ function AppliedEvent() {
     }
 
     return (
-        <div className='pt-25 bg-gray-500'>
-            <span className="border border-black cursor-pointer p-2"
-                onClick={handleBackBtn} >
-                back
-            </span>
-            <form onSubmit={handleSubmitApply} >
-                <div className="max-w-3xl mx-auto bg-gray-900 text-white p-8 rounded-lg shadow-lg space-y-8">
-                    <h2 className="text-2xl font-semibold mb-4">Hackathon Registration Form</h2>
+        <div className='min-h-screen bg-black/90 flex items-center justify-center pt-25'>
+            <form onSubmit={handleSubmitApply} className="w-full max-w-3xl">
+                <div className="bg-gray-900/50 backdrop-blur-md border border-white/10 text-white p-8 rounded-2xl shadow-2xl space-y-8 relative">
+
+                    {/* Header with Close Button */}
+                    <div className="flex justify-between items-center mb-6">
+                        <h2 className="text-3xl font-bold bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">
+                            Application Form
+                        </h2>
+                        <button
+                            type="button"
+                            onClick={handleBackBtn}
+                            className="text-gray-400 hover:text-white transition-colors p-2 rounded-full hover:bg-white/10 cursor-pointer"
+                        >
+                            <FaTimes size={24} />
+                        </button>
+                    </div>
                     <div>
                         <label className="block mb-1 font-medium">Full Name (First & Last)*</label>
                         <input

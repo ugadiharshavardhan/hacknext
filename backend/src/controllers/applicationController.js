@@ -225,3 +225,27 @@ export const checkApplicationStatus = async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 };
+
+export const deleteApplication = async (req, res) => {
+  try {
+    const applicationId = req.params.applicationId;
+    const userId = req.userId;
+
+    const application = await AppliedEventModel.findOne({ _id: applicationId });
+
+    if (!application) {
+      return res.status(404).json({ message: "Application not found" });
+    }
+
+    if (application.user.toString() !== userId) {
+      return res.status(403).json({ message: "Unauthorized to delete this application" });
+    }
+
+    await AppliedEventModel.findByIdAndDelete(applicationId);
+
+    res.status(200).json({ message: "Application cancelled successfully" });
+  } catch (error) {
+    console.error("Error deleting application:", error);
+    res.status(500).json({ message: "Server Error", error: error.message });
+  }
+};
