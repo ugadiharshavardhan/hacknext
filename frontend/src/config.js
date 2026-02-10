@@ -1,1 +1,1 @@
-export const BACKEND_URL = "https://project-hackathon-7utw.onrender.com";
+export const BACKEND_URL = "https://hacknext.onrender.com";
