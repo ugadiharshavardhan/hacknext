@@ -25,7 +25,7 @@ export const getWelcomeEmailTemplate = (username) => {
             <h2>Hi ${username},</h2>
             <p>We are thrilled to have you on board! Your account has been successfully created.</p>
             <p>At HackNext, we strive to bring you the best events and hackathons. Explore the platform and start your journey.</p>
-            <a href="https://hacknext-plum.vercel.app/user/allevents" class="button">Go to Dashboard</a>
+            <a href="http://localhost:5173/user/allevents" class="button">Go to Dashboard</a>
             <p style="margin-top: 30px; font-size: 0.9em; color: #666;">If you have any questions, feel free to reply to this email.</p>
           </div>
           <div class="footer">
@@ -169,7 +169,7 @@ export const getEventAppliedEmailTemplate = (username, event) => {
             <p>Don't miss out! Add this event to your calendar now.</p>
             
             <center>
-                <a href="${googleCalendarUrl}" target="_blank" class="calendar-btn">📅 Add to Google Calendar</a>
+                <a href="${googleCalendarUrl}" target="_blank" class="calendar-btn" style="color: #ffffff !important; text-decoration: none;">📅 Add to Google Calendar</a>
             </center>
 
             <p style="margin-top: 30px;">Good luck with the event! We'll keep you posted on any updates.</p>

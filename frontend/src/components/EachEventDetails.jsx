@@ -6,6 +6,7 @@ import {
   FaClock,
   FaArrowLeft,
   FaRegBookmark,
+  FaUserAlt,
 } from "react-icons/fa";
 import { useParams, useNavigate } from "react-router";
 import Cookies from "js-cookie";
@@ -253,6 +254,9 @@ const EachEventDetails = () => {
                     </Info>
                     <Info icon={<FaTrophy />} label="Prize Pool">
                       <span className="text-amber-400">₹ {eachData.PricePool}</span>
+                    </Info>
+                    <Info icon={<FaUserAlt />} label="Slots Remaining">
+                      {eachData.Slots}
                     </Info>
                   </div>
                 </Card>

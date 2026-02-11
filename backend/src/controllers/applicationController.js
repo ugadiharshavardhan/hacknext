@@ -36,6 +36,11 @@ export const applyForEvent = async (req, res) => {
       event: eventId
     });
 
+    const appliedCount = await AppliedEventModel.countDocuments({ event: eventId });
+    if (appliedCount >= event.Slots) {
+      return res.status(400).json({ message: "No Slots Available" });
+    }
+
     if (existingApplication) {
       return res.status(400).json({ message: "You have already applied to this event" });
     }

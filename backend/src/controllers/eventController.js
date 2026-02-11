@@ -1,9 +1,20 @@
 import { TechEventsModel } from "../models/TechEvents.js";
+import { AppliedEventModel } from "../models/applyEvent.js";
 
 export const getAllEvents = async (req, res) => {
   try {
     const events = await TechEventsModel.find().populate("createdBy", "email");
-    res.status(200).json({ message: "All Events", allevents: events });
+
+    // Calculate remaining slots for each event
+    const eventsWithSlots = await Promise.all(events.map(async (event) => {
+      const appliedCount = await AppliedEventModel.countDocuments({ event: event._id });
+      return {
+        ...event.toObject(),
+        Slots: Math.max(0, event.Slots - appliedCount) // Ensure non-negative
+      };
+    }));
+
+    res.status(200).json({ message: "All Events", allevents: eventsWithSlots });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -15,7 +26,14 @@ export const getEventById = async (req, res) => {
     if (!event) {
       return res.status(404).json({ message: "Event Not Found" });
     }
-    res.status(200).json(event);
+
+    const appliedCount = await AppliedEventModel.countDocuments({ event: req.params.eventid });
+    const eventWithSlots = {
+      ...event.toObject(),
+      Slots: Math.max(0, event.Slots - appliedCount)
+    };
+
+    res.status(200).json(eventWithSlots);
   } catch (err) {
     console.error("Error:", err);
     res.status(500).json({ message: "Server error" });
