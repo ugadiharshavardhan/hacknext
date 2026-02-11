@@ -75,22 +75,6 @@ export const signin = async (req, res) => {
   res.status(200).json({ message: "Signin successful", jwt_token: token });
 };
 
-// export const getUserAccount = async (req, res) => {
-//   try {
-//     // Get fresh user data from database
-//     const user = await userModel.findById(req.user._id).select('-password');
-//     if (!user) {
-//       return res.status(404).json({ message: 'User not found' });
-//     }
-
-//     res.status(200).json({
-//       userDetails: user,
-//     });
-//   } catch (error) {
-//     console.error("Error fetching user account:", error);
-//     res.status(500).json({ message: "Server Error" });
-//   }
-// };
 
 export const getUserAccount = async (req, res) => {
   try {

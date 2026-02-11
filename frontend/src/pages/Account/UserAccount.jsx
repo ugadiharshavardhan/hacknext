@@ -8,11 +8,13 @@ import {
   FaEye,
   FaUpload,
   FaTrash,
-  FaTimes
+  FaTimes,
+  FaEnvelope
 } from "react-icons/fa";
 import { ThreeDot } from "react-loading-indicators";
 import SavedEvents from "../../components/SavedEvents";
 import Eventsbyuser from "../ApplyedEventsbyuser/Eventsbyuser";
+import ContactUs from "./ContactUs";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import { BACKEND_URL } from "../../config";
@@ -182,6 +184,12 @@ function UserAccount() {
             active={activeSection === "appliedevents"}
             onClick={() => setActiveSection("appliedevents")}
           />
+          <SidebarItem
+            icon={<FaEnvelope />}
+            label="Contact Us"
+            active={activeSection === "contact"}
+            onClick={() => setActiveSection("contact")}
+          />
         </div>
 
         <div
@@ -248,6 +256,7 @@ function UserAccount() {
 
             {activeSection === "saved" && <SavedEvents />}
             {activeSection === "appliedevents" && <Eventsbyuser />}
+            {activeSection === "contact" && <ContactUs userData={userData} />}
           </div>
         </div>
       </main>
