@@ -20,7 +20,7 @@ import savedRoutes from "./src/routes/savedRoutes.js";
 import publicRoutes from "./src/routes/publicRoutes.js";
 import emailRoutes from "./src/routes/emailRoutes.js";
 
-// Request logging middleware
+
 app.use((req, res, next) => {
   console.log(`[REQUEST] ${req.method} ${req.url}`);
   next();
