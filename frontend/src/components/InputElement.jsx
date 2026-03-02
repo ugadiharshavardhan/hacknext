@@ -29,14 +29,14 @@ function InputElement() {
   };
 
   return (
-    <div className="min-h-screen bg-[#020617] text-white">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#020617] text-gray-900 dark:text-white">
 
       {/* HERO */}
       <section className="min-h-[90vh] flex items-center justify-center px-6 pt-24">
         <div className="max-w-5xl text-center space-y-7">
 
           <span className="inline-flex items-center gap-2 px-4 py-1.5 text-sm rounded-full
-                           bg-violet-500/10 text-violet-300 border border-violet-500/30">
+                           bg-violet-100 dark:bg-violet-500/10 text-violet-700 dark:text-violet-300 border border-violet-200 dark:border-violet-500/30">
             <FaLaptopCode />
             Discover Your Next Tech Adventure
           </span>
@@ -48,7 +48,7 @@ function InputElement() {
             </span>
           </h1>
 
-          <p className="text-slate-300 text-lg md:text-xl leading-relaxed">
+          <p className="text-gray-700 dark:text-slate-300 text-lg md:text-xl leading-relaxed">
             A unified platform to explore{" "}
             <span className="text-blue-400 font-semibold">Hackathons</span>,{" "}
             <span className="text-emerald-400 font-semibold">Workshops</span> and{" "}
@@ -56,7 +56,7 @@ function InputElement() {
             hosted by colleges, universities, government bodies and tech companies.
           </p>
 
-          <p className="text-slate-400 max-w-3xl mx-auto">
+          <p className="text-gray-600 dark:text-slate-400 max-w-3xl mx-auto">
             Learn new skills, collaborate with peers, compete, win prizes and gain
             real-world exposure — all from one trusted platform.
           </p>
@@ -65,7 +65,7 @@ function InputElement() {
             <button
               onClick={scrollToEvents}
               className="flex items-center gap-2 px-8 py-3 rounded-xl font-semibold
-                         bg-gradient-to-r from-violet-500 to-blue-500
+                         bg-gradient-to-r from-violet-500 to-blue-500 text-white
                          hover:opacity-90 transition shadow-lg shadow-violet-500/30 cursor-pointer"
             >
               <FaLightbulb />
@@ -75,8 +75,8 @@ function InputElement() {
             <button
               onClick={handleProjects}
               className="flex items-center gap-2 px-8 py-3 rounded-xl font-semibold
-                         bg-[#0F172A] hover:bg-[#111827] transition
-                         border border-slate-700 text-slate-200 cursor-pointer"
+                         bg-white dark:bg-[#0F172A] hover:bg-gray-100 dark:hover:bg-[#111827] transition
+                         border border-gray-300 dark:border-slate-700 text-gray-800 dark:text-slate-200 cursor-pointer"
             >
               <FaProjectDiagram />
               Browse Projects
@@ -97,26 +97,26 @@ function InputElement() {
           </span>
         </h2>
 
-        <p className="text-slate-400">
+        <p className="text-gray-600 dark:text-slate-400">
           Filter and discover upcoming tech opportunities across India
         </p>
 
         <div className="mt-8 flex flex-wrap gap-4 items-center
-                        bg-[#030A1A] border border-slate-700/40
+                        bg-white dark:bg-[#030A1A] border border-gray-200 dark:border-slate-700/40
                         rounded-2xl p-4 shadow-lg">
 
           {/* SEARCH */}
           <div className="flex items-center flex-1 min-w-[250px]
-                          bg-[#020617] px-4 py-3 rounded-xl
-                          border border-slate-700/50 focus-within:border-violet-500">
-            <FiSearch className="text-slate-400 mr-2" />
+                          bg-gray-50 dark:bg-[#020617] px-4 py-3 rounded-xl
+                          border border-gray-300 dark:border-slate-700/50 focus-within:border-violet-500">
+            <FiSearch className="text-gray-500 dark:text-slate-400 mr-2" />
             <input
               type="text"
               placeholder="Search events, titles or keywords"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="bg-transparent outline-none w-full text-sm
-                         placeholder-slate-500 text-slate-200"
+                         placeholder-gray-500 dark:placeholder-slate-500 text-gray-900 dark:text-slate-200"
             />
           </div>
 
@@ -124,12 +124,12 @@ function InputElement() {
           <select
             value={eventType}
             onChange={(e) => setEventType(e.target.value)}
-            className="bg-[#020617] border cursor-pointer border-slate-700/50
-                       rounded-xl px-4 py-3 text-sm text-slate-300
+            className="bg-gray-50 dark:bg-[#020617] border cursor-pointer border-gray-300 dark:border-slate-700/50
+                       rounded-xl px-4 py-3 text-sm text-gray-700 dark:text-slate-300
                        hover:border-violet-500 transition"
           >
             {eventTypes.map((type, idx) => (
-              <option key={idx} className="bg-[#020617]">
+              <option key={idx} className="bg-white dark:bg-[#020617] text-gray-900 dark:text-slate-300">
                 {type}
               </option>
             ))}
@@ -139,17 +139,17 @@ function InputElement() {
           <select
             value={organizer}
             onChange={(e) => setOrganizer(e.target.value)}
-            className="bg-[#020617] border cursor-pointer border-slate-700/50
-                       rounded-xl px-4 py-3 text-sm text-slate-300
+            className="bg-gray-50 dark:bg-[#020617] border cursor-pointer border-gray-300 dark:border-slate-700/50
+                       rounded-xl px-4 py-3 text-sm text-gray-700 dark:text-slate-300
                        hover:border-blue-500 transition"
           >
             {organizers.map((org, idx) => (
-              <option key={idx} className="bg-[#020617]">
+              <option key={idx} className="bg-white dark:bg-[#020617] text-gray-900 dark:text-slate-300">
                 {org}
               </option>
             ))}
           </select>
-          <h1 onClick={handleClearfilters} className="text-white bg-[#020617] border p-2 rounded-xl border-slate-700/50 cursor-pointer">clear filters</h1>
+          <h1 onClick={handleClearfilters} className="text-gray-700 dark:text-white bg-gray-50 dark:bg-[#020617] border p-2 rounded-xl border-gray-300 dark:border-slate-700/50 cursor-pointer text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-800 transition">clear filters</h1>
         </div>
       </section>
 

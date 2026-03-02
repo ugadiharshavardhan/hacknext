@@ -95,7 +95,7 @@ function ProjectsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0f1225] to-[#14172e] text-white px-8 py-20">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-white dark:from-[#0f1225] dark:to-[#14172e] text-gray-900 dark:text-white px-8 py-20">
       {loading ? (
         <div className="flex min-h-screen justify-center items-center">
           <ThreeDot color="#6366f1" size="medium" />
@@ -105,26 +105,26 @@ function ProjectsPage() {
           {/* Header */}
           <div className="text-center mb-5 mt-5">
             <h1 className="text-4xl font-bold">
-              <span className="text-indigo-400">HackNext</span> Projects
+              <span className="text-indigo-600 dark:text-indigo-400">HackNext</span> Projects
             </h1>
-            <p className="text-gray-400 mt-2">
+            <p className="text-gray-600 dark:text-gray-400 mt-2">
               Build real-world projects to boost your development skills.
             </p>
           </div>
 
           {/* Search */}
-          <p className="pb-2 text-gray-300">Search based on stacks</p>
+          <p className="pb-2 text-gray-700 dark:text-gray-300">Search based on stacks</p>
           <div
             className="
               w-full md:w-[520px] mb-8 p-[1.5px] rounded-xl
-              bg-white/10
+              bg-gray-300 dark:bg-white/10
               focus-within:bg-gradient-to-r
               focus-within:from-blue-500
               focus-within:to-violet-600
               transition-all duration-300
             "
           >
-            <div className="flex items-center gap-3 bg-[#0f1225] rounded-[10px] px-4 py-3">
+            <div className="flex items-center gap-3 bg-white dark:bg-[#0f1225] rounded-[10px] px-4 py-3">
               <FiSearch className="text-gray-400" />
               <input
                 type="text"
@@ -134,7 +134,7 @@ function ProjectsPage() {
                 onChange={(e) => handleInput(e)}
                 className="
                   bg-transparent outline-none text-sm w-full
-                  placeholder-gray-500 text-gray-200
+                  placeholder-gray-500 text-gray-900 dark:text-gray-200
                 "
               />
             </div>
@@ -147,7 +147,7 @@ function ProjectsPage() {
             {mainData.map((project, id) => (
               <div
                 key={id}
-                className="rounded-2xl bg-white/5 border border-white/10 p-6 shadow-xl hover:shadow-indigo-900/30 transition-transform hover:-translate-y-1"
+                className="rounded-2xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 p-6 shadow-xl hover:shadow-indigo-900/30 transition-transform hover:-translate-y-1"
               >
                 {/* Title + Level */}
                 <div className="flex justify-between items-center mb-3">
@@ -156,12 +156,12 @@ function ProjectsPage() {
                   </h2>
                   <span
                     className={`text-xs px-3 py-1 rounded-full font-semibold ${project.level === "Beginner"
-                        ? "bg-green-500 text-white"
-                        : project.level === "Intermediate"
-                          ? "bg-orange-500 text-white"
-                          : project.level === "easy"
-                            ? "bg-green-500 text-white"
-                            : "bg-red-500 text-white"
+                      ? "bg-green-500 text-white"
+                      : project.level === "Intermediate"
+                        ? "bg-orange-500 text-white"
+                        : project.level === "easy"
+                          ? "bg-green-500 text-white"
+                          : "bg-red-500 text-white"
                       }`}
                   >
                     {project.level}
@@ -169,7 +169,7 @@ function ProjectsPage() {
                 </div>
 
                 {/* Description */}
-                <p className="text-gray-400 text-sm mb-4 leading-relaxed">
+                <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 leading-relaxed">
                   {project.description}
                 </p>
 
@@ -178,7 +178,7 @@ function ProjectsPage() {
                   {project.stack.map((tech, idx) => (
                     <div
                       key={idx}
-                      className="flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1 rounded-full text-xs text-gray-200"
+                      className="flex items-center gap-2 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 px-3 py-1 rounded-full text-xs text-gray-700 dark:text-gray-200"
                     >
                       {stackIcons[tech]}
                       {tech}
@@ -192,7 +192,7 @@ function ProjectsPage() {
                     e.preventDefault();
                     navigate(`/projects/${project._id}`);
                   }}
-                  className="w-full flex justify-center mt-2 border border-white/10 hover:border-black/20 bg-indigo-600/20 hover:bg-gradient-to-r hover:from-blue-500 hover:to-violet-600 text-indigo-300 py-2 rounded-xl font-medium transition hover:text-white cursor-pointer"
+                  className="w-full flex justify-center mt-2 border border-gray-300 dark:border-white/10 hover:border-gray-400 dark:hover:border-black/20 bg-indigo-50 dark:bg-indigo-600/20 hover:bg-gradient-to-r hover:from-blue-500 hover:to-violet-600 text-indigo-700 dark:text-indigo-300 py-2 rounded-xl font-medium transition hover:text-white cursor-pointer"
                 >
                   View Project <FaExternalLinkAlt className="m-1.5" size={12} />
                 </button>

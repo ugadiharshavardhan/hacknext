@@ -115,33 +115,33 @@ export default function ForgotPassword() {
     };
 
     return (
-        <div className="min-h-screen w-full bg-gradient-to-br from-[#0f1225] to-[#14172e] relative flex items-center justify-center px-4">
-            <div className="absolute inset-0 bg-black/30"></div>
+        <div className="min-h-screen w-full bg-gradient-to-br from-indigo-50 to-white dark:from-[#0f1225] dark:to-[#14172e] relative flex items-center justify-center px-4">
+            <div className="absolute inset-0 bg-white/30 dark:bg-black/30"></div>
 
             {/* Header */}
             <header onClick={handleHome} className="absolute cursor-pointer top-6 left-6 z-20">
                 <div className="flex items-center gap-2">
-                    <FaCode size={34} className="text-indigo-400" />
-                    <h1 className="text-2xl md:text-3xl font-bold text-white">HackNext</h1>
+                    <FaCode size={34} className="text-indigo-600 dark:text-indigo-400" />
+                    <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">HackNext</h1>
                 </div>
                 <button
                     onClick={handleHome}
-                    className="mt-2 text-sm px-4 py-1 rounded-lg border border-white/20 text-gray-200 hover:border-white/40 transition"
+                    className="mt-2 text-sm px-4 py-1 rounded-lg border border-gray-300 dark:border-white/20 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:border-white/40 transition"
                 >
                     Back
                 </button>
             </header>
 
             <div className="relative z-10 w-full max-w-[400px]">
-                <div className="bg-white/5 backdrop-blur-md p-8 rounded-2xl border border-white/10 shadow-2xl">
+                <div className="bg-white/80 dark:bg-white/5 backdrop-blur-md p-8 rounded-2xl border border-gray-200 dark:border-white/10 shadow-2xl">
 
-                    <h2 className="text-2xl font-bold text-white text-center mb-2">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white text-center mb-2">
                         {step === 1 && "Forgot Password"}
                         {step === 2 && "Enter OTP"}
                         {step === 3 && "Reset Password"}
                     </h2>
 
-                    <p className="text-gray-400 text-center text-sm mb-6">
+                    <p className="text-gray-600 dark:text-gray-400 text-center text-sm mb-6">
                         {step === 1 && "Enter your email to receive a 6-digit OTP code."}
                         {step === 2 && `We sent a code to ${email}. Check your inbox.`}
                         {step === 3 && "Create a new strong password for your account."}
@@ -152,9 +152,9 @@ export default function ForgotPassword() {
                         {/* Step 1: Email */}
                         {step === 1 && (
                             <div>
-                                <label className="text-gray-300 text-xs font-semibold mb-1 block">EMAIL ADDRESS</label>
+                                <label className="text-gray-700 dark:text-gray-300 text-xs font-semibold mb-1 block">EMAIL ADDRESS</label>
                                 <div className="relative">
-                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500 dark:text-gray-400">
                                         <FaEnvelope />
                                     </div>
                                     <input
@@ -162,7 +162,7 @@ export default function ForgotPassword() {
                                         required
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
-                                        className="w-full pl-10 pr-3 py-3 rounded-xl bg-white/10 text-white placeholder-gray-500 border border-white/5 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition"
+                                        className="w-full pl-10 pr-3 py-3 rounded-xl bg-gray-100 dark:bg-white/10 text-gray-900 dark:text-white placeholder-gray-500 border border-gray-300 dark:border-white/5 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition"
                                         placeholder="john@example.com"
                                     />
                                 </div>
@@ -172,9 +172,9 @@ export default function ForgotPassword() {
                         {/* Step 2: OTP */}
                         {step === 2 && (
                             <div>
-                                <label className="text-gray-300 text-xs font-semibold mb-1 block">OTP CODE</label>
+                                <label className="text-gray-700 dark:text-gray-300 text-xs font-semibold mb-1 block">OTP CODE</label>
                                 <div className="relative">
-                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500 dark:text-gray-400">
                                         <FaKey />
                                     </div>
                                     <input
@@ -183,7 +183,7 @@ export default function ForgotPassword() {
                                         maxLength="6"
                                         value={otp}
                                         onChange={(e) => setOtp(e.target.value)}
-                                        className="w-full pl-10 pr-3 py-3 rounded-xl bg-white/10 text-white placeholder-gray-500 border border-white/5 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition tracking-widest text-lg"
+                                        className="w-full pl-10 pr-3 py-3 rounded-xl bg-gray-100 dark:bg-white/10 text-gray-900 dark:text-white placeholder-gray-500 border border-gray-300 dark:border-white/5 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition tracking-widest text-lg"
                                         placeholder="123456"
                                     />
                                 </div>
@@ -191,7 +191,7 @@ export default function ForgotPassword() {
                                     <button
                                         type="button"
                                         onClick={() => setStep(1)}
-                                        className="text-indigo-400 text-xs hover:underline"
+                                        className="text-indigo-600 dark:text-indigo-400 text-xs hover:underline"
                                     >
                                         Wrong email?
                                     </button>
@@ -203,9 +203,9 @@ export default function ForgotPassword() {
                         {step === 3 && (
                             <div className="space-y-4">
                                 <div>
-                                    <label className="text-gray-300 text-xs font-semibold mb-1 block">NEW PASSWORD</label>
+                                    <label className="text-gray-700 dark:text-gray-300 text-xs font-semibold mb-1 block">NEW PASSWORD</label>
                                     <div className="relative">
-                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500 dark:text-gray-400">
                                             <FaLock />
                                         </div>
                                         <input
@@ -213,15 +213,15 @@ export default function ForgotPassword() {
                                             required
                                             value={newPassword}
                                             onChange={(e) => setNewPassword(e.target.value)}
-                                            className="w-full pl-10 pr-3 py-3 rounded-xl bg-white/10 text-white placeholder-gray-500 border border-white/5 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition"
+                                            className="w-full pl-10 pr-3 py-3 rounded-xl bg-gray-100 dark:bg-white/10 text-gray-900 dark:text-white placeholder-gray-500 border border-gray-300 dark:border-white/5 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition"
                                             placeholder="••••••••"
                                         />
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="text-gray-300 text-xs font-semibold mb-1 block">CONFIRM PASSWORD</label>
+                                    <label className="text-gray-700 dark:text-gray-300 text-xs font-semibold mb-1 block">CONFIRM PASSWORD</label>
                                     <div className="relative">
-                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500 dark:text-gray-400">
                                             <FaLock />
                                         </div>
                                         <input
@@ -229,7 +229,7 @@ export default function ForgotPassword() {
                                             required
                                             value={confirmPassword}
                                             onChange={(e) => setConfirmPassword(e.target.value)}
-                                            className="w-full pl-10 pr-3 py-3 rounded-xl bg-white/10 text-white placeholder-gray-500 border border-white/5 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition"
+                                            className="w-full pl-10 pr-3 py-3 rounded-xl bg-gray-100 dark:bg-white/10 text-gray-900 dark:text-white placeholder-gray-500 border border-gray-300 dark:border-white/5 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition"
                                             placeholder="••••••••"
                                         />
                                     </div>
@@ -258,7 +258,7 @@ export default function ForgotPassword() {
 
                     {step === 1 && (
                         <div className="mt-6 text-center">
-                            <Link to="/signin" className="text-gray-400 text-sm hover:text-white transition flex items-center justify-center gap-2">
+                            <Link to="/signin" className="text-gray-600 dark:text-gray-400 text-sm hover:text-gray-900 dark:hover:text-white transition flex items-center justify-center gap-2">
                                 <FaArrowLeft size={12} /> Back to Login
                             </Link>
                         </div>

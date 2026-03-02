@@ -92,11 +92,11 @@ function AdminOverView() {
       {stats.map((item, index) => (
         <div
           key={index}
-          className="bg-gray-900 p-6 rounded-xl shadow-md flex flex-col items-center justify-center hover:shadow-lg hover:scale-105 transition-all"
+          className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-white/10 p-6 rounded-xl shadow-md flex flex-col items-center justify-center hover:shadow-lg hover:scale-105 transition-all text-gray-900 dark:text-white"
         >
           {item.icon}
           <h2 className="text-2xl font-bold mt-2">{item.value}</h2>
-          <p className="text-gray-400 text-sm">{item.title}</p>
+          <p className="text-gray-600 dark:text-gray-400 text-sm">{item.title}</p>
         </div>
       ))}
     </div>

@@ -17,18 +17,26 @@ function AppliedEvent() {
         fullName: "",
         email: "",
         phoneNumber: "",
-        street: "",
-        city: "",
-        state: "",
-        postalCode: "",
         institution: "",
         role: "",
         skills: "",
+        // Hackathon fields
         teamName: "",
         teamLeadName: "",
         membersCount: "",
-        ideaDescription: ""
+        experienceLevel: "",
+        ideaDescription: "",
+        // Workshop fields
+        reasonForAttending: "",
+        proficiency: "",
+        expectedOutcomes: "",
+        // Tech Event fields
+        professionalStatus: "",
+        areasOfInterest: "",
+        previousEventExperience: ""
     });
+
+
 
     const validateForm = () => {
         const newErrors = {};
@@ -47,19 +55,30 @@ function AppliedEvent() {
             newErrors.phoneNumber = 'Phone number must be 10 digits';
         }
 
-        if (!ApplyFormData.street) newErrors.street = 'Street address is required';
-        if (!ApplyFormData.city) newErrors.city = 'City is required';
-        if (!ApplyFormData.state) newErrors.state = 'State is required';
-        if (!ApplyFormData.postalCode) newErrors.postalCode = 'Postal code is required';
         if (!ApplyFormData.institution) newErrors.institution = 'Institution is required';
         if (!ApplyFormData.role) newErrors.role = 'Role is required';
+
         if (!ApplyFormData.skills) newErrors.skills = 'Skills are required';
-        if (!ApplyFormData.teamName) newErrors.teamName = 'Team name is required';
-        if (!ApplyFormData.ideaDescription) newErrors.ideaDescription = 'Idea description is required';
+
+        const eventType = EventDetails.EventType;
+
+        if (eventType === "Hackathon") {
+            if (!ApplyFormData.teamName) newErrors.teamName = 'Team name is required';
+            if (!ApplyFormData.membersCount) newErrors.membersCount = 'Members count is required';
+            if (!ApplyFormData.ideaDescription) newErrors.ideaDescription = 'Idea description is required';
+        } else if (eventType === "Workshop") {
+            if (!ApplyFormData.reasonForAttending) newErrors.reasonForAttending = 'Reason for attending is required';
+            if (!ApplyFormData.proficiency) newErrors.proficiency = 'Proficiency level is required';
+        } else if (eventType === "Tech Event") {
+            if (!ApplyFormData.professionalStatus) newErrors.professionalStatus = 'Professional status is required';
+            if (!ApplyFormData.areasOfInterest) newErrors.areasOfInterest = 'Areas of interest is required';
+        }
+
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
+
 
     const handleSubmitApply = async (event) => {
         event.preventDefault();
@@ -161,21 +180,21 @@ function AppliedEvent() {
 
     if (isSuccess) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white flex flex-col items-center justify-center p-4">
-                <div className="max-w-md w-full bg-gray-800/50 backdrop-blur-xl border border-white/10 rounded-2xl p-8 text-center shadow-2xl">
+            <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-white dark:from-gray-900 dark:to-black text-gray-900 dark:text-white flex flex-col items-center justify-center p-4">
+                <div className="max-w-md w-full bg-white dark:bg-gray-800/50 backdrop-blur-xl border border-gray-200 dark:border-white/10 rounded-2xl p-8 text-center shadow-2xl">
                     <div className="flex justify-center mb-6">
-                        <div className="bg-green-500/20 p-4 rounded-full">
-                            <FaCheckCircle className="text-5xl text-green-500" />
+                        <div className="bg-green-100 dark:bg-green-500/20 p-4 rounded-full">
+                            <FaCheckCircle className="text-5xl text-green-600 dark:text-green-500" />
                         </div>
                     </div>
 
-                    <h2 className="text-3xl font-bold bg-gradient-to-r from-green-400 to-emerald-600 bg-clip-text text-transparent mb-2">
+                    <h2 className="text-3xl font-bold bg-gradient-to-r from-green-500 to-emerald-600 dark:from-green-400 dark:to-emerald-600 bg-clip-text text-transparent mb-2">
                         Application Sent!
                     </h2>
 
-                    <p className="text-gray-400 mb-8">
+                    <p className="text-gray-600 dark:text-gray-400 mb-8">
                         You have successfully applied for <br />
-                        <span className="text-white font-semibold">{EventDetails.EventTitle}</span>
+                        <span className="text-gray-900 dark:text-white font-semibold">{EventDetails.EventTitle}</span>
                     </p>
 
                     <div className="space-y-4">
@@ -191,7 +210,7 @@ function AppliedEvent() {
 
                         <button
                             onClick={() => navigate('/user/allevents')}
-                            className="flex items-center justify-center gap-2 w-full bg-white/10 hover:bg-white/20 text-white border border-white/20 py-3 px-6 rounded-xl font-semibold transition-all"
+                            className="flex items-center justify-center gap-2 w-full bg-gray-100 dark:bg-white/10 hover:bg-gray-200 dark:hover:bg-white/20 text-gray-900 dark:text-white border border-gray-300 dark:border-white/20 py-3 px-6 rounded-xl font-semibold transition-all cursor-pointer"
                         >
                             <FaHome />
                             Back to Dashboard
@@ -207,19 +226,19 @@ function AppliedEvent() {
     }
 
     return (
-        <div className='min-h-screen bg-black/90 flex items-center justify-center pt-25'>
+        <div className='min-h-screen bg-gray-50 dark:bg-black/90 flex items-center justify-center pt-25 py-12'>
             <form onSubmit={handleSubmitApply} className="w-full max-w-3xl">
-                <div className="bg-gray-900/50 backdrop-blur-md border border-white/10 text-white p-8 rounded-2xl shadow-2xl space-y-8 relative">
+                <div className="bg-white dark:bg-gray-900/50 backdrop-blur-md border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white p-8 rounded-2xl shadow-2xl space-y-8 relative">
 
                     {/* Header with Close Button */}
                     <div className="flex justify-between items-center mb-6">
-                        <h2 className="text-3xl font-bold bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">
+                        <h2 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-violet-600 dark:from-indigo-400 dark:to-cyan-400 bg-clip-text text-transparent">
                             Application Form
                         </h2>
                         <button
                             type="button"
                             onClick={handleBackBtn}
-                            className="text-gray-400 hover:text-white transition-colors p-2 rounded-full hover:bg-white/10 cursor-pointer"
+                            className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 cursor-pointer"
                         >
                             <FaTimes size={24} />
                         </button>
@@ -232,7 +251,7 @@ function AppliedEvent() {
                             value={ApplyFormData.fullName}
                             onChange={handleDataapply}
                             placeholder="John Doe"
-                            className={`w-full p-2 rounded bg-gray-800 border ${errors.fullName ? 'border-red-500' : 'border-gray-700'}`}
+                            className={`w-full p-2 rounded bg-gray-50 dark:bg-gray-800 border ${errors.fullName ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'} focus:outline-none focus:ring-2 focus:ring-indigo-500`}
                         />
                         {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>}
                     </div>
@@ -246,7 +265,7 @@ function AppliedEvent() {
                                 value={ApplyFormData.email}
                                 onChange={handleDataapply}
                                 placeholder="john.doe@university.edu"
-                                className={`w-full p-2 rounded bg-gray-800 border ${errors.email ? 'border-red-500' : 'border-gray-700'}`}
+                                className={`w-full p-2 rounded bg-gray-50 dark:bg-gray-800 border ${errors.email ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'} focus:outline-none focus:ring-2 focus:ring-indigo-500`}
                             />
                             {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
                         </div>
@@ -259,69 +278,14 @@ function AppliedEvent() {
                                 value={ApplyFormData.phoneNumber}
                                 onChange={handleDataapply}
                                 placeholder="1234567890"
-                                className={`w-full p-2 rounded bg-gray-800 border ${errors.phoneNumber ? 'border-red-500' : 'border-gray-700'}`}
+                                className={`w-full p-2 rounded bg-gray-50 dark:bg-gray-800 border ${errors.phoneNumber ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'} focus:outline-none focus:ring-2 focus:ring-indigo-500`}
                             />
                             {errors.phoneNumber && <p className="text-red-500 text-sm mt-1">{errors.phoneNumber}</p>}
                         </div>
                     </div>
 
-                    <div className="border border-gray-700 rounded p-4 space-y-4">
-                        <p className="font-semibold">Address Information</p>
+                    {/* (REMOVED: Address section was here) */}
 
-                        <div>
-                            <label className="block mb-1 font-medium">Street Address*</label>
-                            <input
-                                type="text"
-                                name="street"
-                                value={ApplyFormData.street}
-                                onChange={handleDataapply}
-                                placeholder="123 Main Street"
-                                className={`w-full p-2 rounded bg-gray-800 border ${errors.street ? 'border-red-500' : 'border-gray-700'}`}
-                            />
-                            {errors.street && <p className="text-red-500 text-sm mt-1">{errors.street}</p>}
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div>
-                                <label className="block mb-1 font-medium">City*</label>
-                                <input
-                                    type="text"
-                                    name="city"
-                                    value={ApplyFormData.city}
-                                    onChange={handleDataapply}
-                                    placeholder="Boston"
-                                    className={`w-full p-2 rounded bg-gray-800 border ${errors.city ? 'border-red-500' : 'border-gray-700'}`}
-                                />
-                                {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city}</p>}
-                            </div>
-
-                            <div>
-                                <label className="block mb-1 font-medium">State / Province*</label>
-                                <input
-                                    type="text"
-                                    name="state"
-                                    value={ApplyFormData.state}
-                                    onChange={handleDataapply}
-                                    placeholder="MA"
-                                    className={`w-full p-2 rounded bg-gray-800 border ${errors.state ? 'border-red-500' : 'border-gray-700'}`}
-                                />
-                                {errors.state && <p className="text-red-500 text-sm mt-1">{errors.state}</p>}
-                            </div>
-
-                            <div>
-                                <label className="block mb-1 font-medium">Postal / Zip Code*</label>
-                                <input
-                                    type="text"
-                                    name="postalCode"
-                                    value={ApplyFormData.postalCode}
-                                    onChange={handleDataapply}
-                                    placeholder="02138"
-                                    className={`w-full p-2 rounded bg-gray-800 border ${errors.postalCode ? 'border-red-500' : 'border-gray-700'}`}
-                                />
-                                {errors.postalCode && <p className="text-red-500 text-sm mt-1">{errors.postalCode}</p>}
-                            </div>
-                        </div>
-                    </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
@@ -332,7 +296,7 @@ function AppliedEvent() {
                                 value={ApplyFormData.institution}
                                 onChange={handleDataapply}
                                 placeholder="Harvard University"
-                                className={`w-full p-2 rounded bg-gray-800 border ${errors.institution ? 'border-red-500' : 'border-gray-700'}`}
+                                className={`w-full p-2 rounded bg-gray-50 dark:bg-gray-800 border ${errors.institution ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'} focus:outline-none focus:ring-2 focus:ring-indigo-500`}
                             />
                             {errors.institution && <p className="text-red-500 text-sm mt-1">{errors.institution}</p>}
                         </div>
@@ -345,7 +309,7 @@ function AppliedEvent() {
                                 value={ApplyFormData.role}
                                 onChange={handleDataapply}
                                 placeholder="Computer Science Student"
-                                className={`w-full p-2 rounded bg-gray-800 border ${errors.role ? 'border-red-500' : 'border-gray-700'}`}
+                                className={`w-full p-2 rounded bg-gray-50 dark:bg-gray-800 border ${errors.role ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'} focus:outline-none focus:ring-2 focus:ring-indigo-500`}
                             />
                             {errors.role && <p className="text-red-500 text-sm mt-1">{errors.role}</p>}
                         </div>
@@ -359,52 +323,197 @@ function AppliedEvent() {
                             value={ApplyFormData.skills}
                             onChange={handleDataapply}
                             placeholder="Web Dev, AI, Blockchain, Design, etc."
-                            className={`w-full p-2 rounded bg-gray-800 border ${errors.skills ? 'border-red-500' : 'border-gray-700'}`}
+                            className={`w-full p-2 rounded bg-gray-50 dark:bg-gray-800 border ${errors.skills ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'} focus:outline-none focus:ring-2 focus:ring-indigo-500`}
                         />
                         {errors.skills && <p className="text-red-500 text-sm mt-1">{errors.skills}</p>}
                     </div>
 
-                    <div>
-                        <label className="block mb-1 font-medium">Team Name*</label>
-                        <input
-                            type="text"
-                            name="teamName"
-                            value={ApplyFormData.teamName}
-                            onChange={handleDataapply}
-                            placeholder="e.g., Code Warriors"
-                            className={`w-full p-2 rounded bg-gray-800 border ${errors.teamName ? 'border-red-500' : 'border-gray-700'}`}
-                        />
-                        {errors.teamName && <p className="text-red-500 text-sm mt-1">{errors.teamName}</p>}
-                    </div>
+                    {/* Hackathon Specific Fields */}
+                    {EventDetails.EventType === "Hackathon" && (
+                        <>
+                            <div className="space-y-4 border border-indigo-200 dark:border-indigo-500/30 p-5 rounded-xl bg-indigo-50 dark:bg-indigo-500/5">
+                                <p className="font-semibold text-indigo-600 dark:text-indigo-400 text-lg">Hackathon Details</p>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block mb-1 font-medium text-sm">Team Name*</label>
+                                        <input
+                                            type="text"
+                                            name="teamName"
+                                            value={ApplyFormData.teamName}
+                                            onChange={handleDataapply}
+                                            placeholder="e.g., Code Warriors"
+                                            className={`w-full p-2.5 rounded bg-white dark:bg-gray-800 border ${errors.teamName ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'} focus:border-indigo-500 outline-none`}
+                                        />
+                                        {errors.teamName && <p className="text-red-500 text-xs mt-1">{errors.teamName}</p>}
+                                    </div>
+                                    <div>
+                                        <label className="block mb-1 font-medium text-sm">Members Count*</label>
+                                        <select
+                                            name="membersCount"
+                                            value={ApplyFormData.membersCount}
+                                            onChange={handleDataapply}
+                                            className={`w-full p-2.5 rounded bg-white dark:bg-gray-800 border ${errors.membersCount ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'} focus:border-indigo-500 outline-none`}
+                                        >
+                                            <option value="">Select Count</option>
+                                            <option value="1">1 (Solo)</option>
+                                            <option value="2">2 Members</option>
+                                            <option value="3">3 Members</option>
+                                            <option value="4">4 Members</option>
+                                        </select>
+                                        {errors.membersCount && <p className="text-red-500 text-xs mt-1">{errors.membersCount}</p>}
+                                    </div>
+                                </div>
 
-                    <div>
-                        <label className="block mb-2 font-medium">Team Lead Name</label>
-                        <input placeholder='Head of the team' name="teamLeadName" value={ApplyFormData.teamLeadName} onChange={handleDataapply} className='w-full p-2 rounded bg-gray-800 border border-gray-700' />
-                    </div>
+                                <div>
+                                    <label className="block mb-1 font-medium text-sm">Team Lead Name</label>
+                                    <input
+                                        type="text"
+                                        name="teamLeadName"
+                                        value={ApplyFormData.teamLeadName}
+                                        onChange={handleDataapply}
+                                        placeholder="Name of the team representative"
+                                        className="w-full p-2.5 rounded bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:border-indigo-500 outline-none"
+                                    />
+                                </div>
 
-                    <div>
-                        <label className="block mb-2 font-medium">Members</label>
-                        <input placeholder='1 or 2 or 3 or 4 ' name="membersCount" value={ApplyFormData.membersCount} onChange={handleDataapply} className='w-full p-2 rounded bg-gray-800 border border-gray-700' />
-                    </div>
+                                <div>
+                                    <label className="block mb-1 font-medium text-sm">Experience Level (Hackathons)</label>
+                                    <select
+                                        name="experienceLevel"
+                                        value={ApplyFormData.experienceLevel}
+                                        onChange={handleDataapply}
+                                        className="w-full p-2.5 rounded bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:border-indigo-500 outline-none"
+                                    >
+                                        <option value="">Select Experience</option>
+                                        <option value="First Timer">First Timer</option>
+                                        <option value="Intermediate (1-3 Hackathons)">Intermediate (1-3 Hackathons)</option>
+                                        <option value="Pro (4+ Hackathons)">Pro (4+ Hackathons)</option>
+                                    </select>
+                                </div>
 
-                    <div>
-                        <label className="block mb-1 font-medium">
-                            Describe your idea or area of interest*
-                        </label>
-                        <textarea
-                            onChange={handleDataapply}
-                            rows="4"
-                            name="ideaDescription"
-                            value={ApplyFormData.ideaDescription}
-                            placeholder="Briefly explain what you plan to build or explore..."
-                            className="w-full p-2 rounded bg-gray-800 border border-gray-700"
-                        />
-                    </div>
+                                <div>
+                                    <label className="block mb-1 font-medium text-sm">Describe your project idea*</label>
+                                    <textarea
+                                        name="ideaDescription"
+                                        value={ApplyFormData.ideaDescription}
+                                        onChange={handleDataapply}
+                                        rows="3"
+                                        placeholder="What problem are you solving and what's your proposed tech stack?"
+                                        className={`w-full p-2.5 rounded bg-white dark:bg-gray-800 border ${errors.ideaDescription ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'} focus:border-indigo-500 outline-none`}
+                                    />
+                                    {errors.ideaDescription && <p className="text-red-500 text-xs mt-1">{errors.ideaDescription}</p>}
+                                </div>
+                            </div>
+                        </>
+                    )}
+
+                    {/* Workshop Specific Fields */}
+                    {EventDetails.EventType === "Workshop" && (
+                        <>
+                            <div className="space-y-4 border border-emerald-200 dark:border-emerald-500/30 p-5 rounded-xl bg-emerald-50 dark:bg-emerald-500/5">
+                                <p className="font-semibold text-emerald-600 dark:text-emerald-400 text-lg">Workshop Details</p>
+                                <div>
+                                    <label className="block mb-1 font-medium text-sm">Reason for Attending*</label>
+                                    <textarea
+                                        name="reasonForAttending"
+                                        value={ApplyFormData.reasonForAttending}
+                                        onChange={handleDataapply}
+                                        rows="2"
+                                        placeholder="Explain your interest in this specific workshop"
+                                        className={`w-full p-2.5 rounded bg-white dark:bg-gray-800 border ${errors.reasonForAttending ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'} focus:border-emerald-500 outline-none`}
+                                    />
+                                    {errors.reasonForAttending && <p className="text-red-500 text-xs mt-1">{errors.reasonForAttending}</p>}
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block mb-1 font-medium text-sm">Your Proficiency*</label>
+                                        <select
+                                            name="proficiency"
+                                            value={ApplyFormData.proficiency}
+                                            onChange={handleDataapply}
+                                            className={`w-full p-2.5 rounded bg-white dark:bg-gray-800 border ${errors.proficiency ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'} focus:border-emerald-500 outline-none`}
+                                        >
+                                            <option value="">Select Level</option>
+                                            <option value="Beginner">Beginner</option>
+                                            <option value="Intermediate">Intermediate</option>
+                                            <option value="Advanced">Advanced</option>
+                                        </select>
+                                        {errors.proficiency && <p className="text-red-500 text-xs mt-1">{errors.proficiency}</p>}
+                                    </div>
+                                    <div>
+                                        <label className="block mb-1 font-medium text-sm">Expected Outcomes</label>
+                                        <input
+                                            type="text"
+                                            name="expectedOutcomes"
+                                            value={ApplyFormData.expectedOutcomes}
+                                            onChange={handleDataapply}
+                                            placeholder="What do you hope to learn?"
+                                            className="w-full p-2.5 rounded bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:border-emerald-500 outline-none"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </>
+                    )}
+
+                    {/* Tech Event Specific Fields */}
+                    {EventDetails.EventType === "Tech Event" && (
+                        <>
+                            <div className="space-y-4 border border-cyan-200 dark:border-cyan-500/30 p-5 rounded-xl bg-cyan-50 dark:bg-cyan-500/5">
+                                <p className="font-semibold text-cyan-600 dark:text-cyan-400 text-lg">Tech Event Details</p>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block mb-1 font-medium text-sm">Professional Status*</label>
+                                        <select
+                                            name="professionalStatus"
+                                            value={ApplyFormData.professionalStatus}
+                                            onChange={handleDataapply}
+                                            className={`w-full p-2.5 rounded bg-white dark:bg-gray-800 border ${errors.professionalStatus ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'} focus:border-cyan-500 outline-none`}
+                                        >
+                                            <option value="">Select Status</option>
+                                            <option value="Student">Student</option>
+                                            <option value="Working Professional">Working Professional</option>
+                                            <option value="Freelancer">Freelancer</option>
+                                            <option value="Founder/CEO">Founder/CEO</option>
+                                        </select>
+                                        {errors.professionalStatus && <p className="text-red-500 text-xs mt-1">{errors.professionalStatus}</p>}
+                                    </div>
+                                    <div>
+                                        <label className="block mb-1 font-medium text-sm">Areas of Interest*</label>
+                                        <input
+                                            type="text"
+                                            name="areasOfInterest"
+                                            value={ApplyFormData.areasOfInterest}
+                                            onChange={handleDataapply}
+                                            placeholder="AI, Web3, Cloud, etc."
+                                            className={`w-full p-2.5 rounded bg-white dark:bg-gray-800 border ${errors.areasOfInterest ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'} focus:border-cyan-500 outline-none`}
+                                        />
+                                        {errors.areasOfInterest && <p className="text-red-500 text-xs mt-1">{errors.areasOfInterest}</p>}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block mb-1 font-medium text-sm">Previous Event Experience</label>
+                                    <textarea
+                                        name="previousEventExperience"
+                                        value={ApplyFormData.previousEventExperience}
+                                        onChange={handleDataapply}
+                                        rows="2"
+                                        placeholder="List any similar events you've attended previously"
+                                        className="w-full p-2.5 rounded bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:border-cyan-500 outline-none"
+                                    />
+                                </div>
+                            </div>
+                        </>
+                    )}
+
+
 
                     <button
                         type="submit"
                         disabled={isSubmitting}
-                        className={`w-full ${isSubmitting ? 'bg-blue-400' : 'bg-blue-600 hover:bg-blue-700'} text-white font-semibold py-3 px-4 rounded-lg transition-colors`}
+                        className={`w-full ${isSubmitting ? 'bg-blue-400 dark:bg-indigo-400' : 'bg-blue-600 hover:bg-blue-700 dark:bg-indigo-600 dark:hover:bg-indigo-700'} text-white font-semibold py-3 px-4 rounded-lg flex justify-center items-center cursor-pointer transition-colors`}
                     >
                         {isSubmitting ? 'Submitting...' : 'Submit Application'}
                     </button>

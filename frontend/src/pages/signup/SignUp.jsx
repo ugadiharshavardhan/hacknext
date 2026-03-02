@@ -98,28 +98,28 @@ export default function SignUp() {
   const handleHome = () => navigate("/", { replace: true });
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-[#0f1225] to-[#14172e] relative flex items-center justify-center px-4">
-      <div className="absolute inset-0 bg-black/30"></div>
+    <div className="min-h-screen w-full bg-gradient-to-br from-indigo-50 to-white dark:from-[#0f1225] dark:to-[#14172e] relative flex items-center justify-center px-4">
+      <div className="absolute inset-0 bg-white/30 dark:bg-black/30"></div>
 
 
       <header onClick={handleHome} className="absolute cursor-pointer top-6 left-6 z-20">
         <div className="flex items-center gap-2">
-          <FaCode size={34} className="text-indigo-400" />
-          <h1 className="text-2xl md:text-3xl font-bold text-white">HackNext</h1>
+          <FaCode size={34} className="text-indigo-600 dark:text-indigo-400" />
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">HackNext</h1>
         </div>
         <button
           onClick={handleHome}
-          className="mt-2 text-sm px-4 py-1 rounded-lg border border-white/20 text-gray-200 hover:border-white/40 transition"
+          className="mt-2 text-sm px-4 py-1 rounded-lg border border-gray-300 dark:border-white/20 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:border-white/40 transition"
         >
           Back
         </button>
       </header>
 
 
-      <div className="relative z-10 flex shadow-2xl rounded-2xl overflow-hidden flex-col md:flex-row">
+      <div className="relative z-10 flex shadow-2xl rounded-2xl overflow-hidden flex-col md:flex-row border border-gray-200 dark:border-white/10">
 
-        <div className="bg-white/5 backdrop-blur-md p-6 md:p-8 w-full max-w-[360px] border border-white/10">
-          <h1 className="text-xl md:text-2xl font-bold text-center text-white mb-6">
+        <div className="bg-white/80 dark:bg-white/5 backdrop-blur-md p-6 md:p-8 w-full max-w-[360px]">
+          <h1 className="text-xl md:text-2xl font-bold text-center text-gray-900 dark:text-white mb-6">
             Create Account
           </h1>
 
@@ -129,10 +129,10 @@ export default function SignUp() {
           >
 
             <div>
-              <label className="text-gray-300 text-xs font-semibold">
+              <label className="text-gray-700 dark:text-gray-300 text-xs font-semibold">
                 USERNAME
               </label>
-              <div className="mt-1 p-[1.5px] rounded-lg bg-white/10 focus-within:bg-gradient-to-r focus-within:from-indigo-500 focus-within:to-violet-600 transition">
+              <div className="mt-1 p-[1.5px] rounded-lg bg-gray-200 dark:bg-white/10 focus-within:bg-gradient-to-r focus-within:from-indigo-500 focus-within:to-violet-600 transition">
                 <input
                   type="text"
                   name="username"
@@ -140,16 +140,16 @@ export default function SignUp() {
                   value={username}
                   onChange={handleUsername}
                   required
-                  className="w-full px-3 py-2 rounded-md bg-[#0f1225] text-gray-200 text-sm outline-none"
+                  className="w-full px-3 py-2 rounded-md bg-white dark:bg-[#0f1225] text-gray-900 dark:text-gray-200 text-sm outline-none"
                 />
               </div>
             </div>
 
             <div>
-              <label className="text-gray-300 text-xs font-semibold">
+              <label className="text-gray-700 dark:text-gray-300 text-xs font-semibold">
                 EMAIL
               </label>
-              <div className="mt-1 p-[1.5px] rounded-lg bg-white/10 focus-within:bg-gradient-to-r focus-within:from-indigo-500 focus-within:to-violet-600 transition">
+              <div className="mt-1 p-[1.5px] rounded-lg bg-gray-200 dark:bg-white/10 focus-within:bg-gradient-to-r focus-within:from-indigo-500 focus-within:to-violet-600 transition">
                 <input
                   type="email"
                   name="email"
@@ -157,29 +157,29 @@ export default function SignUp() {
                   value={email}
                   onChange={handleEmail}
                   required
-                  className="w-full px-3 py-2 rounded-md bg-[#0f1225] text-gray-200 text-sm outline-none"
+                  className="w-full px-3 py-2 rounded-md bg-white dark:bg-[#0f1225] text-gray-900 dark:text-gray-200 text-sm outline-none"
                 />
               </div>
             </div>
 
 
             <div>
-              <label className="text-gray-300 text-xs font-semibold">
+              <label className="text-gray-700 dark:text-gray-300 text-xs font-semibold">
                 PASSWORD
               </label>
-              <div className="mt-1 p-[1.5px] rounded-lg bg-white/10 focus-within:bg-gradient-to-r focus-within:from-indigo-500 focus-within:to-violet-600 transition relative">
+              <div className="mt-1 p-[1.5px] rounded-lg bg-gray-200 dark:bg-white/10 focus-within:bg-gradient-to-r focus-within:from-indigo-500 focus-within:to-violet-600 transition relative">
                 <input
                   type={showPassword ? "text" : "password"}
                   placeholder="Create new password"
                   value={password}
                   onChange={handlePassword}
                   required
-                  className="w-full px-3 py-2 rounded-md bg-[#0f1225] text-gray-200 text-sm outline-none pr-10"
+                  className="w-full px-3 py-2 rounded-md bg-white dark:bg-[#0f1225] text-gray-900 dark:text-gray-200 text-sm outline-none pr-10"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition cursor-pointer"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition cursor-pointer"
                 >
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
@@ -196,15 +196,15 @@ export default function SignUp() {
 
             <button
               type="submit"
-              className="mt-2 py-3 px-6 w-full h-12 cursor-pointer rounded-xl bg-indigo-600/80 hover:bg-indigo-600 active:bg-indigo-700 text-white font-semibold transition duration-200 flex items-center justify-center"
+              className="mt-2 py-3 px-6 w-full h-12 cursor-pointer rounded-xl bg-blue-600 hover:bg-blue-700 dark:bg-indigo-600/80 dark:hover:bg-indigo-600 dark:active:bg-indigo-700 text-white font-semibold transition duration-200 flex items-center justify-center"
             >
               Create Account
             </button>
           </form>
 
-          <p className="text-gray-300 pt-5 text-center text-sm">
+          <p className="text-gray-600 dark:text-gray-300 pt-5 text-center text-sm">
             Already have an account?{" "}
-            <Link to="/signin" className="text-indigo-400 hover:underline">
+            <Link to="/signin" className="text-indigo-600 dark:text-indigo-400 hover:underline">
               Login
             </Link>
           </p>

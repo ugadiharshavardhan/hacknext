@@ -74,14 +74,14 @@ function EachProject() {
   return (
     <div>
       {loading ? (
-        <div className="min-h-screen w-full bg-gradient-to-br from-[#0f1225] to-[#14172e] flex justify-center items-center">
+        <div className="min-h-screen w-full bg-gradient-to-br from-indigo-50 to-white dark:from-[#0f1225] dark:to-[#14172e] flex justify-center items-center">
           <ThreeDot color="#6366f1" size="medium" />
         </div>
       ) : (
-        <div className="min-h-screen bg-gradient-to-br from-[#0f1225] to-[#14172e] text-white px-6 py-24 flex justify-center items-start">
+        <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-white dark:from-[#0f1225] dark:to-[#14172e] text-gray-900 dark:text-white px-6 py-24 flex justify-center items-start">
           <button
             onClick={handleBackBtn}
-            className="p-2 cursor-pointer rounded-full border relative right-70 top-5 border-white/20 hover:border-white/40 transition"
+            className="p-2 cursor-pointer rounded-full border relative right-70 top-5 border-gray-300 dark:border-white/20 text-gray-700 dark:text-white hover:border-gray-400 dark:hover:border-white/40 transition"
           >
             <FaArrowLeft />
           </button>
@@ -103,12 +103,12 @@ function EachProject() {
 
               <span
                 className={`text-xs px-3 py-1 rounded-full font-semibold ${eachProject.level === "Beginner"
-                    ? "bg-green-500 text-white"
-                    : eachProject.level === "Intermediate"
-                      ? "bg-orange-500 text-white"
-                      : eachProject.level === "easy"
-                        ? "bg-green-500 text-white"
-                        : "bg-red-500 text-white"
+                  ? "bg-green-500 text-white"
+                  : eachProject.level === "Intermediate"
+                    ? "bg-orange-500 text-white"
+                    : eachProject.level === "easy"
+                      ? "bg-green-500 text-white"
+                      : "bg-red-500 text-white"
                   }`}
               >
                 {eachProject.level}
@@ -116,18 +116,18 @@ function EachProject() {
             </div>
 
             {/* DESCRIPTION */}
-            <p className="text-gray-400 text-sm mb-6 leading-relaxed">
+            <p className="text-gray-600 dark:text-gray-400 text-sm mb-6 leading-relaxed">
               {eachProject.description}
             </p>
 
             {/* FUNCTIONALITY */}
-            <h1 className="mb-3 text-lg font-semibold text-indigo-400">
+            <h1 className="mb-3 text-lg font-semibold text-indigo-600 dark:text-indigo-400">
               Functionality of Project
             </h1>
 
             <div className="flex flex-col gap-2 mb-6">
               {functionalityList.map((line, index) => (
-                <p key={index} className="text-gray-300 text-sm">
+                <p key={index} className="text-gray-700 dark:text-gray-300 text-sm">
                   • {line}.
                 </p>
               ))}
@@ -140,22 +140,22 @@ function EachProject() {
                   key={index}
                   className="
                     flex items-center gap-2
-                    bg-white/5 border border-white/10
+                    bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10
                     px-3 py-1 rounded-full text-sm
-                    hover:border-white/30 transition
+                    hover:border-gray-300 dark:hover:border-white/30 transition
                   "
                 >
                   <span className="text-lg">
                     {stackIcons[item] || <FaCode />}
                   </span>
-                  <span className="text-gray-200">{item}</span>
+                  <span className="text-gray-700 dark:text-gray-200">{item}</span>
                 </li>
               ))}
             </ul>
 
             {/* REFERENCES */}
             {(eachProject.gitLink || eachProject.figmaLink) && (
-              <h1 className="text-lg font-semibold text-indigo-400 mb-3">
+              <h1 className="text-lg font-semibold text-indigo-600 dark:text-indigo-400 mb-3">
                 Reference Links
               </h1>
             )}
@@ -165,7 +165,7 @@ function EachProject() {
                 <a
                   href={eachProject.figmaLink}
                   target="__blank"
-                  className="flex items-center gap-2 text-gray-300 hover:text-indigo-400 transition"
+                  className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition"
                 >
                   <SiFigma className="text-[#F24E1E] text-xl" />
                   <span className="underline">Figma Design</span>
@@ -176,7 +176,7 @@ function EachProject() {
                 <a
                   href={eachProject.gitLink}
                   target="__blank"
-                  className="flex items-center gap-2 text-gray-300 hover:text-indigo-400 transition"
+                  className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition"
                 >
                   <FaGitAlt className="text-[#F05033] text-xl" />
                   <span className="underline">Git Repository</span>

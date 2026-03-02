@@ -60,7 +60,7 @@ const SignIn = () => {
   if (jwtToken !== undefined) return <Navigate to="/user/allevents" />;
 
   return (
-    <div className="min-h-screen w-full relative flex items-center justify-center px-4 bg-gradient-to-br from-[#0f1225] to-[#14172e] overflow-hidden">
+    <div className="min-h-screen w-full relative flex items-center justify-center px-4 bg-gradient-to-br from-indigo-50 to-white dark:from-[#0f1225] dark:to-[#14172e] overflow-hidden">
       <div className="absolute inset-0 -z-10">
         <div
           className="absolute top-[-30%] left-1/2 -translate-x-1/2
@@ -78,14 +78,14 @@ const SignIn = () => {
 
 
       <header onClick={handleHome} className="absolute  cursor-pointer top-6 left-10 z-20 flex items-center gap-2">
-        <FaCode size={34} className="text-indigo-400" />
-        <h1 className="text-2xl md:text-3xl font-bold text-white tracking-wide">
+        <FaCode size={34} className="text-indigo-600 dark:text-indigo-400" />
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white tracking-wide">
           HackNext
         </h1>
       </header>
 
 
-      <div className="relative z-10 flex h-auto md:h-[470px] w-full max-w-[760px] rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-white/5 backdrop-blur-md">
+      <div className="relative z-10 flex h-auto md:h-[470px] w-full max-w-[760px] rounded-2xl overflow-hidden shadow-2xl border border-gray-200 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-md">
 
 
         <div className="relative w-1/2 hidden md:block">
@@ -105,48 +105,48 @@ const SignIn = () => {
           />
         </div>
 
-        <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-center text-white">
+        <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-center text-gray-900 dark:text-white">
           <h1 className="text-2xl md:text-3xl font-bold text-center mb-2">
             Student Login
           </h1>
 
-          <p className="text-xs text-center mb-6 text-gray-400">
+          <p className="text-xs text-center mb-6 text-gray-600 dark:text-gray-400">
             Enter your credentials to access your account
           </p>
 
           <form className="flex flex-col space-y-5" onSubmit={handleSubmitForm}>
             <div>
-              <label className="text-xs font-semibold text-gray-300">
+              <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
                 EMAIL
               </label>
-              <div className="mt-1 p-[1.5px] rounded-lg bg-white/10 focus-within:bg-gradient-to-r focus-within:from-indigo-500 focus-within:to-violet-600 transition">
+              <div className="mt-1 p-[1.5px] rounded-lg bg-gray-200 dark:bg-white/10 focus-within:bg-gradient-to-r focus-within:from-indigo-500 focus-within:to-violet-600 transition">
                 <input
                   type="text"
                   placeholder="Enter Email"
                   value={email}
                   name="email"
                   onChange={handleEmail}
-                  className="w-full px-3 py-2 rounded-md bg-[#0f1225] text-gray-200 text-sm outline-none"
+                  className="w-full px-3 py-2 rounded-md bg-white dark:bg-[#0f1225] text-gray-900 dark:text-gray-200 text-sm outline-none"
                 />
               </div>
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-gray-300">
+              <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
                 PASSWORD
               </label>
-              <div className="mt-1 p-[1.5px] rounded-lg bg-white/10 focus-within:bg-gradient-to-r focus-within:from-indigo-500 focus-within:to-violet-600 transition relative">
+              <div className="mt-1 p-[1.5px] rounded-lg bg-gray-200 dark:bg-white/10 focus-within:bg-gradient-to-r focus-within:from-indigo-500 focus-within:to-violet-600 transition relative">
                 <input
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter password"
                   value={password}
                   onChange={handlePassword}
-                  className="w-full px-3 py-2 rounded-md bg-[#0f1225] text-gray-200 text-sm outline-none pr-10"
+                  className="w-full px-3 py-2 rounded-md bg-white dark:bg-[#0f1225] text-gray-900 dark:text-gray-200 text-sm outline-none pr-10"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition cursor-pointer"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition cursor-pointer"
                 >
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
@@ -162,7 +162,7 @@ const SignIn = () => {
               </div>
               <Link
                 to="/forgot-password"
-                className="text-indigo-400 hover:text-indigo-300 transition"
+                className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 transition"
               >
                 Forgot Password?
               </Link>
@@ -171,24 +171,24 @@ const SignIn = () => {
 
             <button
               type="submit"
-              className="bg-gradient-to-r from-indigo-600 to-violet-600 hover:opacity-90 text-white font-semibold py-3 rounded-xl transition cursor-pointer"
+              className="bg-blue-600 hover:bg-blue-700 dark:bg-gradient-to-r dark:from-indigo-600 dark:to-violet-600 dark:hover:opacity-90 text-white font-semibold py-3 rounded-xl transition cursor-pointer"
             >
               Login
             </button>
           </form>
 
-          <p className="text-sm pt-5 text-center text-gray-400">
+          <p className="text-sm pt-5 text-center text-gray-600 dark:text-gray-400">
             Don&apos;t have an account?{" "}
             <Link
               to="/signup"
-              className="text-indigo-400 font-semibold hover:underline"
+              className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline"
             >
               Signup now
             </Link>
           </p>
 
           <div
-            className="flex items-center gap-1 cursor-pointer mt-3 justify-center text-gray-400 hover:text-white transition"
+            className="flex items-center gap-1 cursor-pointer mt-3 justify-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition"
             onClick={handleHome}
           >
             <FaAngleLeft />

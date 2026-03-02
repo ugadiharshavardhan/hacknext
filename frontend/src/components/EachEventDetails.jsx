@@ -194,7 +194,7 @@ const EachEventDetails = () => {
   return (
     <div>
       {eachData.EventTitle ? (
-        <div className="min-h-screen bg-gradient-to-br from-[#0f1225] to-[#14172e] text-white px-6 py-24 flex justify-center">
+        <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-white dark:from-[#0f1225] dark:to-[#14172e] text-gray-900 dark:text-white px-6 py-24 flex justify-center">
           <div className="w-full max-w-6xl">
 
             {/* HEADER */}
@@ -203,25 +203,25 @@ const EachEventDetails = () => {
                 <div className="flex items-center gap-3 mb-2">
                   <button
                     onClick={handleBackBtn}
-                    className="p-2 cursor-pointer rounded-full border border-white/20 hover:border-white/40 transition"
+                    className="p-2 cursor-pointer rounded-full border border-gray-300 dark:border-white/20 hover:border-gray-500 dark:hover:border-white/40 transition"
                   >
                     <FaArrowLeft />
                   </button>
 
-                  <span className="bg-emerald-500/20 text-emerald-400 px-3 py-1 rounded-full text-sm">
+                  <span className="bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400 px-3 py-1 rounded-full text-sm font-semibold">
                     {eachData.Organizer} Event
                   </span>
 
-                  <span className="bg-indigo-500/20 text-indigo-400 px-3 py-1 rounded-full text-sm">
+                  <span className="bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-400 px-3 py-1 rounded-full text-sm font-semibold">
                     {eachData.EventType}
                   </span>
                 </div>
 
-                <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-violet-500 bg-clip-text text-transparent">
+                <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-violet-600 dark:from-indigo-400 dark:to-violet-500 bg-clip-text text-transparent">
                   {eachData.EventTitle}
                 </h1>
 
-                <p className="text-gray-400 mt-1">
+                <p className="text-gray-600 dark:text-gray-400 mt-1">
                   Organized by {eachData.OrganisationName}
                 </p>
               </div>
@@ -229,8 +229,8 @@ const EachEventDetails = () => {
               <button
                 onClick={handleSaveBtn}
                 className={`p-3 rounded-full border cursor-pointer transition ${isSaved
-                  ? "bg-white text-black"
-                  : "border-white/20 hover:border-white/40"
+                  ? "bg-indigo-600 border-indigo-600 text-white dark:bg-white dark:border-white dark:text-gray-900"
+                  : "border-gray-300 text-gray-400 dark:border-white/20 dark:text-gray-400 hover:border-gray-500 hover:text-gray-500 dark:hover:border-white/40 dark:hover:text-white"
                   }`}
               >
                 <FaRegBookmark />
@@ -263,7 +263,7 @@ const EachEventDetails = () => {
 
                 <Card>
                   <h2 className="text-xl font-semibold mb-3">About This Event</h2>
-                  <p className="text-gray-300">{eachData.EventDescription}</p>
+                  <p className="text-gray-700 dark:text-gray-300">{eachData.EventDescription}</p>
                 </Card>
 
                 <Card>
@@ -272,7 +272,7 @@ const EachEventDetails = () => {
                     {eachData.SpecifiedStacks?.split(",").map((s, i) => (
                       <span
                         key={i}
-                        className="bg-blue-600 px-4 py-1 rounded-full text-sm font-bold"
+                        className="bg-blue-100 text-blue-800 dark:bg-blue-600 dark:text-white px-4 py-1 rounded-full text-sm font-bold border border-blue-200 dark:border-transparent"
                       >
                         {s.trim()}
                       </span>
@@ -284,7 +284,7 @@ const EachEventDetails = () => {
               <div className="space-y-6">
                 <Card>
                   <h2 className="text-xl font-semibold mb-2">Registration</h2>
-                  <p className="flex items-center gap-2 text-gray-400 text-sm mb-4">
+                  <p className="flex items-center gap-2 text-gray-600 dark:text-gray-400 text-sm mb-4">
                     <FaClock />
                     {isRegistrationOpen
                       ? `Deadline: ${deadlineDate(eachData.StartDate)}`
@@ -295,9 +295,9 @@ const EachEventDetails = () => {
                     <button
                       onClick={handleApplyNow}
                       disabled={isApplied}
-                      className={`w-full py-2.5 rounded-xl cursor-pointer transition ${isApplied
-                        ? "bg-green-600 cursor-not-allowed"
-                        : "bg-gradient-to-r from-indigo-600 to-violet-600 hover:opacity-90"
+                      className={`w-full py-2.5 rounded-xl cursor-pointer font-semibold transition text-white ${isApplied
+                        ? "bg-green-500 dark:bg-green-600 cursor-not-allowed shadow-md shadow-green-500/20"
+                        : "bg-indigo-600 hover:bg-indigo-700 dark:bg-gradient-to-r dark:from-indigo-600 dark:to-violet-600 dark:hover:opacity-90 shadow-lg shadow-indigo-600/20"
                         }`}
                     >
                       {isApplied ? "Applied ✓" : "Apply Now"}
@@ -305,7 +305,7 @@ const EachEventDetails = () => {
                   ) : (
                     <button
                       disabled
-                      className="w-full py-2.5 rounded-xl bg-gray-700 cursor-not-allowed"
+                      className="w-full py-2.5 rounded-xl bg-gray-200 text-gray-500 dark:bg-gray-700 dark:text-gray-400 font-semibold cursor-not-allowed"
                     >
                       Expired
                     </button>
@@ -316,7 +316,7 @@ const EachEventDetails = () => {
           </div>
         </div>
       ) : (
-        <div className="min-h-screen flex items-center justify-center bg-gray-950">
+        <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-[#0f1225]">
           <ThreeDot color="#6366f1" size="medium" />
         </div>
       )}
@@ -326,14 +326,14 @@ const EachEventDetails = () => {
 
 /* UI HELPERS */
 const Card = ({ children }) => (
-  <div className="bg-white/5 border border-white/10 rounded-2xl p-5 shadow-xl">
+  <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl p-5 shadow-xl">
     {children}
   </div>
 );
 
 const Info = ({ icon, label, children }) => (
   <div>
-    <p className="flex items-center gap-2 text-gray-400">
+    <p className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
       {icon} {label}
     </p>
     <p>{children}</p>

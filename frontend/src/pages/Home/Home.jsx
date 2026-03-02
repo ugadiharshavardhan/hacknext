@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { ThreeDot } from "react-loading-indicators";
 import { FaUserGraduate, FaCalendarAlt, FaTrophy, FaUsers } from "react-icons/fa";
 import Footer from "../../components/Footer";
+import ThemeToggle from "../../components/ThemeToggle";
 import { BACKEND_URL } from "../../config";
 
 const Home = () => {
@@ -44,26 +45,29 @@ const Home = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen bg-[#070b1e]">
-        <ThreeDot color="#ffffff" size="medium" />
+      <div className="flex justify-center items-center h-screen bg-gray-50 dark:bg-[#070b1e]">
+        <ThreeDot color="#6366f1" size="medium" />
       </div>
     );
   }
 
   return (
-    <div className="w-full min-h-screen bg-[#070b1e] text-white overflow-hidden">
+    <div className="w-full min-h-screen bg-gray-50 dark:bg-[#070b1e] text-gray-900 dark:text-white overflow-hidden">
 
       <section className="min-h-screen flex flex-col items-center justify-center px-6 relative pt-20 md:pt-0">
-        <h1 className="absolute top-6 left-10 text-2xl md:text-3xl font-bold">&lt;/&gt;</h1>
+        <h1 className="absolute top-6 left-10 text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">&lt;/&gt;</h1>
 
+        <div className="absolute top-6 right-[260px] hidden md:block">
+          <ThemeToggle />
+        </div>
 
         <button
           onClick={handleUserEvents}
           className="
             absolute top-7 right-40 hidden md:block
-            cursor-pointer font-bold text-sm text-gray-300
+            cursor-pointer font-bold text-sm text-gray-700 dark:text-gray-300
             transition-all duration-200 ease-out
-            hover:scale-115 hover:text-white
+            hover:scale-115 hover:text-black dark:hover:text-white
             hover:drop-shadow-[0_6px_15px_rgba(255,255,255,0.25)]
             active:scale-95
           "
@@ -76,7 +80,7 @@ const Home = () => {
           className="
             absolute top-6 right-10 hidden md:block
             cursor-pointer font-bold text-sm
-            border-2 border-white rounded-xl px-3 py-1
+            border-2 border-gray-900 dark:border-white rounded-xl px-3 py-1
             transition-all duration-200 ease-out
             hover:scale-115 hover:shadow-[0_8px_25px_rgba(99,102,241,0.45)]
             hover:bg-white hover:text-black
@@ -88,7 +92,7 @@ const Home = () => {
 
 
 
-        <button className="px-4 py-2 text-sm rounded-full bg-gradient-to-r from-purple-600 to-blue-600 mt-4">
+        <button className="px-4 py-2 text-sm rounded-full bg-indigo-600 hover:bg-indigo-700 dark:bg-gradient-to-r dark:from-purple-600 dark:to-blue-600 dark:hover:opacity-90 mt-4 text-white font-medium cursor-pointer transition">
           🚀 Discover Your Next Tech Adventure
         </button>
 
@@ -97,11 +101,11 @@ const Home = () => {
             text-3xl md:text-5xl font-bold mt-10
             transition-all duration-300 ease-out
     
-            text-white
+            text-gray-900 dark:text-white
             hover:bg-gradient-to-r hover:from-purple-600 hover:to-blue-600
             hover:bg-clip-text hover:text-transparent
 
-            hover:scale-105
+            hover:scale-105 cursor-pointer
             hover:drop-shadow-[0_6px_15px_rgba(0,0,0,0.35)]
             active:scale-100
           "
@@ -110,7 +114,7 @@ const Home = () => {
         </h1>
 
 
-        <p className="text-gray-300 text-base md:text-lg max-w-2xl text-center mt-6">
+        <p className="text-gray-600 dark:text-gray-300 text-base md:text-lg max-w-2xl text-center mt-6">
           Your gateway to hackathons, workshops, and tech competitions. Discover
           opportunities, collaborate, and grow your career.
         </p>
@@ -119,21 +123,21 @@ const Home = () => {
           <button
             onClick={handleUserEvents}
             className="px-5 sm:px-7 py-3 transition-all duration-200 ease-out
-            hover:scale-105 cursor-pointer bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-semibold"
+            hover:scale-105 cursor-pointer bg-indigo-600 hover:bg-indigo-700 dark:bg-gradient-to-r dark:from-purple-600 dark:to-blue-600 dark:hover:opacity-90 text-white rounded-lg font-semibold"
           >
             Explore Events →
           </button>
 
           <button
             onClick={handleAdminEvents}
-            className="px-6 sm:px-7 py-3 cursor-pointer transition-all duration-200 ease-out hover:scale-105 bg-black/40 border border-white/10 rounded-lg"
+            className="px-6 sm:px-7 py-3 cursor-pointer transition-all duration-200 ease-out hover:scale-105 bg-gray-200 dark:bg-black/40 border border-gray-300 dark:border-white/10 rounded-lg text-gray-900 dark:text-white"
           >
             Admin Community
           </button>
         </div>
 
         {/* STATS */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-24 bg-violet-950 px-8 py-10 rounded-2xl">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-24 bg-purple-100 dark:bg-violet-950 px-8 py-10 rounded-2xl">
           <Stat title="Active Events" value={`${ActiveEvents}+`} />
           <Stat title="Registered Students" value={`${registered}+`} />
           <Stat title="Total Prize Pool" value={`₹ ${prizePool}+`} />
@@ -170,7 +174,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="py-24 bg-[#0b102a] px-6">
+      <section className="py-24 bg-gray-100 dark:bg-[#0b102a] px-6">
         <h2 className="text-2xl md:text-4xl font-bold text-center mb-14">
           How HackNext Works
         </h2>
@@ -186,41 +190,41 @@ const Home = () => {
         <h2 className="text-2xl md:text-4xl font-bold mb-6">
           Ready to Start Your Tech Journey?
         </h2>
-        <p className="text-gray-300 mb-10">
+        <p className="text-gray-600 dark:text-gray-300 mb-10">
           Join thousands of students already building their future with HackNext.
         </p>
 
         <button
           onClick={handleUserEvent}
-          className="px-10 py-4 transition-all duration-200 ease-out hover:scale-105 cursor-pointer bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl text-lg font-semibold"
+          className="px-10 py-4 transition-all duration-200 ease-out hover:scale-105 cursor-pointer bg-indigo-600 hover:bg-indigo-700 dark:bg-gradient-to-r dark:from-purple-600 dark:to-blue-600 dark:hover:opacity-90 text-white rounded-xl text-lg font-semibold"
         >
           Get Started for Free →
         </button>
       </section>
       <Footer />
-    </div>
+    </div >
   );
 };
 
 const Stat = ({ title, value }) => (
   <div className="text-center">
-    <div className="text-2xl md:text-3xl font-bold">{value}</div>
-    <p className="text-gray-400 mt-2">{title}</p>
+    <div className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">{value}</div>
+    <p className="text-gray-600 dark:text-gray-400 mt-2">{title}</p>
   </div>
 );
 
 const Feature = ({ icon, title, desc }) => (
-  <div className="bg-[#0f1538] p-6 rounded-xl border border-white/10 hover:scale-105 transition sm:text-center">
-    <div className="text-3xl mb-4 text-purple-400">{icon}</div>
-    <h3 className="text-lg md:text-xl font-semibold mb-2">{title}</h3>
-    <p className="text-gray-400 text-sm">{desc}</p>
+  <div className="bg-white dark:bg-[#0f1538] p-6 rounded-xl border border-gray-200 dark:border-white/10 shadow-sm dark:shadow-none hover:scale-105 transition sm:text-center">
+    <div className="text-3xl mb-4 text-purple-600 dark:text-purple-400">{icon}</div>
+    <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-900 dark:text-white">{title}</h3>
+    <p className="text-gray-600 dark:text-gray-400 text-sm">{desc}</p>
   </div>
 );
 
 const Step = ({ number, title }) => (
-  <div className="bg-[#0f1538] p-8 rounded-xl border border-white/10">
-    <div className="text-purple-500 text-2xl font-bold mb-4">{number}</div>
-    <h3 className="text-lg md:text-xl font-semibold">{title}</h3>
+  <div className="bg-white dark:bg-[#0f1538] p-8 rounded-xl border border-gray-200 dark:border-white/10 shadow-sm dark:shadow-none">
+    <div className="text-purple-600 dark:text-purple-500 text-2xl font-bold mb-4">{number}</div>
+    <h3 className="text-lg md:text-xl font-semibold text-gray-900 dark:text-white">{title}</h3>
   </div>
 );
 

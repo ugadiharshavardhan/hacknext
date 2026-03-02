@@ -2,6 +2,7 @@ import { useNavigate } from "react-router";
 import { FaHome, FaRegUser, FaEye, FaBars, FaTimes, FaBookmark, FaClipboardList, FaUser, FaSignInAlt } from "react-icons/fa";
 import { useState } from "react";
 import Cookies from "js-cookie";
+import ThemeToggle from "./ThemeToggle";
 
 function UserNavbar() {
   const navigate = useNavigate();
@@ -48,9 +49,9 @@ function UserNavbar() {
         className="
           flex justify-between items-center
           px-10 py-5
-          bg-white/5 backdrop-blur-md
-          border-b border-white/10
-          text-white
+          bg-white/80 dark:bg-black/20 backdrop-blur-md
+          border-b border-gray-200 dark:border-white/10
+          text-gray-900 dark:text-white
         "
       >
         <div
@@ -68,22 +69,26 @@ function UserNavbar() {
           HackNext
         </div>
 
-        <ul className="hidden md:flex items-center gap-3">
-          <NavItem label="Home" icon={<FaHome />} onClick={handleHome} />
-          <NavItem label="Projects" icon={<FaEye />} onClick={handleProjects} />
-          <NavItem icon={<FaRegUser />} onClick={handleUserAccount} />
-        </ul>
+        <div className="flex items-center gap-4">
+          <ThemeToggle />
 
-        <button
-          onClick={toggleMenu}
-          className="md:hidden text-white text-2xl"
-        >
-          {isMenuOpen ? <FaTimes /> : <FaBars />}
-        </button>
+          <ul className="hidden md:flex items-center gap-3">
+            <NavItem label="Home" icon={<FaHome />} onClick={handleHome} />
+            <NavItem label="Projects" icon={<FaEye />} onClick={handleProjects} />
+            <NavItem icon={<FaRegUser />} onClick={handleUserAccount} />
+          </ul>
+
+          <button
+            onClick={toggleMenu}
+            className="md:hidden text-gray-900 dark:text-white text-2xl cursor-pointer"
+          >
+            {isMenuOpen ? <FaTimes /> : <FaBars />}
+          </button>
+        </div>
       </nav>
 
       {isMenuOpen && (
-        <div className="md:hidden bg-white/5 backdrop-blur-md border-b border-white/10">
+        <div className="md:hidden bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-b border-gray-200 dark:border-white/10">
           <ul className="flex flex-col items-center gap-3 py-5">
             <MobileNavItem label="Home" icon={<FaHome />} onClick={() => { handleHome(); setIsMenuOpen(false); }} />
             <MobileNavItem label="Projects" icon={<FaEye />} onClick={() => { handleProjects(); setIsMenuOpen(false); }} />
@@ -106,9 +111,9 @@ function NavItem({ label, icon, onClick }) {
       className="
         flex items-center gap-2 cursor-pointer
         px-4 py-2 rounded-xl
-        text-gray-300
-        hover:text-white
-        hover:bg-white/5
+        text-gray-600 dark:text-gray-300
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-black/5 dark:hover:bg-white/5
         transition-all duration-300
       "
     >
@@ -125,9 +130,9 @@ function MobileNavItem({ label, icon, onClick }) {
       className="
         flex items-center gap-2 cursor-pointer
         px-4 py-2 rounded-xl w-full text-center
-        text-gray-300
-        hover:text-white
-        hover:bg-white/5
+        text-gray-600 dark:text-gray-300
+        hover:text-gray-900 dark:hover:text-white
+        hover:bg-black/5 dark:hover:bg-white/5
         transition-all duration-300
       "
     >

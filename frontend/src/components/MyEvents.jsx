@@ -150,12 +150,12 @@ function MyEvents({ setForm, dropValue }) {
   /* ---------------- EVENT CARD ---------------- */
   const EventCard = ({ each }) => (
     <li className="w-full max-w-3xl mx-auto mb-6">
-      <div className="bg-[#0f172a] border border-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition">
+      <div className="bg-white dark:bg-[#0f172a] border border-gray-200 dark:border-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition">
 
         {/* HEADER */}
         <div className="flex justify-between items-start gap-4">
           <div>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
               {each.EventTitle} <span className="px-2 text-xs rounded-full bg-green-500/50 text-white border border-purple-500/30">verified</span>
             </h2>
 
@@ -170,19 +170,19 @@ function MyEvents({ setForm, dropValue }) {
           </div>
 
           {/* ACTIONS */}
-          <div className="flex gap-3 text-gray-400">
+          <div className="flex gap-3 text-gray-500 dark:text-gray-400">
             <button
               onClick={() =>
                 setForm({ open: true, event: each, id: each._id })
               }
-              className="hover:text-blue-400 transition"
+              className="hover:text-blue-600 dark:hover:text-blue-400 transition cursor-pointer"
             >
               <FiEdit size={18} />
             </button>
 
             <button
               onClick={() => handleDeleteEachItem(each._id)}
-              className="hover:text-red-400 transition"
+              className="hover:text-red-600 dark:hover:text-red-400 transition cursor-pointer"
             >
               <FiTrash2 size={18} />
             </button>
@@ -190,7 +190,7 @@ function MyEvents({ setForm, dropValue }) {
         </div>
 
         {/* DESCRIPTION */}
-        <div className="mt-4 flex gap-2 text-gray-400">
+        <div className="mt-4 flex gap-2 text-gray-600 dark:text-gray-400">
           <FcAbout className="mt-1" />
           <p className="text-sm leading-relaxed">
             {each.EventDescription}
@@ -198,7 +198,7 @@ function MyEvents({ setForm, dropValue }) {
         </div>
 
         {/* META */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 text-sm text-gray-300">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 text-sm text-gray-700 dark:text-gray-300">
           <div className="flex items-center gap-2">
             <FaCalendarAlt className="text-blue-400" />
             {formatDate(each.StartDate)} – {formatDate(each.EndDate)}
@@ -235,21 +235,21 @@ function MyEvents({ setForm, dropValue }) {
   /* ---------------- PROJECT CARD ---------------- */
   const ProjectCard = ({ each }) => (
     <li className="w-full max-w-3xl mx-auto mb-6">
-      <div className="bg-[#020617] border border-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition">
+      <div className="bg-white dark:bg-[#020617] border border-gray-200 dark:border-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition">
         <div className="flex justify-between items-start">
-          <h2 className="text-xl font-semibold text-white">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
             {each.title}
           </h2>
 
           <button
             onClick={() => handleDeleteProject(each._id)}
-            className="text-gray-400 hover:text-red-400 transition"
+            className="text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition cursor-pointer"
           >
             <FiTrash2 size={18} />
           </button>
         </div>
 
-        <p className="mt-3 text-sm text-gray-400">
+        <p className="mt-3 text-sm text-gray-600 dark:text-gray-400">
           {each.description}
         </p>
 
@@ -279,9 +279,9 @@ function MyEvents({ setForm, dropValue }) {
   /* ---------------- EMPTY STATE ---------------- */
   if (MyEventsdata.length === 0 && dropValue !== "Projects") {
     return (
-      <div className="flex flex-col items-center mt-20 text-gray-400">
+      <div className="flex flex-col items-center mt-20 text-gray-500 dark:text-gray-400">
         <FaRegCalendarAlt size={80} />
-        <h1 className="text-xl font-bold mt-3">No Events Created</h1>
+        <h1 className="text-xl font-bold mt-3 text-gray-900 dark:text-white">No Events Created</h1>
       </div>
     );
   }

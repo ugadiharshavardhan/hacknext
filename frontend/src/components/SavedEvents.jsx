@@ -79,10 +79,10 @@ function SavedEvents() {
         </div>
       ) : Data.length === 0 ? (
         <div className="flex flex-col justify-center items-center text-center h-[70vh]">
-          <h1 className="text-white font-bold text-3xl md:text-4xl mb-4">
+          <h1 className="text-gray-900 dark:text-white font-bold text-3xl md:text-4xl mb-4">
             No Saved Events
           </h1>
-          <p className="text-gray-400 mb-6">
+          <p className="text-gray-600 dark:text-gray-400 mb-6">
             You haven't saved any events yet.
           </p>
           <img
@@ -94,10 +94,10 @@ function SavedEvents() {
       ) : (
         <div className="w-full max-w-7xl mx-auto animate-fadeIn pb-10">
           <div className="text-center mb-10 pt-2 animate-slideUp">
-            <h1 className="text-3xl md:text-4xl font-bold text-white">
-              <span className="text-indigo-400">Saved</span> Events
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+              <span className="text-indigo-600 dark:text-indigo-400">Saved</span> Events
             </h1>
-            <p className="text-gray-400 mt-2 text-lg">
+            <p className="text-gray-600 dark:text-gray-400 mt-2 text-lg">
               Quickly access and manage your bookmarked events.
             </p>
           </div>
@@ -110,7 +110,7 @@ function SavedEvents() {
                 className="
                   group relative
                   w-full
-                  bg-white/5 border border-white/10
+                  bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10
                   backdrop-blur-md
                   rounded-2xl p-6
                   flex flex-col
@@ -156,19 +156,19 @@ function SavedEvents() {
                 </div>
 
                 <div className="space-y-2 mb-6 flex-grow ">
-                  <p className="text-gray-300 text-sm text-center">
+                  <p className="text-gray-700 dark:text-gray-300 text-sm text-center">
                     <span className="block text-xs text-gray-500 mb-0.5">Organized by</span>
-                    <span className="font-semibold text-white">
+                    <span className="font-semibold text-gray-900 dark:text-white">
                       {each.OrganisationName}
                     </span>
                   </p>
-                  <p className="text-gray-300 text-sm text-center">
+                  <p className="text-gray-700 dark:text-gray-300 text-sm text-center">
                     <span className="block text-xs text-gray-500 mb-0.5">Location</span>
                     {each.City}, {each.State}
                   </p>
-                  <p className="text-gray-300 text-sm text-center">
+                  <p className="text-gray-700 dark:text-gray-300 text-sm text-center">
                     <span className="block text-xs text-gray-500 mb-0.5">Venue</span>
-                    <span className="text-gray-200 font-medium">
+                    <span className="text-gray-800 dark:text-gray-200 font-medium">
                       {each.Venue}
                     </span>
                   </p>

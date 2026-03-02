@@ -45,21 +45,21 @@ const AdminProfile = () => {
   }
 
   return (
-    <div className="bg-gray-900 p-6 rounded-xl">
-      <h2 className="text-xl md:text-2xl font-bold mb-4">Admin Profile</h2>
+    <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-white/10 p-6 rounded-xl shadow-md">
+      <h2 className="text-xl md:text-2xl font-bold mb-4 text-gray-900 dark:text-white">Admin Profile</h2>
       {adminData ? (
         <div className="space-y-4">
-          <div className="flex justify-between">
-            <span className="text-gray-400">Email:</span>
-            <span className="text-white">{adminData.email}</span>
+          <div className="flex justify-between border-b border-gray-100 dark:border-gray-800 pb-2">
+            <span className="text-gray-600 dark:text-gray-400">Email:</span>
+            <span className="text-gray-900 dark:text-white font-medium">{adminData.email}</span>
           </div>
-          <div className="flex justify-between">
-            <span className="text-gray-400">Name:</span>
-            <span className="text-white">{adminData.name || 'N/A'}</span>
+          <div className="flex justify-between border-b border-gray-100 dark:border-gray-800 pb-2">
+            <span className="text-gray-600 dark:text-gray-400">Name:</span>
+            <span className="text-gray-900 dark:text-white font-medium">{adminData.name || 'N/A'}</span>
           </div>
         </div>
       ) : (
-        <p className="text-gray-400">Unable to load profile data.</p>
+        <p className="text-gray-600 dark:text-gray-400">Unable to load profile data.</p>
       )}
     </div>
   );
@@ -86,7 +86,7 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white px-4 md:px-10 py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-black text-gray-900 dark:text-white px-4 md:px-10 py-8">
       <AdminNavbar />
       <div className="pt-20">
 
@@ -96,7 +96,7 @@ const AdminDashboard = () => {
           <div>
             <button
               onClick={() => setActiveSection('overview')}
-              className="mb-4 px-4 py-2 bg-blue-600 rounded-lg hover:bg-blue-700 transition"
+              className="mb-4 px-4 py-2 bg-indigo-600 dark:bg-blue-600 text-white rounded-lg hover:bg-indigo-700 dark:hover:bg-blue-700 cursor-pointer transition"
             >
               Back to Overview
             </button>
@@ -108,25 +108,25 @@ const AdminDashboard = () => {
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => setForm({ open: false, event: null })}
-              className="px-4 py-2 md:px-6 md:py-2 cursor-pointer  bg-gray-800 rounded-lg shadow hover:bg-gray-700 transition"
+              className="px-4 py-2 md:px-6 md:py-2 cursor-pointer bg-white dark:bg-gray-800 border border-gray-300 dark:border-white/20 text-gray-900 dark:text-white rounded-lg shadow-sm dark:shadow hover:bg-gray-100 dark:hover:bg-gray-700 transition"
             >
               My Events
             </button>
             <button
               onClick={() => setForm({ open: true, event: null })}
-              className="px-4 py-2 md:px-6 md:py-2  cursor-pointer bg-gray-800 rounded-lg shadow hover:bg-gray-700 transition"
+              className="px-4 py-2 md:px-6 md:py-2 cursor-pointer bg-white dark:bg-gray-800 border border-gray-300 dark:border-white/20 text-gray-900 dark:text-white rounded-lg shadow-sm dark:shadow hover:bg-gray-100 dark:hover:bg-gray-700 transition"
             >
               + Create Event
             </button>
             <button
               onClick={handleCreateProject}
-              className="px-4 py-2 md:px-6 md:py-2  cursor-pointer bg-gray-800 rounded-lg shadow hover:bg-gray-700 transition"
+              className="px-4 py-2 md:px-6 md:py-2 cursor-pointer bg-white dark:bg-gray-800 border border-gray-300 dark:border-white/20 text-gray-900 dark:text-white rounded-lg shadow-sm dark:shadow hover:bg-gray-100 dark:hover:bg-gray-700 transition"
             >
               + Create Project
             </button>
           </div>
           <div>
-            <select className="bg-gray-700 p-2 rounded-xl  cursor-pointer text-sm md:text-base" value={drodownValue} onChange={(e) => handleDropValue(e)} >
+            <select className="bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white p-2 rounded-xl cursor-pointer text-sm md:text-base outline-none focus:border-indigo-500" value={drodownValue} onChange={(e) => handleDropValue(e)} >
               <option value={"All Events"} >All Events</option>
               <option value={"Hackathon"}>Hackathon</option>
               <option value={"Workshop"}>Workshop</option>

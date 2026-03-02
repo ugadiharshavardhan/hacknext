@@ -52,7 +52,7 @@ function Eventsbyuser() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center">
         <ThreeDot color="#6366f1" size="medium" />
       </div>
     );
@@ -60,13 +60,13 @@ function Eventsbyuser() {
 
   if (!loading && appliedData.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-center text-gray-300">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col items-center justify-center text-gray-700 dark:text-gray-300">
         <img
           src="https://www.iimnagpur.ac.in/CoE/CLEAD/wp-content/themes/iimnagpur_clead/images/no-event.jpg"
           alt="No Applied Events"
           className="w-64 opacity-70"
         />
-        <h2 className="mt-6 text-xl font-semibold">
+        <h2 className="mt-6 text-xl font-semibold text-gray-900 dark:text-white">
           No Applied Events Found
         </h2>
       </div>
@@ -113,16 +113,16 @@ function Eventsbyuser() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-950 px-6 py-20">
-      <h1 className="text-4xl font-bold text-center text-white mb-12">
-        <span className="text-indigo-400">Applied</span> Events
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 px-6 py-20">
+      <h1 className="text-4xl font-bold text-center text-gray-900 dark:text-white mb-12">
+        <span className="text-indigo-600 dark:text-indigo-400">Applied</span> Events
       </h1>
 
       <ul className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
         {appliedData.map((each, id) => (
           <li
             key={id}
-            className="rounded-2xl bg-gradient-to-br from-[#0f1225] to-[#14172e] p-6 text-white shadow-xl hover:shadow-2xl transition-all hover:shadow-blue-900/40 transform hover:scale-[1.02] animate-slideUp"
+            className="rounded-2xl bg-white dark:bg-gradient-to-br dark:from-[#0f1225] dark:to-[#14172e] border border-gray-200 dark:border-white/10 p-6 text-gray-900 dark:text-white shadow-xl hover:shadow-2xl transition-all hover:shadow-indigo-900/20 transform hover:scale-[1.02] animate-slideUp"
           >
             <div className="flex justify-between items-start mb-4">
               <span className="bg-green-600 text-white px-3 py-1 rounded-full text-xs font-semibold">
@@ -130,14 +130,14 @@ function Eventsbyuser() {
               </span>
               <button
                 onClick={() => confirmDelete(each._id)}
-                className="text-gray-400 hover:text-red-500 transition p-1 rounded-full hover:bg-white/5 cursor-pointer"
+                className="text-gray-500 dark:text-gray-400 hover:text-red-500 transition p-1 rounded-full hover:bg-gray-100 dark:hover:bg-white/5 cursor-pointer"
                 title="Cancel Application"
               >
                 <FaTrash />
               </button>
             </div>
 
-            <h3 className="text-indigo-400 font-semibold mb-3">
+            <h3 className="text-indigo-600 dark:text-indigo-400 font-semibold mb-3">
               Event Details
             </h3>
 
@@ -145,12 +145,12 @@ function Eventsbyuser() {
               {each.eventTitle}
             </h2>
 
-            <div className="flex gap-2 text-gray-400 text-sm mb-5">
+            <div className="flex gap-2 text-gray-600 dark:text-gray-400 text-sm mb-5">
               <FcAbout className="mt-1" />
               <p className="line-clamp-3">{each.ideaDescription}</p>
             </div>
 
-            <div className="flex items-center gap-3 text-sm text-gray-400 mb-4">
+            <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-400 mb-4">
               <FaCalendarAlt />
               <span>
                 {each.StartDate?.split("T")[0]} —{" "}
@@ -159,14 +159,14 @@ function Eventsbyuser() {
             </div>
 
             {/* Divider */}
-            <hr className="border-white/10 my-4" />
+            <hr className="border-gray-200 dark:border-white/10 my-4" />
 
             {/* Applicant Details */}
-            <h3 className="text-indigo-400 font-semibold mb-3">
+            <h3 className="text-indigo-600 dark:text-indigo-400 font-semibold mb-3">
               Application Details
             </h3>
 
-            <div className="space-y-2 text-sm text-gray-300">
+            <div className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
               <p className="flex items-center gap-2">
                 <FaUsers /> {each.fullName}
               </p>
@@ -180,13 +180,13 @@ function Eventsbyuser() {
                 <FaPhoneAlt /> {each.phoneNumber}
               </p>
               <p>
-                <span className="text-gray-400">Team:</span>{" "}
+                <span className="text-gray-500 dark:text-gray-400">Team:</span>{" "}
                 {each.teamName} ({each.membersCount} members)
               </p>
             </div>
 
             {/* Location */}
-            <div className="flex items-center gap-2 text-gray-400 text-sm mt-4">
+            <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 text-sm mt-4">
               <FaMapMarkerAlt />
               <span>
                 {each.Venue || "Unknown Venue"},{" "}
@@ -199,7 +199,7 @@ function Eventsbyuser() {
               {each.skills?.split(",").map((skill, index) => (
                 <span
                   key={index}
-                  className="bg-indigo-600/20 text-indigo-400 px-3 py-1 rounded-full text-xs"
+                  className="bg-indigo-50 dark:bg-indigo-600/20 text-indigo-700 dark:text-indigo-400 px-3 py-1 rounded-full text-xs border border-indigo-200 dark:border-indigo-500/30"
                 >
                   {skill.trim()}
                 </span>
@@ -210,7 +210,7 @@ function Eventsbyuser() {
             <div className="flex justify-end mt-6">
               <button
                 onClick={() => handleViewDetails(each.event)}
-                className="flex items-center gap-2 border cursor-pointer border-white/10 hover:border-white/30 hover:bg-gradient-to-r hover:from-blue-500 hover:to-violet-600 px-5 py-2 rounded-xl text-sm transition"
+                className="flex items-center gap-2 border cursor-pointer border-gray-300 dark:border-white/10 hover:border-indigo-600 dark:hover:border-white/30 hover:bg-indigo-600 dark:hover:bg-gradient-to-r dark:hover:from-blue-500 dark:hover:to-violet-600 px-5 py-2 rounded-xl text-sm transition text-gray-900 dark:text-white hover:text-white"
               >
                 View Event <FaExternalLinkAlt size={12} />
               </button>
@@ -223,15 +223,15 @@ function Eventsbyuser() {
       {
         showModal && (
           <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-            <div className="bg-gray-900 border border-white/10 p-6 rounded-2xl w-full max-w-sm shadow-2xl animate-scaleIn">
-              <h3 className="text-xl font-bold text-white mb-2">Cancel Application?</h3>
-              <p className="text-gray-400 mb-6">
+            <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-white/10 p-6 rounded-2xl w-full max-w-sm shadow-2xl animate-scaleIn">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Cancel Application?</h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-6">
                 Are you sure you want to cancel this application? This action cannot be undone.
               </p>
               <div className="flex gap-3 justify-end">
                 <button
                   onClick={() => setShowModal(false)}
-                  className="px-4 py-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition cursor-pointer"
+                  className="px-4 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 transition cursor-pointer"
                 >
                   No, Keep it
                 </button>

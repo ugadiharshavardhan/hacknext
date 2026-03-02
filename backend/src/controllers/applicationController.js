@@ -15,6 +15,23 @@ export const applyForEvent = async (req, res) => {
     const Venue = req.body.Venue;
     const userId = req.userId;
 
+    // Validate fields based on eventType
+    if (eventType === "Hackathon") {
+      if (!req.body.teamName || !req.body.membersCount || !req.body.ideaDescription) {
+        return res.status(400).json({ message: "Hackathon requires Team Name, Members Count, and Idea Description" });
+      }
+    } else if (eventType === "Workshop") {
+      if (!req.body.reasonForAttending || !req.body.proficiency) {
+        return res.status(400).json({ message: "Workshop requires Reason for Attending and Proficiency Level" });
+      }
+    } else if (eventType === "Tech Event") {
+      if (!req.body.professionalStatus || !req.body.areasOfInterest) {
+        return res.status(400).json({ message: "Tech Event requires Professional Status and Areas of Interest" });
+      }
+    }
+
+
+
     if (!userId) {
       return res.status(401).json({ message: "Unauthorized user" });
     }

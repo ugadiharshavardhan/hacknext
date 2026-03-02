@@ -17,9 +17,9 @@ const Form = ({ event }) => {
     EventType: event?.EventType || "",
     Organizer: event?.Organizer || "",
     OnlineorOffline:
-      event?.OnlineorOffline === "true" ||
-      event?.OnlineorOffline === true ||
-      false,
+      event?.OnlineorOffline === "Online" || event?.OnlineorOffline === "true" || event?.OnlineorOffline === true
+        ? "Online"
+        : "Offline", // Use string "Online" or "Offline" instead of boolean
     PricePool: event?.PricePool || "",
     OrganisationName: event?.OrganisationName || "",
     Slots: event?.Slots || "",
@@ -38,10 +38,16 @@ const Form = ({ event }) => {
 
   // handle input change
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === "checkbox" ? checked : value,
+    const { name, value } = e.target;
+
+    setFormData(prev => {
+      const newData = { ...prev, [name]: value };
+
+      // If event type changes to Tech Event, default to Offline
+      if (name === "EventType" && value === "Tech Event") {
+        newData.OnlineorOffline = "Offline";
+      }
+      return newData;
     });
   };
 
@@ -89,7 +95,7 @@ const Form = ({ event }) => {
       EventDescription: "",
       EventType: "",
       Organizer: "",
-      OnlineorOffline: false,
+      OnlineorOffline: "Offline",
       PricePool: "",
       OrganisationName: "",
       City: "",
@@ -115,10 +121,10 @@ const Form = ({ event }) => {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-950 text-white">
+    <div className="min-h-screen flex justify-center items-center bg-gray-50/90 dark:bg-gray-950/90 backdrop-blur-sm z-50 fixed inset-0 overflow-y-auto pt-10 pb-10">
       <form
         onSubmit={handleSubmit}
-        className="bg-gray-900 p-6 rounded-2xl shadow-lg w-full max-w-2xl space-y-4"
+        className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 p-6 rounded-2xl shadow-2xl w-full max-w-2xl space-y-4 text-gray-900 dark:text-white my-auto"
       >
         {/* Header */}
         <div className="flex justify-between items-center">
@@ -132,7 +138,7 @@ const Form = ({ event }) => {
           />
         </div>
 
-        <p className="text-gray-400 mb-4">
+        <p className="text-gray-600 dark:text-gray-400 mb-4">
           {event
             ? "Edit the details to update the event"
             : "Fill in the details to create a new event"}
@@ -140,39 +146,39 @@ const Form = ({ event }) => {
 
         {/* Input fields */}
         <div>
-          <label className="block text-sm mb-1">Event Title *</label>
+          <label className="block text-sm mb-1 font-medium text-gray-700 dark:text-gray-300">Event Title *</label>
           <input
             type="text"
             name="EventTitle"
             value={formData.EventTitle}
             onChange={handleChange}
             placeholder="Enter event title"
-            className="w-full p-2 rounded-md bg-gray-800 border border-gray-700"
+            className="w-full p-2 rounded-md bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none text-gray-900 dark:text-white"
             required
           />
         </div>
 
         <div>
-          <label className="block text-sm mb-1">Event Description *</label>
+          <label className="block text-sm mb-1 font-medium text-gray-700 dark:text-gray-300">Event Description *</label>
           <input
             type="text"
             name="EventDescription"
             value={formData.EventDescription}
             onChange={handleChange}
             placeholder="Enter event description"
-            className="w-full p-2 rounded-md bg-gray-800 border border-gray-700"
+            className="w-full p-2 rounded-md bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none text-gray-900 dark:text-white"
             required
           />
         </div>
 
 
         <div>
-          <label className="block text-sm mb-1">Event Type *</label>
+          <label className="block text-sm mb-1 font-medium text-gray-700 dark:text-gray-300">Event Type *</label>
           <select
             name="EventType"
             value={formData.EventType}
             onChange={handleChange}
-            className="w-full p-2 rounded-md bg-gray-800 border border-gray-700"
+            className="w-full p-2 rounded-md bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none text-gray-900 dark:text-white"
             required
           >
             <option value="">Select type</option>
@@ -183,12 +189,12 @@ const Form = ({ event }) => {
         </div>
 
         <div>
-          <label className="block text-sm mb-1">Organizer *</label>
+          <label className="block text-sm mb-1 font-medium text-gray-700 dark:text-gray-300">Organizer *</label>
           <select
             name="Organizer"
             value={formData.Organizer}
             onChange={handleChange}
-            className="w-full p-2 rounded-md bg-gray-800 border border-gray-700"
+            className="w-full p-2 rounded-md bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none text-gray-900 dark:text-white"
             required
           >
             <option value="">Select organizer</option>
@@ -199,133 +205,168 @@ const Form = ({ event }) => {
           </select>
         </div>
 
-        <div className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            name="OnlineorOffline"
-            checked={formData.OnlineorOffline}
-            onChange={handleChange}
-            className="w-4 h-4"
-          />
-          <label>Online or Offline Event</label>
+        {/* Show Online/Offline toggle for all event types */}
+        <div className="flex flex-col gap-2">
+          <label className="block text-sm mb-1 font-medium text-gray-700 dark:text-gray-300">Event Format *</label>
+          <div className="flex items-center gap-6">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="radio"
+                name="OnlineorOffline"
+                value="Online"
+                checked={formData.OnlineorOffline === "Online"}
+                onChange={handleChange}
+                className="w-4 h-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700"
+              />
+              <span className="text-gray-700 dark:text-gray-300">Online Event</span>
+            </label>
+
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="radio"
+                name="OnlineorOffline"
+                value="Offline"
+                checked={formData.OnlineorOffline === "Offline"}
+                onChange={handleChange}
+                className="w-4 h-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700"
+              />
+              <span className="text-gray-700 dark:text-gray-300">Offline Event</span>
+            </label>
+          </div>
         </div>
 
         <div className="flex gap-4">
           <div className="flex flex-col flex-1">
-            <label>Organization Name</label>
+            <label className="font-medium text-gray-700 dark:text-gray-300 text-sm mb-1">Organization Name</label>
             <input
               type="text"
               name="OrganisationName"
               value={formData.OrganisationName}
               onChange={handleChange}
-              className="p-2 rounded-md bg-gray-800 border border-gray-700"
+              placeholder="e.g. Google, Stanford University"
+              className="p-2 rounded-md bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none text-gray-900 dark:text-white"
             />
           </div>
           <div className="flex flex-col flex-1">
-            <label>Prize Pool</label>
+            <label className="font-medium text-gray-700 dark:text-gray-300 text-sm mb-1">Prize Pool</label>
             <input
               type="text"
               name="PricePool"
               value={formData.PricePool}
               onChange={handleChange}
-              className="p-2 rounded-md bg-gray-800 border border-gray-700"
+              placeholder="e.g. $10,000 or Swag"
+              className="p-2 rounded-md bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none text-gray-900 dark:text-white"
             />
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-4">
-          <div>
-            <label>City</label>
-            <input
-              type="text"
-              name="City"
-              value={formData.City}
-              onChange={handleChange}
-              className="p-2 rounded-md bg-gray-800 border border-gray-700"
-            />
-          </div>
-          <div>
-            <label>State</label>
-            <input
-              type="text"
-              name="State"
-              value={formData.State}
-              onChange={handleChange}
-              className="p-2 rounded-md bg-gray-800 border border-gray-700"
-            />
-          </div>
-          <div>
-            <label>Venue</label>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {formData.OnlineorOffline === "Offline" && (
+            <>
+              <div>
+                <label className="font-medium text-gray-700 dark:text-gray-300 text-sm mb-1 block">City</label>
+                <input
+                  type="text"
+                  name="City"
+                  value={formData.City}
+                  onChange={handleChange}
+                  placeholder="e.g. San Francisco"
+                  className="w-full p-2 rounded-md bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none text-gray-900 dark:text-white"
+                  required={formData.OnlineorOffline === "Offline"}
+                />
+              </div>
+              <div>
+                <label className="font-medium text-gray-700 dark:text-gray-300 text-sm mb-1 block">State</label>
+                <input
+                  type="text"
+                  name="State"
+                  value={formData.State}
+                  onChange={handleChange}
+                  placeholder="e.g. CA"
+                  className="w-full p-2 rounded-md bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none text-gray-900 dark:text-white"
+                  required={formData.OnlineorOffline === "Offline"}
+                />
+              </div>
+            </>
+          )}
+          <div className={formData.OnlineorOffline === "Online" ? "md:col-span-3" : ""}>
+            <label className="font-medium text-gray-700 dark:text-gray-300 text-sm mb-1 block">
+              {formData.OnlineorOffline === "Online" ? "Online Method / Link" : "Venue"}
+            </label>
             <input
               type="text"
               name="Venue"
               value={formData.Venue}
               onChange={handleChange}
-              className="p-2 rounded-md bg-gray-800 border border-gray-700"
+              placeholder={formData.OnlineorOffline === "Online" ? "e.g. Zoom Link, Google Meet, Discord" : "e.g. 123 Tech Avenue"}
+              className="w-full p-2 rounded-md bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none text-gray-900 dark:text-white"
+              required
             />
           </div>
         </div>
 
         <div className="flex gap-4">
           <div className="flex flex-col">
-            <label>Slots</label>
+            <label className="font-medium text-gray-700 dark:text-gray-300 text-sm mb-1 block">Slots</label>
             <input
-              type="text"
+              type="number"
               name="Slots"
               value={formData.Slots}
               onChange={handleChange}
-              className="p-2 rounded-md bg-gray-800 border border-gray-700"
+              placeholder="e.g. 100"
+              className="p-2 rounded-md bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none text-gray-900 dark:text-white"
+              required
             />
           </div>
           <div className="flex flex-col">
-            <label>Start Date</label>
+            <label className="font-medium text-gray-700 dark:text-gray-300 text-sm mb-1 block">Start Date</label>
             <input
               type="date"
               name="StartDate"
               value={formData.StartDate}
               onChange={handleChange}
-              className="p-2 rounded-md bg-gray-800 border border-gray-700"
+              className="p-2 rounded-md bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none text-gray-900 dark:text-white"
             />
           </div>
           <div className="flex flex-col">
-            <label>End Date</label>
+            <label className="font-medium text-gray-700 dark:text-gray-300 text-sm mb-1 block">End Date</label>
             <input
               type="date"
               name="EndDate"
               value={formData.EndDate}
               onChange={handleChange}
-              className="p-2 rounded-md bg-gray-800 border border-gray-700"
+              className="p-2 rounded-md bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none text-gray-900 dark:text-white"
             />
           </div>
         </div>
 
 
         <div>
-          <label className="block text-sm mb-1">Specified Stacks</label>
+          <label className="block text-sm mb-1 font-medium text-gray-700 dark:text-gray-300">Specified Stacks</label>
           <input
             type="text"
             name="SpecifiedStacks"
             value={formData.SpecifiedStacks}
             onChange={handleChange}
             placeholder="e.g., React, Node.js, AI/ML"
-            className="w-full p-2 rounded-md bg-gray-800 border border-gray-700"
+            className="w-full p-2 rounded-md bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none text-gray-900 dark:text-white"
           />
         </div>
         <div>
-          <label className="block text-sm mb-1">Application Form Link</label>
+          <label className="block text-sm mb-1 font-medium text-gray-700 dark:text-gray-300">Application Form Link</label>
           <input
             type="text"
             name="FormLink"
             value={formData.FormLink}
             onChange={handleChange}
             placeholder="Google Application Form link"
-            className="w-full p-2 rounded-md bg-gray-800 border border-gray-700"
+            className="w-full p-2 rounded-md bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none text-gray-900 dark:text-white"
           />
         </div>
 
         <button
           type="submit"
-          className="w-full p-2 bg-purple-600 hover:bg-purple-700 rounded-md font-bold"
+          className="w-full p-2 bg-indigo-600 hover:bg-indigo-700 dark:bg-gradient-to-r dark:from-indigo-600 dark:to-violet-600 text-white rounded-md font-bold transition-colors cursor-pointer"
         >
           {event ? "Update Event" : "Create Event"}
         </button>

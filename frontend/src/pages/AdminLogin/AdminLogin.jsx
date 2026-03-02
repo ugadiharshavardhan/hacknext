@@ -56,14 +56,14 @@ function AdminLogin() {
   const handleHome = () => navigate("/", { replace: true })
 
   return (
-    <div className="min-h-screen  w-full bg-gradient-to-br from-[#020617] via-[#020617] to-[#0f172a] flex items-center justify-center px-4">
+    <div className="min-h-screen  w-full bg-gradient-to-br from-indigo-50 via-white to-gray-100 dark:from-[#020617] dark:via-[#020617] dark:to-[#0f172a] flex items-center justify-center px-4">
 
-      <header onClick={handleHome} className="absolute top-6 left-6 flex items-center gap-2">
-        <FaCode size={34} className="text-blue-500" />
-        <h1 className="text-3xl font-bold text-white tracking-wide">HackNext</h1>
+      <header onClick={handleHome} className="absolute top-6 left-6 flex items-center gap-2 cursor-pointer">
+        <FaCode size={34} className="text-blue-600 dark:text-blue-500" />
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white tracking-wide">HackNext</h1>
       </header>
 
-      <div className="flex shadow-2xl rounded-2xl overflow-hidden border-1 border-white">
+      <div className="flex shadow-2xl rounded-2xl overflow-hidden border border-gray-200 dark:border-white/10">
 
         <div className="hidden md:block">
           <img
@@ -73,40 +73,40 @@ function AdminLogin() {
           />
         </div>
 
-        <div className="bg-[#020617] border border-white/10 p-8 w-[360px]">
-          <h1 className="text-3xl font-bold text-white text-center">Admin Login</h1>
-          <p className="text-xs text-gray-400 text-center mt-2 mb-6">
+        <div className="bg-white dark:bg-[#020617] border-l border-gray-200 dark:border-white/10 p-8 w-[360px]">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white text-center">Admin Login</h1>
+          <p className="text-xs text-gray-600 dark:text-gray-400 text-center mt-2 mb-6">
             Manage Hackathons, Workshops & Tech Events
           </p>
 
           <form className="flex flex-col space-y-4" onSubmit={handleSubmitForm}>
 
             <div>
-              <label className="text-xs text-gray-300 font-semibold">EMAIL</label>
+              <label className="text-xs text-gray-700 dark:text-gray-300 font-semibold">EMAIL</label>
               <input
                 type="text"
                 placeholder="Enter email"
                 name='email'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full mt-1 p-2 rounded bg-[#0f172a] text-white border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                className="w-full mt-1 p-2 rounded bg-gray-50 dark:bg-[#0f172a] text-gray-900 dark:text-white border border-gray-300 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-600"
               />
             </div>
 
             <div>
-              <label className="text-xs text-gray-300 font-semibold">Password</label>
+              <label className="text-xs text-gray-700 dark:text-gray-300 font-semibold">Password</label>
               <div className="relative mt-1">
                 <input
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter Password"
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
-                  className="w-full p-2 pr-10 rounded bg-[#0f172a] text-white border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  className="w-full p-2 pr-10 rounded bg-gray-50 dark:bg-[#0f172a] text-gray-900 dark:text-white border border-gray-300 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-600"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white cursor-pointer"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer"
                 >
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
@@ -127,7 +127,7 @@ function AdminLogin() {
             </button>
 
             <div
-              className="flex items-center gap-1 text-gray-400 hover:text-white cursor-pointer text-sm"
+              className="flex items-center gap-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer text-sm"
               onClick={handleHome}
             >
               <FaAngleLeft />

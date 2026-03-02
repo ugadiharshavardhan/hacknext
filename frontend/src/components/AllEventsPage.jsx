@@ -130,7 +130,7 @@ function AllEventsPage({ searchQuery, eventType, organizer }) {
             className={`px-5 py-2 rounded-full text-sm font-medium transition
               ${activeSection === tab.key
                 ? "bg-gradient-to-r from-blue-500 to-violet-600 text-white"
-                : "border border-white/10 text-gray-400 hover:text-white cursor-pointer"
+                : "border border-gray-300 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer"
               }`}
           >
             {tab.label}
@@ -145,14 +145,14 @@ function AllEventsPage({ searchQuery, eventType, organizer }) {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 px-6 py-16">
           {filteredEvents.length === 0 ? (
-            <p className="text-center text-gray-400 col-span-full">
+            <p className="text-center text-gray-600 dark:text-gray-400 col-span-full">
               No events found for this section.
             </p>
           ) : (
             filteredEvents.map((each, _id) => (
               <div
                 key={_id}
-                className="rounded-2xl bg-white/5 border border-white/10 p-6 text-white
+                className="rounded-2xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 p-6 text-gray-900 dark:text-white
                            shadow-xl hover:shadow-indigo-900/30
                            transition-transform duration-300 hover:-translate-y-3"
               >
@@ -181,11 +181,11 @@ function AllEventsPage({ searchQuery, eventType, organizer }) {
                   {each.EventTitle.toUpperCase()}
                 </h2>
 
-                <p className="text-gray-400 text-sm mb-4 leading-relaxed">
+                <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 leading-relaxed">
                   {each.EventDescription}
                 </p>
 
-                <div className="space-y-2 text-gray-300 text-sm">
+                <div className="space-y-2 text-gray-700 dark:text-gray-300 text-sm">
                   <div className="flex items-center gap-2">
                     <FaCalendarAlt />
                     {formatDate(each.StartDate)} - {formatDate(each.EndDate)}
@@ -212,7 +212,7 @@ function AllEventsPage({ searchQuery, eventType, organizer }) {
                   {each.SpecifiedStacks?.split(",").map((stack, index) => (
                     <li
                       key={index}
-                      className="bg-white/5 border border-white/10 text-xs px-3 py-1 rounded-full text-gray-200"
+                      className="bg-gray-100 dark:bg-white/5 border border-gray-300 dark:border-white/10 text-xs px-3 py-1 rounded-full text-gray-800 dark:text-gray-200"
                     >
                       {stack.trim()}
                     </li>
@@ -220,7 +220,7 @@ function AllEventsPage({ searchQuery, eventType, organizer }) {
                 </ul>
 
                 <div className="flex justify-between items-center mt-6">
-                  <div className="flex items-center text-gray-400 text-sm">
+                  <div className="flex items-center text-gray-600 dark:text-gray-400 text-sm">
                     <LuClock3 className="mr-1" />
                     {remainingDays(each.StartDate)}
                   </div>
@@ -228,9 +228,9 @@ function AllEventsPage({ searchQuery, eventType, organizer }) {
                   <button
                     onClick={() => handleViewDetails(each._id)}
                     className="flex items-center gap-2 px-4 py-2 rounded-xl
-                               border border-white/10
+                               border border-gray-300 dark:border-white/10
                                hover:bg-gradient-to-r hover:from-blue-500 hover:to-violet-600
-                               text-white text-sm transition cursor-pointer"
+                               text-gray-900 dark:text-white hover:text-white text-sm transition cursor-pointer"
                   >
                     View Details <FaExternalLinkAlt size={12} />
                   </button>

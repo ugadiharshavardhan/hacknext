@@ -59,22 +59,22 @@ function CreateProjectAdmin() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0f1225] to-[#14172e]">
+    <div className="min-h-screen bg-gray-50 dark:bg-gradient-to-br dark:from-[#0f1225] dark:to-[#14172e]">
       <AdminNavbar />
 
       <div className="pt-24 px-4 pb-10 flex justify-center">
-        <div className="w-full max-w-2xl bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 md:p-8 shadow-xl">
+        <div className="w-full max-w-2xl bg-white dark:bg-white/5 backdrop-blur-md border border-gray-200 dark:border-white/10 rounded-2xl p-6 md:p-8 shadow-xl">
 
           {/* BACK BUTTON */}
           <button
             onClick={() => navigate("/admin/dashboard")}
-            className="flex items-center gap-2 cursor-pointer text-gray-300 hover:text-white mb-6 transition"
+            className="flex items-center gap-2 cursor-pointer text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white mb-6 transition"
           >
             <FaArrowLeft />
             Back to Dashboard
           </button>
 
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-6">
             Add New Project
           </h2>
 
@@ -82,38 +82,38 @@ function CreateProjectAdmin() {
 
             {/* Event Type */}
             <div>
-              <label className="text-sm text-gray-300">Event Type</label>
+              <label className="text-sm text-gray-700 dark:text-gray-300">Event Type</label>
               <input
                 type="text"
                 name="EventType"
                 value={formData.EventType}
                 readOnly
-                className="w-full mt-1 bg-white/10 text-gray-300 p-3 rounded-lg cursor-not-allowed"
+                className="w-full mt-1 bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-transparent p-3 rounded-lg cursor-not-allowed"
               />
             </div>
 
             {/* Title */}
             <div>
-              <label className="text-sm text-gray-300">Project Title</label>
+              <label className="text-sm text-gray-700 dark:text-gray-300">Project Title</label>
               <input
                 type="text"
                 name="title"
                 value={formData.title}
                 onChange={handleChange}
                 placeholder="Enter project title"
-                className="w-full mt-1 bg-[#0f1225] border border-white/10 text-white p-3 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full mt-1 bg-white dark:bg-[#0f1225] border border-gray-300 dark:border-white/10 text-gray-900 dark:text-white p-3 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
                 required
               />
             </div>
 
             {/* Level */}
             <div>
-              <label className="text-sm text-gray-300">Level</label>
+              <label className="text-sm text-gray-700 dark:text-gray-300">Level</label>
               <select
                 name="level"
                 value={formData.level}
                 onChange={handleChange}
-                className="w-full mt-1 bg-[#0f1225] border border-white/10 text-white p-3 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full mt-1 bg-white dark:bg-[#0f1225] border border-gray-300 dark:border-white/10 text-gray-900 dark:text-white p-3 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
                 required
               >
                 <option value="">Select Level</option>
@@ -125,34 +125,34 @@ function CreateProjectAdmin() {
 
             {/* Description */}
             <div>
-              <label className="text-sm text-gray-300">Description</label>
+              <label className="text-sm text-gray-700 dark:text-gray-300">Description</label>
               <textarea
                 name="description"
                 value={formData.description}
                 onChange={handleChange}
                 placeholder="Enter project description"
-                className="w-full mt-1 bg-[#0f1225] border border-white/10 text-white p-3 rounded-lg h-24 outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full mt-1 bg-white dark:bg-[#0f1225] border border-gray-300 dark:border-white/10 text-gray-900 dark:text-white p-3 rounded-lg h-24 outline-none focus:ring-2 focus:ring-indigo-500"
                 required
               />
             </div>
 
             {/* Stack */}
             <div>
-              <label className="text-sm text-gray-300">
+              <label className="text-sm text-gray-700 dark:text-gray-300">
                 Tech Stack (comma separated)
               </label>
               <input
                 type="text"
                 onChange={handleStackChange}
                 placeholder="React, Node.js, MongoDB"
-                className="w-full mt-1 bg-[#0f1225] border border-white/10 text-white p-3 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full mt-1 bg-white dark:bg-[#0f1225] border border-gray-300 dark:border-white/10 text-gray-900 dark:text-white p-3 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
                 required
               />
             </div>
 
             {/* GitHub */}
             <div>
-              <label className="text-sm text-gray-300">
+              <label className="text-sm text-gray-700 dark:text-gray-300">
                 GitHub Repository (optional)
               </label>
               <input
@@ -161,13 +161,13 @@ function CreateProjectAdmin() {
                 value={formData.githublink}
                 onChange={handleChange}
                 placeholder="https://github.com/username/project"
-                className="w-full mt-1 bg-[#0f1225] border border-white/10 text-white p-3 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full mt-1 bg-white dark:bg-[#0f1225] border border-gray-300 dark:border-white/10 text-gray-900 dark:text-white p-3 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </div>
 
             {/* Figma */}
             <div>
-              <label className="text-sm text-gray-300">
+              <label className="text-sm text-gray-700 dark:text-gray-300">
                 Figma Design (optional)
               </label>
               <input
@@ -176,14 +176,14 @@ function CreateProjectAdmin() {
                 value={formData.figmaLink}
                 onChange={handleChange}
                 placeholder="https://figma.com/file/..."
-                className="w-full mt-1 bg-[#0f1225] border border-white/10 text-white p-3 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full mt-1 bg-white dark:bg-[#0f1225] border border-gray-300 dark:border-white/10 text-gray-900 dark:text-white p-3 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </div>
 
             {/* SUBMIT */}
             <button
               type="submit"
-              className="w-full cursor-pointer mt-4 bg-gradient-to-r from-indigo-600 to-violet-600 hover:opacity-90 text-white font-semibold py-3 rounded-xl transition"
+              className="w-full cursor-pointer mt-4 bg-indigo-600 hover:bg-indigo-700 dark:bg-gradient-to-r dark:from-indigo-600 dark:to-violet-600 dark:hover:opacity-90 text-white font-semibold py-3 rounded-xl transition"
             >
               Create Project
             </button>

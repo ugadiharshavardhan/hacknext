@@ -11,7 +11,7 @@ function NotFound() {
 
   return (
     <div className="h-screen w-full flex flex-col items-center justify-center bg-black text-white">
-      
+
       <FuzzyText
         fontSize="clamp(3rem, 12vw, 10rem)"
         fontWeight={900}
@@ -32,7 +32,7 @@ function NotFound() {
         Page Not Found
       </FuzzyText>
       <p className="mt-4 text-xl text-gray-300">
-        
+
       </p>
 
       <button

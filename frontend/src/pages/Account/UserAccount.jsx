@@ -55,7 +55,7 @@ function UserAccount() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen bg-gradient-to-br from-[#0f1225] to-[#14172e]">
+      <div className="flex justify-center items-center h-screen bg-gradient-to-br from-indigo-50 to-white dark:from-[#0f1225] dark:to-[#14172e]">
         <ThreeDot color="#6366f1" size="medium" />
       </div>
     );
@@ -161,10 +161,10 @@ function UserAccount() {
 
 
   return (
-    <div className="flex min-h-screen bg-gray-950 overflow-hidden">
+    <div className="flex min-h-screen bg-gray-50 dark:bg-gray-950 overflow-hidden">
 
       {/* SIDEBAR */}
-      <aside className="w-[280px] fixed left-0 top-0 h-screen bg-white/5 border-r border-white/10 backdrop-blur-md flex flex-col justify-between">
+      <aside className="w-[280px] fixed left-0 top-0 h-screen bg-white dark:bg-white/5 border-r border-gray-200 dark:border-white/10 backdrop-blur-md flex flex-col justify-between">
         <div className="pt-24 px-4 space-y-2">
           <SidebarItem
             icon={<FaUser />}
@@ -195,7 +195,7 @@ function UserAccount() {
         <div
           onClick={handleLogout}
           className="m-4 flex items-center justify-center gap-2 py-3 rounded-xl
-          bg-rose-500/20 text-white cursor-pointer hover:bg-rose-500/30 transition"
+          bg-red-50 hover:bg-red-100 text-red-600 dark:bg-rose-500/20 dark:text-gray-200 cursor-pointer dark:hover:bg-rose-500/30 transition"
         >
           <FaSignInAlt /> Logout
         </div>
@@ -208,7 +208,7 @@ function UserAccount() {
 
             {activeSection === "user" && (
               <div className="animate-slideUp flex flex-col items-center">
-                <div className="bg-white/5 border border-white/10 rounded-2xl p-8 shadow-xl w-full max-w-md text-center">
+                <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl p-8 shadow-xl w-full max-w-md text-center">
 
                   <div
                     className="relative group w-24 h-24 mx-auto mb-4 cursor-pointer"
@@ -234,19 +234,19 @@ function UserAccount() {
                     </div>
                   </div>
 
-                  <h2 className="text-2xl font-bold text-white">
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                     {userData.username}
                   </h2>
-                  <p className="text-gray-400">{userData.email}</p>
+                  <p className="text-gray-600 dark:text-gray-400">{userData.email}</p>
 
                   <div className="mt-6 grid grid-cols-2 gap-4 text-sm">
-                    <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                      <p className="text-gray-400">Role</p>
-                      <p className="font-semibold text-white">Student</p>
+                    <div className="bg-gray-50 dark:bg-white/5 rounded-xl p-4 border border-gray-200 dark:border-white/10">
+                      <p className="text-gray-500 dark:text-gray-400">Role</p>
+                      <p className="font-semibold text-gray-900 dark:text-white">Student</p>
                     </div>
-                    <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                      <p className="text-gray-400">Status</p>
-                      <p className="font-semibold text-emerald-400">Active</p>
+                    <div className="bg-gray-50 dark:bg-white/5 rounded-xl p-4 border border-gray-200 dark:border-white/10">
+                      <p className="text-gray-500 dark:text-gray-400">Status</p>
+                      <p className="font-semibold text-emerald-600 dark:text-emerald-400">Active</p>
                     </div>
                   </div>
 
@@ -268,13 +268,13 @@ function UserAccount() {
           onClick={() => setShowOptions(false)}
         >
           <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/95 backdrop-blur-sm rounded-xl p-3 space-y-2 min-w-[220px] shadow-2xl border border-white/20"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-black/95 backdrop-blur-sm rounded-xl p-3 space-y-2 min-w-[220px] shadow-2xl border border-gray-200 dark:border-white/20"
             onClick={(e) => e.stopPropagation()}
           >
 
             {userData.profileImage && (
               <button
-                className="flex w-full items-center gap-3 text-white py-3 px-4 hover:bg-white/10 active:bg-white/20 rounded-lg transition-all touch-manipulation"
+                className="flex w-full items-center gap-3 text-gray-700 dark:text-white py-3 px-4 hover:bg-gray-100 dark:hover:bg-white/10 active:bg-gray-200 dark:active:bg-white/20 rounded-lg transition-all touch-manipulation"
                 onClick={(e) => {
                   e.stopPropagation();
                   setShowPreview(true);
@@ -286,7 +286,7 @@ function UserAccount() {
             )}
 
             <button
-              className="flex w-full items-center gap-3 text-white py-3 px-4 hover:bg-white/10 active:bg-white/20 rounded-lg transition-all touch-manipulation"
+              className="flex w-full items-center gap-3 text-gray-700 dark:text-white py-3 px-4 hover:bg-gray-100 dark:hover:bg-white/10 active:bg-gray-200 dark:active:bg-white/20 rounded-lg transition-all touch-manipulation"
               onClick={(e) => {
                 e.stopPropagation();
                 fileInputRef.current.click();
@@ -298,7 +298,7 @@ function UserAccount() {
 
             {userData.profileImage && (
               <button
-                className="flex w-full items-center gap-3 text-red-400 py-3 px-4 hover:bg-white/10 active:bg-white/20 rounded-lg transition-all touch-manipulation"
+                className="flex w-full items-center gap-3 text-red-600 dark:text-red-400 py-3 px-4 hover:bg-red-50 dark:hover:bg-white/10 active:bg-red-100 dark:active:bg-white/20 rounded-lg transition-all touch-manipulation"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleRemoveImage();
@@ -348,8 +348,8 @@ function SidebarItem({ icon, label, active, onClick }) {
     <div
       onClick={onClick}
       className={`flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition ${active
-        ? "bg-gradient-to-r from-indigo-600/30 to-violet-600/30 text-white"
-        : "text-gray-400 hover:bg-white/5 hover:text-white"
+        ? "bg-gradient-to-r from-indigo-100 to-indigo-200 text-indigo-800 dark:from-indigo-600/30 dark:to-violet-600/30 dark:text-white"
+        : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white"
         }`}
     >
       {icon}
